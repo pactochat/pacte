@@ -90,9 +90,5 @@ export default {
 		'private',
 	],
 	sortPackages: true,
-	source: [
-		'package.json',
-		'apps/*/package.json',
-		'packages/**/package.json',
-	],
+	source: ['package.json', 'apps/*/package.json', 'packages/**/package.json'],
 }

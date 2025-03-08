@@ -9,8 +9,8 @@
 
 - Tamagui +v1.121 for Web & React Native
 - Package structure:
-  - @xiroi/shared-ui-core: Exports Tamagui components with custom tokens
-  - @xiroi/shared-ui-components: Reusable component library
+  - @agentic/shared-ui-core: Exports Tamagui components with custom tokens
+  - @agentic/shared-ui-components: Reusable component library
 - Always prioritize custom tokens from shared-core for colors, spacing, gap, z-index
 
 ## Repository Structure

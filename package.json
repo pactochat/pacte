@@ -1,5 +1,5 @@
 {
-	"name": "agentic_platform",
+	"name": "agentic",
 	"version": "0.0.0",
 	"repository": "https://github.com/guillempuche/agentic_platform",
 	"packageManager": "yarn@4.7.0",
@@ -10,7 +10,9 @@
 	"type": "module",
 	"workspaces": [
 		"apps/*",
-		"packages/shared/*"
+		"packages/agents/*",
+		"packages/shared/*",
+		"packages/shared/infrastructure/*"
 	],
 	"scripts": {
 		"______ Build ______": "Build and run the monorepo",
@@ -18,6 +20,7 @@
 		"server": "yarn turbo run @agentic/apps-server#start",
 		"generate-paths": "yarn workspace @agentic/shared-tsconfig generate-paths",
 		"______ Setup ______": "Project initialization",
+		"prepare": "lefthook install",
 		"setup": "yarn install && yarn generate-paths",
 		"clean-node_modules": "rm -rf node_modules && rm -rf ./apps/*/node_modules && rm -rf ./packages/**/node_modules && yarn cache clean",
 		"______ Check ______": "Validate code and dependencies",
@@ -30,14 +33,15 @@
 		"lint-syncpack": "syncpack format",
 		"______ Docs ______": "Generate documentation",
 		"docs:apps": "repomix --compress apps --output repomix_apps.md",
-		"docs:core": "repomix --compress packages/shared/core --output repomix_core.md",
+		"docs:agents": "repomix --compress packages/agents --output repomix_agents.md",
 		"docs:shared": "repomix --compress packages/shared --output repomix_shared.md",
-		"docs:all": "yarn docs:apps && yarn docs:core && yarn docs:shared"
+		"docs:all": "yarn docs:apps && yarn docs:agents && yarn docs:shared"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.3",
 		"@secretlint/secretlint-rule-preset-recommend": "^9.2.0",
 		"@types/node": "^22.10.10",
+		"repomix": "^0.2.34",
 		"secretlint": "^9.2.0",
 		"syncpack": "^13.0.2",
 		"tsup": "^8.3.6",
@@ -48,5 +52,17 @@
 	"resolutions": {
 		"typescript": "5.7.2"
 	},
-	"private": true
+	"config": {
+		"commitizen": {
+			"path": "node_modules/cz-customizable"
+		},
+		"cz-customizable": {
+			"config": "cz.config.cjs"
+		}
+	},
+	"dependenciesMeta": {
+		"agentic": {
+			"built": true
+		}
+	}
 }

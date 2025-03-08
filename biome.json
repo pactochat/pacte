@@ -6,20 +6,59 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"complexity": {
+				"noStaticOnlyClass": "off"
+			},
+			"correctness": {
+				"useExhaustiveDependencies": "warn"
+			},
+			"recommended": true,
+			"performance": {
+				"noAccumulatingSpread": "warn"
+			},
+			"style": {
+				"useLiteralEnumMembers": "off"
+			},
+			"suspicious": {
+				"noArrayIndexKey": "warn",
+				"noConsole": "warn",
+				"noEmptyInterface": "warn",
+				"noExplicitAny": "warn",
+				"noShadowRestrictedNames": "warn"
+			}
 		}
 	},
 	"formatter": {
 		"enabled": true,
+		"formatWithErrors": false,
 		"indentStyle": "tab",
 		"indentWidth": 2,
 		"lineWidth": 80,
 		"lineEnding": "lf"
 	},
+	"javascript": {
+		"formatter": {
+			"arrowParentheses": "asNeeded",
+			"quoteStyle": "single",
+			"jsxQuoteStyle": "single",
+			"semicolons": "asNeeded"
+		}
+	},
+	"json": {
+		"parser": {
+			"allowComments": true
+		}
+	},
 	"files": {
 		"ignore": [
-			"node_modules",
-			"dist"
-		]
+			"./**/.tamagui",
+			"./**/.yarn",
+			"./**/build",
+			"./**/dist",
+			"./**/node_modules",
+			"./**/public",
+			"scripts"
+		],
+		"ignoreUnknown": true
 	}
 }
