@@ -1,0 +1,55 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gitea-config
+  namespace: gitea
+data:
+  app.ini: |
+    [database]
+    DB_TYPE = postgres
+    HOST = postgres:5432
+    NAME = gitea
+    USER = gitea
+    PASSWD = ${DB_PASSWORD}
+    SSL_MODE = disable
+
+    [repository]
+    ROOT = /data/git/repositories
+    SCRIPT_TYPE = bash
+
+    [server]
+    DOMAIN = gitea.example.com
+    SSH_DOMAIN = gitea.example.com
+    ROOT_URL = https://gitea.example.com/
+    HTTP_PORT = 3000
+    SSH_PORT = 22
+    DISABLE_SSH = false
+    LFS_START_SERVER = true
+    LFS_CONTENT_PATH = /data/lfs
+
+    [service]
+    REGISTER_EMAIL_CONFIRM = false
+    ENABLE_NOTIFY_MAIL = false
+    DISABLE_REGISTRATION = false
+    ALLOW_ONLY_EXTERNAL_REGISTRATION = false
+    ENABLE_CAPTCHA = false
+    REQUIRE_SIGNIN_VIEW = false
+    DEFAULT_KEEP_EMAIL_PRIVATE = false
+    DEFAULT_ALLOW_CREATE_ORGANIZATION = true
+    NO_REPLY_ADDRESS = noreply.example.com
+
+    [security]
+    INSTALL_LOCK = true
+    SECRET_KEY = ${GITEA_SECRET_KEY}
+    INTERNAL_TOKEN = ${GITEA_INTERNAL_TOKEN}
+
+    [oauth2]
+    JWT_SECRET = ${GITEA_JWT_SECRET}
+
+    [session]
+    PROVIDER = file
+    PROVIDER_CONFIG = /data/gitea/sessions
+
+    [log]
+    MODE = console
+    LEVEL = info

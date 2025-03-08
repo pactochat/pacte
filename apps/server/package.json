@@ -8,8 +8,16 @@
 		"start": "tsx watch --conditions=development src/index.ts"
 	},
 	"dependencies": {
-		"@agentic/core": "workspace:*",
-		"fastify": "^5.2.0"
+		"@agentic/agents-domain": "workspace:*",
+		"@agentic/shared-domain": "workspace:*",
+		"@agentic/shared-infra-git-manager": "workspace:*",
+		"@kubernetes/client-node": "^1.0.0",
+		"@langchain/community": "^0.3.34",
+		"@langchain/core": "^0.3.42",
+		"@langchain/langgraph": "^0.2.54",
+		"effect": "^3.13.7",
+		"fastify": "^5.2.0",
+		"langchain": "^0.3.19"
 	},
 	"devDependencies": {
 		"@agentic/shared-tsconfig": "workspace:*",

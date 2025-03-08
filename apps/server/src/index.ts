@@ -1,20 +1,28 @@
-import Fastify from 'fastify';
-import { sayHello } from '@agentic/core';
+import Fastify from 'fastify'
 
-const server = Fastify({ logger: true });
+import { CodeAgent } from './codeAgent'
+import { FileManager } from './fileManager'
+import { registerRoutes } from './routes.'
 
-server.get('/', async (request, reply) => {
-	return sayHello('Agentic User');
-});
+async function startServer() {
+	const fastify = Fastify({ logger: true })
 
-const start = async () => {
+	// Initialize our in-memory file store and code agent
+	const fileManager = new FileManager()
+	const codeAgent = new CodeAgent(fileManager)
+
+	// Register routes
+	registerRoutes(fastify, codeAgent, fileManager)
+
+	// Start server
+	const port = process.env.PORT ? Number.parseInt(process.env.PORT, 10) : 3000
 	try {
-		await server.listen({ port: 3000, host: '0.0.0.0' });
-		console.log('Server running at http://localhost:3000');
+		await fastify.listen({ port, host: '0.0.0.0' })
+		console.log(`Fastify server is running on port ${port}`)
 	} catch (err) {
-		server.log.error(err);
-		process.exit(1);
+		fastify.log.error(err)
+		process.exit(1)
 	}
-};
+}
 
-start();
+startServer()

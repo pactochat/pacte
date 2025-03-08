@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: user-project-ingress
+  namespace: user-<userId>
+spec:
+  rules:
+    - host: <userId>-<projectId>.agentic.example.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: svc-<podName>
+                port:
+                  number: 3000

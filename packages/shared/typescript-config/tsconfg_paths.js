@@ -2,7 +2,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
-export function getAgenticTSPaths(consumerDirname) {
+export function getTSPaths(consumerDirname) {
 	const monorepoRoot = getMonorepoRoot()
 	const packagesDir = path.join(monorepoRoot, 'packages')
 

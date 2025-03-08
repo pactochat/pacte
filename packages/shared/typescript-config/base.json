@@ -43,8 +43,14 @@
       "node"
     ],
     "paths": {
-      "@agentic/core": [
-        "../core/src"
+      "@agentic/agents-domain": [
+        "../../agents/domain/src"
+      ],
+      "@agentic/shared-domain": [
+        "../domain/src"
+      ],
+      "@agentic/shared-infra-git-manager": [
+        "../infrastructure/git-manager/src"
       ]
     }
   },

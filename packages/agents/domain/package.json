@@ -1,5 +1,5 @@
 {
-	"name": "@agentic/core",
+	"name": "@agentic/agents-domain",
 	"version": "0.0.1",
 	"type": "module",
 	"types": "./dist/index.d.ts",
@@ -17,7 +17,11 @@
 		"check-types": "tsc --noEmit",
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
+	"peerDependencies": {
+		"effect": "^3.13.7"
+	},
 	"devDependencies": {
+		"@agentic/shared-domain": "workspace:*",
 		"@agentic/shared-tsconfig": "workspace:*",
 		"tsup": "^8.3.6",
 		"typescript": "5.7.2"
