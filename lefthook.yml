@@ -1,0 +1,26 @@
+pre-commit:
+  parallel: true
+  commands:
+    secretlint:
+      run: |
+        echo "🔑 Running Secretlint..."
+        yarn secretlint "{staged_files}"
+      stage_fixed: false
+    lint:
+      run: |
+        echo "✨ Running lint checks..."
+        yarn lint
+      stage_fixed: true
+    check-deps:
+      run: |
+        echo "📦 Running dependency version consistency checks..."
+        yarn check-sync
+    check-types:
+      run: |
+        echo "🔍 Running type checks..."
+        yarn check-types
+    generate-paths:
+      run: |
+        echo "🔄 Updating TypeScript paths..."
+        yarn generate-paths
+      stage_fixed: true

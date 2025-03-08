@@ -1,0 +1,52 @@
+{
+	"name": "agentic_platform",
+	"version": "0.0.0",
+	"repository": "https://github.com/guillempuche/agentic_platform",
+	"packageManager": "yarn@4.7.0",
+	"engines": {
+		"node": ">=22",
+		"yarn": ">=4"
+	},
+	"type": "module",
+	"workspaces": [
+		"apps/*",
+		"packages/shared/*"
+	],
+	"scripts": {
+		"______ Build ______": "Build and run the monorepo",
+		"build": "DO_NOT_TRACK=1 TURBO_TELEMETRY_DISABLED=1 turbo run build --verbosity=2",
+		"server": "yarn turbo run @agentic/apps-server#start",
+		"generate-paths": "yarn workspace @agentic/shared-tsconfig generate-paths",
+		"______ Setup ______": "Project initialization",
+		"setup": "yarn install && yarn generate-paths",
+		"clean-node_modules": "rm -rf node_modules && rm -rf ./apps/*/node_modules && rm -rf ./packages/**/node_modules && yarn cache clean",
+		"______ Check ______": "Validate code and dependencies",
+		"check-types": "turbo run check-types --affected",
+		"check-sync": "syncpack list",
+		"check-secrets": "secretlint '**/*'",
+		"______ Lint ______": "Code quality tools",
+		"lint": "yarn lint-biome && yarn lint-syncpack",
+		"lint-biome": "biome check --write --no-errors-on-unmatched",
+		"lint-syncpack": "syncpack format",
+		"______ Docs ______": "Generate documentation",
+		"docs:apps": "repomix --compress apps --output repomix_apps.md",
+		"docs:core": "repomix --compress packages/shared/core --output repomix_core.md",
+		"docs:shared": "repomix --compress packages/shared --output repomix_shared.md",
+		"docs:all": "yarn docs:apps && yarn docs:core && yarn docs:shared"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "^1.9.3",
+		"@secretlint/secretlint-rule-preset-recommend": "^9.2.0",
+		"@types/node": "^22.10.10",
+		"secretlint": "^9.2.0",
+		"syncpack": "^13.0.2",
+		"tsup": "^8.3.6",
+		"tsx": "^4.19.2",
+		"turbo": "^2.4.1",
+		"typescript": "5.7.2"
+	},
+	"resolutions": {
+		"typescript": "5.7.2"
+	},
+	"private": true
+}

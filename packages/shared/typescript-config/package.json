@@ -1,0 +1,15 @@
+{
+	"name": "@agentic/shared-tsconfig",
+	"version": "0.0.1",
+	"description": "Shared tsconfig base for agentic_platform",
+	"type": "module",
+	"exports": {
+		"./base.json": "./base.json",
+		"./node.json": "./node.json",
+		"./paths": "./tsconfig_paths.js"
+	},
+	"scripts": {
+		"generate-paths": "node ./generate_monorepo_paths.js"
+	},
+	"private": true
+}

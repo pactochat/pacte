@@ -1,0 +1,21 @@
+{
+	"name": "@agentic/apps-server",
+	"version": "0.0.1",
+	"main": "src/index.ts",
+	"type": "module",
+	"scripts": {
+		"build": "tsup ./src/index.ts --format esm --dts --out-dir dist --tsconfig tsconfig.json --silent",
+		"start": "tsx watch --conditions=development src/index.ts"
+	},
+	"dependencies": {
+		"@agentic/core": "workspace:*",
+		"fastify": "^5.2.0"
+	},
+	"devDependencies": {
+		"@agentic/shared-tsconfig": "workspace:*",
+		"@types/node": "^22.10.10",
+		"tsup": "^8.3.6",
+		"tsx": "^4.19.2",
+		"typescript": "5.7.2"
+	}
+}

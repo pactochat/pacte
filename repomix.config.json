@@ -1,0 +1,32 @@
+{
+	"output": {
+		"filePath": "repomix_output.md",
+		"style": "markdown",
+		"instructionFilePath": "./prompts/repomix.md",
+		"fileSummary": false,
+		"directoryStructure": false,
+		"removeComments": false,
+		"removeEmptyLines": false,
+		"topFilesLength": 10,
+		"showLineNumbers": false,
+		"copyToClipboard": false,
+		"includeEmptyDirectories": false
+	},
+	"ignore": {
+		"useGitignore": true,
+		"useDefaultPatterns": true,
+		"customPatterns": [
+			"./**/.expo",
+			"./**/.tamagui",
+			"./**/android",
+			"./**/dist",
+			"./**/ios",
+			"./**/public",
+			"./**/tsconfig.tsbuildinfo",
+			"*.log"
+		]
+	},
+	"security": {
+		"enableSecurityCheck": true
+	}
+}
