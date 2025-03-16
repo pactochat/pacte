@@ -1,0 +1,21 @@
+name: pacto_chat_email
+
+services:
+  inbucket:
+    image: inbucket/inbucket:latest
+    environment:
+      - INBUCKET_WEB_ADDR=:9000
+      - INBUCKET_SMTP_ADDR=:2500
+      - INBUCKET_POP3_ADDR=:1100
+      - INBUCKET_STORAGE_PATH=/storage # Where emails are stored
+    ports:
+      - 9000:9000 # Web interface
+      - 2500:2500 # SMTP service
+      - 1100:1100 # POP3 service
+    volumes:
+      - ./config:/config # Optional: Customize greeting.html or other configs
+      - inbucket_storage:/storage # Optional: Persist emails across restarts
+
+volumes:
+  inbucket_storage:
+    name: pacto_chat_email_inbucket_storage

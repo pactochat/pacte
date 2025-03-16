@@ -1,4 +1,4 @@
-name: agentic_db
+name: pacto_chat_db
 
 services:
   db_visualizer:
@@ -39,4 +39,4 @@ services:
 
 volumes:
   pg_data:
-    name: agentic_db_postgres_data
+    name: pacto_chat_db_postgres_data

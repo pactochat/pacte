@@ -1,0 +1,7 @@
+{
+	"imports": {
+		"@std/cli": "jsr:@std/cli@1.0.11",
+		"@std/fmt/colors": "jsr:@std/fmt@1.0.4/colors",
+		"@std/path": "jsr:@std/path@1.0.8"
+	}
+}
