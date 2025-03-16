@@ -6,7 +6,7 @@ export const Entity = S.Struct({
 	id: S.UUID,
 	createdAt: ZonedDateTimeString,
 	updatedAt: S.optional(ZonedDateTimeString),
-}).annotations({ identifier: '@agentic/agents-domain/Entity' })
+}).annotations({ identifier: '@pacto-chat/agents-domain/Entity' })
 export type Entity = S.Schema.Type<typeof Entity>
 
 // // Helper to make fields optional with null/undefined
