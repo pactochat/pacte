@@ -1,14 +1,28 @@
 {
-	"editor.defaultFormatter": "biomejs.biome",
-	"editor.formatOnSave": true,
-	"[typescript]": {
+	"[typescriptreact]": {
 		"editor.defaultFormatter": "biomejs.biome"
 	},
+	"deno.enablePaths": ["scripts/services"],
+	"deno.lint": false,
+	"editor.defaultFormatter": "biomejs.biome",
+	"editor.formatOnSave": true,
+	"explorer.fileNesting.patterns": {
+		"package.json": "package-lock.json, yarn.lock"
+	},
+	"json.schemas": [
+		{
+			"url": "https://cdn.jsdelivr.net/npm/tsup/schema.json",
+			"fileMatch": ["package.json", "tsup.config.json"]
+		}
+	],
 	"search.exclude": {
 		"**/node_modules": true,
+		"**/.tamagui": true,
+		"**/.yarn": true,
 		"**/dist": true,
 		"**/yarn.lock": true
 	},
+	"typescript.enablePromptUseWorkspaceTsdk": true,
 	"typescript.tsdk": "node_modules/typescript/lib",
-	"typescript.enablePromptUseWorkspaceTsdk": true
+	"yaml.customTags": ["!env scalar"]
 }
