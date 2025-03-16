@@ -47,7 +47,26 @@ function scanAllPackages(packagesDir, baseDir) {
 							const relative = path
 								.relative(baseDir, srcFolder)
 								.replace(/\\/g, '/')
-							results[pkgJson.name] = [relative]
+
+							if (pkgJson.exports && typeof pkgJson.exports === 'object') {
+								const hasRootExport = '.' in pkgJson.exports
+								const hasSubpathExports = Object.keys(pkgJson.exports).some(
+									key => key !== '.',
+								)
+
+								// Only add root path if there's a root export or no exports defined
+								if (hasRootExport || !pkgJson.exports) {
+									results[pkgJson.name] = [relative]
+								}
+
+								// Add wildcard path if there are subpath exports
+								if (hasSubpathExports) {
+									results[`${pkgJson.name}/*`] = [`${relative}/*`]
+								}
+							} else {
+								// If no exports field, use default root path
+								results[pkgJson.name] = [relative]
+							}
 						}
 					}
 				} catch {

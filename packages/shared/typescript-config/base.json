@@ -43,14 +43,32 @@
       "node"
     ],
     "paths": {
-      "@agentic/agents-domain": [
+      "@pacto-chat/agents-domain": [
         "../../agents/domain/src"
       ],
-      "@agentic/shared-domain": [
+      "@pacto-chat/shared-domain": [
         "../domain/src"
       ],
-      "@agentic/shared-infra-git-manager": [
-        "../infrastructure/git-manager/src"
+      "@pacto-chat/shared-utils-env": [
+        "../utils/env/src"
+      ],
+      "@pacto-chat/shared-utils-env-frontend": [
+        "../utils/env-frontend/src"
+      ],
+      "@pacto-chat/shared-utils-logging": [
+        "../utils/logging/src"
+      ],
+      "@pacto-chat/shared-ui-core": [
+        "../ui/core/src"
+      ],
+      "@pacto-chat/shared-ui-providers": [
+        "../ui/providers/src"
+      ],
+      "@pacto-chat/shared-ui-core/*": [
+        "../ui/core/src/*"
+      ],
+      "@pacto-chat/shared-ui-localization": [
+        "../ui/localization/src"
       ]
     }
   },

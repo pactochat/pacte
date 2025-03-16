@@ -1,12 +1,15 @@
 {
-	"name": "@agentic/shared-tsconfig",
+	"name": "@pacto-chat/shared-tsconfig",
 	"version": "0.0.1",
 	"description": "Shared tsconfig base for agentic_platform",
 	"type": "module",
 	"exports": {
 		"./base.json": "./base.json",
 		"./node.json": "./node.json",
-		"./paths": "./tsconfig_paths.js"
+		"./paths": "./tsconfig_paths.js",
+		"./ui.json": "./ui.json",
+		"./ui-native.json": "./ui_native.json",
+		"./vite": "./vite-utils.js"
 	},
 	"scripts": {
 		"generate-paths": "node ./generate_monorepo_paths.js"
