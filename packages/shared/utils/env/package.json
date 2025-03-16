@@ -1,0 +1,35 @@
+{
+	"name": "@pacto-chat/shared-utils-env",
+	"version": "0.0.1",
+	"main": "./src/index.ts",
+	"type": "module",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./src/index.ts",
+			"import": {
+				"development": "./src/index.ts",
+				"default": "./dist/index.js"
+			}
+		}
+	},
+	"scripts": {
+		"build": "tsup ./src/index.ts --format esm --dts --out-dir dist --tsconfig tsconfig.json --silent",
+		"check-types": "tsc --noEmit",
+		"watch": "tsc --watch --preserveWatchOutput"
+	},
+	"dependencies": {
+		"@pacto-chat/shared-utils-logging": "workspace:*",
+		"dotenv": "^16.4.5"
+	},
+	"peerDependencies": {
+		"@effect/platform": "^0.69.21",
+		"@effect/platform-node": "^0.64.23",
+		"effect": "^3.12.0"
+	},
+	"devDependencies": {
+		"@pacto-chat/shared-tsconfig": "workspace:*",
+		"tsup": "^8.3.6",
+		"typescript": "5.7.2"
+	}
+}
