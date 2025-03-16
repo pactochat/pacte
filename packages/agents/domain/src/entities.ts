@@ -1,9 +1,9 @@
 import { Schema as S } from 'effect'
 
-import { Entity } from '@agentic/shared-domain'
+import { Entity } from '@pacto-chat/shared-domain'
 
 export class FileVersion extends S.Class<FileVersion>(
-	'@agentic/agents-domain/FileVersion',
+	'@pacto-chat/agents-domain/FileVersion',
 )({
 	...Entity.fields,
 	versionId: S.UUID,
@@ -15,7 +15,7 @@ export const Language = S.Literal('python', 'typescript')
 export type Language = S.Schema.Type<typeof Language>
 
 export class FileInfo extends S.Class<FileInfo>(
-	'@agentic/agents-domain/FileInfo',
+	'@pacto-chat/agents-domain/FileInfo',
 )({
 	...Entity.fields,
 	fileId: S.UUID,
@@ -25,7 +25,7 @@ export class FileInfo extends S.Class<FileInfo>(
 	language: Language,
 }) {}
 
-export class Project extends S.Class<Project>('@agentic/agents-domain/Project')(
+export class Project extends S.Class<Project>('@pacto-chat/agents-domain/Project')(
 	{
 		...Entity.fields,
 		userId: S.UUID,
@@ -42,7 +42,7 @@ export class Project extends S.Class<Project>('@agentic/agents-domain/Project')(
 ) {}
 
 export class PodSettings extends S.Class<PodSettings>(
-	'@agentic/agents-domain/PodSettings',
+	'@pacto-chat/agents-domain/PodSettings',
 )({
 	...Entity.fields,
 	runtimeClass: S.String.pipe(S.minLength(1)), // e.g., "kata"
