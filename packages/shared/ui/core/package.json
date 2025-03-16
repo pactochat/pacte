@@ -1,0 +1,73 @@
+{
+	"name": "@pacto-chat/shared-ui-core",
+	"version": "0.0.1",
+	"main": "./src/index.ts",
+	"type": "module",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./src/index.ts",
+			"import": {
+				"development": "./src/index.ts",
+				"default": "./dist/index.js"
+			}
+		},
+		"./theme": {
+			"types": "./src/theme/index.tsx",
+			"import": {
+				"development": "./src/theme/index.tsx",
+				"default": "./dist/theme/index.js"
+			}
+		},
+		"./components": {
+			"types": "./src/components/index.ts",
+			"import": {
+				"development": "./src/components/index.ts",
+				"default": "./dist/components/index.js"
+			}
+		},
+		"./icons": {
+			"types": "./src/icons/index.ts",
+			"import": {
+				"development": "./src/icons/index.ts",
+				"default": "./dist/icons/index.js"
+			}
+		}
+	},
+	"scripts": {
+		"build": "tsup --format esm --dts --tsconfig tsconfig.json --silent",
+		"clean": "tamagui-build clean",
+		"clean:build": "tamagui-build clean:build",
+		"check-types": "tsc --noEmit",
+		"watch": "tsc --watch --preserveWatchOutput"
+	},
+	"dependencies": {
+		"@tamagui/config": "^1.121.10",
+		"@tamagui/font-inter": "^1.121.10",
+		"@tamagui/helpers-icon": "^1.121.10",
+		"@tamagui/lucide-icons": "^1.121.10",
+		"@tamagui/next-theme": "^1.121.10",
+		"@tamagui/roving-focus": "^1.121.10",
+		"@tamagui/shorthands": "^1.121.10",
+		"@tamagui/themes": "^1.121.10",
+		"@tamagui/use-did-finish-ssr": "^1.121.10",
+		"@tamagui/use-direction": "^1.121.10",
+		"@tamagui/web": "^1.121.10",
+		"tamagui": "^1.121.10"
+	},
+	"peerDependencies": {
+		"react": "18.3.1",
+		"react-native": "0.76.7"
+	},
+	"devDependencies": {
+		"@pacto-chat/shared-tsconfig": "workspace:*",
+		"@tamagui/build": "^1.121.10",
+		"tsup": "^8.3.6",
+		"typescript": "5.7.2"
+	},
+	"peerDependenciesMeta": {
+		"react-native": {
+			"optional": true
+		}
+	}
+}
