@@ -1,0 +1,27 @@
+{
+  debug
+  https_port 443
+  http_port 80
+
+	log {
+    level INFO
+  }
+}
+
+web.pacto.local {
+  reverse_proxy http://localhost:4001
+  tls internal
+
+	log {
+    output file ./caddy_web.log
+  }
+}
+
+api.pacto.local {
+  reverse_proxy http://localhost:4000
+  tls internal
+
+	log {
+    output file ./caddy_api.log
+  }
+}
