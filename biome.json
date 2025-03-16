@@ -57,7 +57,8 @@
 			"./**/dist",
 			"./**/node_modules",
 			"./**/public",
-			"scripts"
+			"./**/scripts",
+			"./services"
 		],
 		"ignoreUnknown": true
 	}

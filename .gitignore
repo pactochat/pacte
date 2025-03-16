@@ -68,3 +68,6 @@ cache/
 
 # Repomix
 repomix_*.md
+
+# Others
+*.log

@@ -14,8 +14,8 @@ export default {
 			isIgnored: true,
 		},
 		{
-			label: 'Agentic',
-			dependencies: ['@agentic/*'],
+			label: 'Pacto Chat',
+			dependencies: ['@pacto-chat/*'],
 			policy: 'sameRange',
 		},
 		{
@@ -30,23 +30,8 @@ export default {
 			policy: 'sameRange',
 		},
 		{
-			label: 'Expo',
-			dependencies: ['expo', 'expo-*', '@expo/*', 'metro'],
-			policy: 'sameRange',
-		},
-		{
 			label: 'Effect',
 			dependencies: ['effec*', '@effect/*'],
-			policy: 'sameRange',
-		},
-		{
-			label: 'PowerSync',
-			dependencies: [
-				'@powersync/*',
-				'@journeyapps/*',
-				'@op-engineering/op-sqlite',
-				'kysel*',
-			],
 			policy: 'sameRange',
 		},
 		{

@@ -9,8 +9,8 @@
 
 - Tamagui +v1.121 for Web & React Native
 - Package structure:
-  - @agentic/shared-ui-core: Exports Tamagui components with custom tokens
-  - @agentic/shared-ui-components: Reusable component library
+  - @pacto-chat/shared-ui-core: Exports Tamagui components with custom tokens
+  - @pacto-chat/shared-ui-components: Reusable component library
 - Always prioritize custom tokens from shared-core for colors, spacing, gap, z-index
 
 ## Repository Structure
