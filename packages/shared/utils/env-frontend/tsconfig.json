@@ -1,7 +1,7 @@
 {
 	"extends": "@pacto-chat/shared-tsconfig/ui.json",
 	"compilerOptions": {
-		"rootDir": "src",
+		"rootDir": "../../../..",
 		"outDir": "dist"
 	},
 	"include": ["src"],

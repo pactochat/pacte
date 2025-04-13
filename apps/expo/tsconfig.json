@@ -1,9 +1,7 @@
 {
-  "extends": "./tsconfig.merged.json",
-  "include": [
-    "**/*.ts",
-    "**/*.tsx",
-    ".expo/types/**/*.ts",
-    "expo-env.d.ts"
-  ]
+	"extends": "@pacto-chat/shared-tsconfig/ui.json",
+	"compilerOptions": {
+		"jsx": "react-native"
+	},
+	"include": ["**/*.ts", "**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }
