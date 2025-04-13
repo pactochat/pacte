@@ -1,7 +1,7 @@
 import { LogLevel } from 'typescript-logging'
 
-import type { LogMessage, MessageFormatter } from '../types.js'
-import { formatArgs } from '../utils.js'
+import type { LogMessage, MessageFormatter } from '../types'
+import { formatArgs } from '../utils'
 
 export const nodeFormatter: MessageFormatter = {
 	formatMessage: (msg: LogMessage) => {

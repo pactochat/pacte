@@ -25,8 +25,6 @@ const logSharedInfra = logShared.getChildCategory('infra')
 export const logSharedInfraUiCore = logSharedInfra.getChildCategory('ui-core')
 export const logSharedInfraUiLocalization =
 	logSharedInfra.getChildCategory('ui-localization')
-export const logSharedInfraUiProviders =
-	logSharedInfra.getChildCategory('ui-providers')
 export const logSharedInfraUiRouting =
 	logSharedInfra.getChildCategory('ui-routing')
 

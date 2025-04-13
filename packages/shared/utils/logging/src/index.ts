@@ -1,10 +1,10 @@
-import { rootProvider } from './categories.js'
-import { nodeFormatter } from './formatters/node.js'
-import { uiFormatter } from './formatters/ui.js'
-import type { LogMessage } from './types.js'
+import { rootProvider } from './categories'
+import { nodeFormatter } from './formatters/node'
+import { uiFormatter } from './formatters/ui'
+import type { LogMessage } from './types'
 
-export * from './effect_logging.js'
-export * from './categories.js'
+export * from './effect_logging'
+export * from './categories'
 
 // // In Node.js: process.versions.node exists
 // // In React Native: process.versions is undefined but global exists

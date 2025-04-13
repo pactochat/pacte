@@ -7,10 +7,9 @@
 	"exports": {
 		".": {
 			"types": "./src/index.ts",
-			"import": {
-				"development": "./src/index.ts",
-				"default": "./dist/index.js"
-			}
+			"import": "./src/index.ts",
+			"require": "./dist/index.js",
+			"web": "./src/index.ts"
 		}
 	},
 	"scripts": {
@@ -23,12 +22,9 @@
 		"typescript-logging-category-style": "^2.2.0"
 	},
 	"peerDependencies": {
-		"effect": "^3.13.7"
+		"effect": "^3.14.8"
 	},
 	"devDependencies": {
-		"@pacto-chat/shared-tsconfig": "workspace:*",
-		"@types/node": "^22.10.10",
-		"tsup": "^8.3.6",
-		"typescript": "5.7.2"
+		"@types/node": "^22.10.10"
 	}
 }
