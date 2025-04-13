@@ -21,7 +21,6 @@
 		"server": "yarn turbo run @pacto-chat/apps-server#start",
 		"web": "yarn workspace @pacto-chat/apps-expo web",
 		"chrome": "\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --remote-debugging-port=9222 &",
-		"generate-paths": "yarn workspace @pacto-chat/shared-tsconfig generate-paths",
 		"______ Build ______": "Build and run the monorepo",
 		"build": "DO_NOT_TRACK=1 TURBO_TELEMETRY_DISABLED=1 turbo run build --verbosity=2",
 		"______ Setup ______": "Project initialization",

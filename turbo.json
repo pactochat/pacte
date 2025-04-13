@@ -3,7 +3,6 @@
 	"tasks": {
 		"build": {
 			"dependsOn": [
-				"generate-paths",
 				"^build"
 			],
 			"inputs": [
@@ -17,8 +16,7 @@
 		},
 		"check-types": {
 			"dependsOn": [
-				"^check-types",
-				"generate-paths"
+				"^check-types"
 			],
 			"outputs": []
 		},

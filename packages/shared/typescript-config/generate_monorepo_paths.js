@@ -15,10 +15,12 @@ function main() {
 	const baseJson = JSON.parse(baseJsonRaw)
 
 	baseJson.compilerOptions ??= {}
-	baseJson.compilerOptions.paths ??= {}
+	// Overwrite paths by resetting to an empty object
+	baseJson.compilerOptions.paths = {}
 
-	for (const [pkgName, [srcPathRelative]] of Object.entries(pkgToSrcPaths)) {
-		baseJson.compilerOptions.paths[pkgName] = [srcPathRelative]
+	// Add paths in alphabetical order
+	for (const pkgName of Object.keys(pkgToSrcPaths).sort()) {
+		baseJson.compilerOptions.paths[pkgName] = pkgToSrcPaths[pkgName]
 	}
 
 	fs.writeFileSync(baseJsonPath, `${JSON.stringify(baseJson, null, 2)}\n`)
