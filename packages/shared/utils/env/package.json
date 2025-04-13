@@ -7,10 +7,9 @@
 	"exports": {
 		".": {
 			"types": "./src/index.ts",
-			"import": {
-				"development": "./src/index.ts",
-				"default": "./dist/index.js"
-			}
+			"import": "./src/index.ts",
+			"require": "./dist/index.js",
+			"web": "./src/index.ts"
 		}
 	},
 	"scripts": {
@@ -19,17 +18,15 @@
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
 	"dependencies": {
-		"@pacto-chat/shared-utils-logging": "workspace:*",
 		"dotenv": "^16.4.5"
 	},
-	"peerDependencies": {
-		"@effect/platform": "^0.69.21",
-		"@effect/platform-node": "^0.64.23",
-		"effect": "^3.12.0"
-	},
 	"devDependencies": {
-		"@pacto-chat/shared-tsconfig": "workspace:*",
-		"tsup": "^8.3.6",
-		"typescript": "5.7.2"
+		"@pacto-chat/shared-utils-logging": "workspace:*"
+	},
+	"peerDependencies": {
+		"@effect/platform": "^0.80.8",
+		"@effect/platform-node": "^0.76.16",
+		"@pacto-chat/shared-utils-logging": "workspace:*",
+		"effect": "^3.14.8"
 	}
 }

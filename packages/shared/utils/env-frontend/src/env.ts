@@ -1,5 +1,5 @@
 import { logSharedUtils } from '@pacto-chat/shared-utils-logging'
-import type { EnvVariables } from './types.js'
+import type { EnvVariables } from './types'
 
 const log = logSharedUtils.getChildCategory('env')
 

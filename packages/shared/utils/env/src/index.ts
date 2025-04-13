@@ -3,7 +3,7 @@ import { NodePath } from '@effect/platform-node'
 import { Effect, Layer } from 'effect'
 
 import { logShared } from '@pacto-chat/shared-utils-logging'
-import { Dotenv } from './dotenv.js'
+import { Dotenv } from './dotenv'
 
 const log = logShared.getChildCategory('utils/env')
 

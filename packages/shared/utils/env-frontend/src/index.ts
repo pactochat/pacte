@@ -1,7 +1,7 @@
-import { WebEnvironment } from './env.js'
-import { NativeEnvironment } from './env.native.js'
-import { isWeb } from './platform.js'
-import type { EnvVariables } from './types.js'
+import { WebEnvironment } from './env'
+import { NativeEnvironment } from './env.native'
+import { isWeb } from './platform'
+import type { EnvVariables } from './types'
 
 export type { EnvVariables }
 
