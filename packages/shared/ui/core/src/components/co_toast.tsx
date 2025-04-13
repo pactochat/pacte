@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { IconX } from '../icons/index.js'
+import { IconX } from '../icons'
 import {
 	AnimatePresence,
 	View,
@@ -8,9 +8,9 @@ import {
 	styled,
 	useTextDirectionality,
 	useTheme,
-} from '../theme/index.js'
-import { CoButtonIcon } from './co_button_icon.js'
-import { CoText } from './co_text.js'
+} from '../theme'
+import { CoButtonIcon } from './co_button_icon'
+import { CoText } from './co_text'
 
 /**
  * Data structure for a toast notification

@@ -7,9 +7,9 @@ import {
 	YStack,
 	styled,
 	withStaticProperties,
-} from '../theme/index.js'
-import { CoSpinner } from './co_spinner.js'
-import { CoText } from './co_text.js'
+} from '../theme'
+import { CoSpinner } from './co_spinner'
+import { CoText } from './co_text'
 
 const CardContainer = styled(CardFrame, {
 	name: 'CoCard',

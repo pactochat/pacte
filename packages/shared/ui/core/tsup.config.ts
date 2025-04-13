@@ -8,12 +8,6 @@ export default defineConfig([
 	// 	dts: true,
 	// },
 	{
-		entry: ['src/theme/index.tsx'],
-		outDir: 'dist/theme',
-		format: ['esm'],
-		dts: true,
-	},
-	{
 		entry: ['src/components/index.ts'],
 		outDir: 'dist/components',
 		format: ['esm'],
@@ -22,6 +16,12 @@ export default defineConfig([
 	{
 		entry: ['src/icons/index.ts'],
 		outDir: 'dist/icons',
+		format: ['esm'],
+		dts: true,
+	},
+	{
+		entry: ['src/theme/index.tsx'],
+		outDir: 'dist/theme',
 		format: ['esm'],
 		dts: true,
 	},

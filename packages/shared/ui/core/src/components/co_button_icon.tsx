@@ -5,12 +5,8 @@
 
 import type { ComponentType } from 'react'
 
-import type { IconProps } from '../icons/index.js'
-import {
-	Button as ButtonTamagui,
-	type TamaguiGetProps,
-	styled,
-} from '../theme/index.js'
+import type { IconProps } from '../icons'
+import { Button as ButtonTamagui, type TamaguiGetProps, styled } from '../theme'
 
 export const CoButtonIcon = ({
 	icon: Icon,

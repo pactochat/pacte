@@ -1,4 +1,4 @@
-import { Spinner } from '../theme/index.js'
+import { Spinner } from '../theme'
 
 interface CoSpinnerProps {
 	size?: 'small' | 'large'

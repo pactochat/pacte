@@ -1,10 +1,6 @@
 import { forwardRef } from 'react'
 
-import {
-	type TamaguiGetProps,
-	Input as TamaguiInput,
-	styled,
-} from '../theme/index.js'
+import { type TamaguiGetProps, Input as TamaguiInput, styled } from '../theme'
 
 /**
  * CoInput component based on Material Design v3 guidelines

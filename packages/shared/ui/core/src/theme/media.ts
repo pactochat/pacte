@@ -4,7 +4,7 @@
 
 import { createMedia } from 'tamagui'
 
-import { breakpoints } from './breakpoints.js'
+import { breakpoints } from './breakpoints'
 
 /**
  * Defines responsive breakpoints for the application.

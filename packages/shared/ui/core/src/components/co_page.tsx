@@ -5,8 +5,8 @@ import {
 	View,
 	YStack,
 	styled,
-} from '../theme/index.js'
-import { CoText } from './co_text.js'
+} from '../theme'
+import { CoText } from './co_text'
 
 /**
  * CoPage component for consistent page layouts.

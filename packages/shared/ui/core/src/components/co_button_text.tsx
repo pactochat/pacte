@@ -4,7 +4,7 @@
 
 import { cloneElement } from 'react'
 
-import type { IconProps } from '../icons/index.js'
+import type { IconProps } from '../icons'
 import {
 	AnimatePresence,
 	ButtonFrame as ButtonFrameTamagui,
@@ -12,8 +12,8 @@ import {
 	Spinner,
 	type TamaguiGetProps,
 	styled,
-} from '../theme/index.js'
-import { CoText } from './co_text.js'
+} from '../theme'
+import { CoText } from './co_text'
 
 /**
  * CoButtonText based on [Material Design](https://m3.material.io/styles/typography/)

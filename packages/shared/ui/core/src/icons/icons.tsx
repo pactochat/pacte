@@ -13,6 +13,8 @@ import {
 	LibraryBig,
 	Monitor,
 	Plus,
+	Send,
+	Settings,
 	Trash,
 	UserRound,
 	X,
@@ -101,6 +103,18 @@ export const IconTrash = ({
 	color = '$primary',
 	...props
 }: IconProps) => <Trash size={size} color={color} {...props} />
+
+export const IconSend = ({
+	size = '$iconLg',
+	color = '$primary',
+	...props
+}: IconProps) => <Send size={size} color={color} {...props} />
+
+export const IconSettings = ({
+	size = '$iconLg',
+	color = '$primary',
+	...props
+}: IconProps) => <Settings size={size} color={color} {...props} />
 
 export const IconUserRound = ({
 	size = '$iconLg',

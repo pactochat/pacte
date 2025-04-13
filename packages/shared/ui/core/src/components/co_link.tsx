@@ -1,6 +1,6 @@
 import type React from 'react'
 
-import { Anchor, type TamaguiTextProps, isWeb, styled } from '../theme/index.js'
+import { Anchor, type TamaguiTextProps, isWeb, styled } from '../theme'
 
 interface LinkProps extends TamaguiTextProps {
 	children: React.ReactNode

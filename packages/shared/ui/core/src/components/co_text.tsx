@@ -5,7 +5,7 @@
 import { forwardRef } from 'react'
 import type { AccessibilityRole, Text as RNText } from 'react-native'
 
-import { type TamaguiTextProps, Text, isWeb, styled } from '../theme/index.js'
+import { type TamaguiTextProps, Text, isWeb, styled } from '../theme'
 
 type CoTextProps = {
 	lowercase?: boolean
