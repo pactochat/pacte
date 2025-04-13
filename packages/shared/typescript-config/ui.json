@@ -13,10 +13,6 @@
 				"name": "@nderscore/tamagui-typescript-plugin",
 				"pathToApp": "apps/web"
 			}
-		],
-		"types": [
-			"vite/client",
-			"node"
 		]
 	}
 }

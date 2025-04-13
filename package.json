@@ -19,7 +19,7 @@
 	"scripts": {
 		"______ Development ______": "Run applications in development mode",
 		"server": "yarn turbo run @pacto-chat/apps-server#start",
-		"web": "yarn turbo run @pacto-chat/apps-web#start",
+		"web": "yarn workspace @pacto-chat/apps-expo web",
 		"chrome": "\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --remote-debugging-port=9222 &",
 		"generate-paths": "yarn workspace @pacto-chat/shared-tsconfig generate-paths",
 		"______ Build ______": "Build and run the monorepo",
@@ -46,14 +46,17 @@
 	"devDependencies": {
 		"@biomejs/biome": "^1.9.3",
 		"@drizzle-team/brocli": "^0.11.0",
+		"@pacto-chat/shared-tsconfig": "workspace:*",
 		"@secretlint/secretlint-rule-preset-recommend": "^9.2.0",
 		"@types/node": "^22.10.10",
+		"effect": "^3.14.8",
+		"react": "18.3.1",
+		"react-native": "0.76.9",
 		"repomix": "^0.2.34",
 		"secretlint": "^9.2.0",
 		"syncpack": "^13.0.2",
 		"tsup": "^8.3.6",
-		"tsx": "^4.19.2",
-		"turbo": "^2.4.1",
+		"turbo": "^2.5.0",
 		"typescript": "5.7.2"
 	},
 	"resolutions": {
