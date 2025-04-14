@@ -7,35 +7,28 @@
 	"exports": {
 		".": {
 			"types": "./src/index.ts",
-			"import": {
-				"development": "./src/index.ts",
-				"default": "./dist/index.js"
-			}
+			"import": "./dist/index.ts",
+			"require": "./dist/index.js",
+			"default": "./dist/index.js"
 		}
 	},
 	"scripts": {
-		"build": "tsup ./src/index.ts --format esm --dts --out-dir dist --tsconfig tsconfig.json --silent",
+		"build": "tsup ./src/index.ts --format esm --dts --out-dir dist --tsconfig tsconfig.json --silent --external react,expo-localization,react-i18next,i18next,@pacto-chat/shared-domain,@pacto-chat/shared-utils-logging",
 		"check-types": "tsc --noEmit",
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
 	"dependencies": {
-		"@pacto-chat/shared-domain": "workspace:*",
-		"@pacto-chat/shared-utils-logging": "workspace:*",
 		"i18next": "^23.12.2",
 		"react-i18next": "^15.0.1"
 	},
+	"devDependencies": {
+		"@pacto-chat/shared-domain": "workspace:*",
+		"@pacto-chat/shared-utils-logging": "workspace:*"
+	},
 	"peerDependencies": {
+		"@pacto-chat/shared-domain": "workspace:*",
+		"@pacto-chat/shared-utils-logging": "workspace:*",
 		"expo-localization": "~16.0.1",
 		"react": "18.3.1"
-	},
-	"devDependencies": {
-		"@pacto-chat/shared-tsconfig": "workspace:*",
-		"tsup": "^8.3.6",
-		"typescript": "5.7.2"
-	},
-	"peerDependenciesMeta": {
-		"expo-localization": {
-			"optional": true
-		}
 	}
 }

@@ -1,51 +1,110 @@
-import i18next, { type InitOptions, type Module } from 'i18next'
+// import * as Localization from 'expo-localization'
+// // 1. First, let's fix the i18n.ts file by updating the imports
+// // packages/shared/ui/localization/src/i18n.ts
+// import i18next from 'i18next'
+// import { initReactI18next } from 'react-i18next'
+
+// import {
+// 	ListSupportedLanguagesCodes,
+// 	ListSupportedLanguagesMapperIso1to3,
+// } from '@pacto-chat/shared-domain'
+// import { resources } from './resources'
+
+// /**
+//  * Detects the device language and converts it to our ISO 639-3 format
+//  */
+// export function detectLanguage(): ListSupportedLanguagesCodes {
+// 	try {
+// 		// Get device locale (works in both web and native)
+// 		const locales = Localization.getLocales()
+// 		const locale = locales[0]?.languageCode || 'en'
+
+// 		// Use just the language code part (in case it's something like 'en-US')
+// 		const languageCode = (locale.split('-')[0] ?? 'en').toLowerCase()
+
+// 		// Convert from ISO 639-1 to our ISO 639-3 format
+// 		const iso3Code =
+// 			ListSupportedLanguagesMapperIso1to3[
+// 				languageCode as keyof typeof ListSupportedLanguagesMapperIso1to3
+// 			]
+
+// 		// If we don't support this language, fall back to English
+// 		return iso3Code || ListSupportedLanguagesCodes.eng
+// 	} catch (error) {
+// 		console.warn('Failed to detect device language:', error)
+// 		return ListSupportedLanguagesCodes.eng
+// 	}
+// }
+
+// const i18n = i18next.use(initReactI18next).init({
+// 	resources,
+// 	lng: detectLanguage(),
+// 	fallbackLng: ListSupportedLanguagesCodes.eng,
+// 	interpolation: {
+// 		escapeValue: false, // React already escapes by default
+// 	},
+// 	react: {
+// 		useSuspense: false, // Disable Suspense to avoid issues
+// 	},
+// })
+
+// // Utility function to change language
+// export const changeLanguage = (language: ListSupportedLanguagesCodes) => {
+// 	return i18next.changeLanguage(language)
+// }
+// export default i18next
+
+import * as Localization from 'expo-localization'
+import i18next from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
-import { ListSupportedLanguagesCodes } from '@pacto-chat/shared-domain'
-import { detectDeviceLanguage } from './language_detector/index.js'
-import { resources } from './resources.js'
+import {
+	ListSupportedLanguagesCodes,
+	ListSupportedLanguagesMapperIso1to3,
+} from '@pacto-chat/shared-domain'
+import { languages } from './languages'
 
 /**
- * Changes the current language of the i18n instance.
- * If no language is provided, detects the device language.
- * Falls back to English if no supported language is found.
+ * Detects the device language and converts it to our ISO 639-3 format
  */
-export const changeLanguage = async (
-	language?: ListSupportedLanguagesCodes,
-) => {
-	const targetLanguage = language ?? detectDeviceLanguage()
-	return i18next.changeLanguage(targetLanguage)
+export function detectLanguage(): ListSupportedLanguagesCodes {
+	try {
+		// Get device locale (works in both web and native)
+		const locales = Localization.getLocales()
+		const locale = locales[0]?.languageCode || 'en'
+
+		// Use just the language code part (in case it's something like 'en-US')
+		const languageCode = (locale.split('-')[0] ?? 'en').toLowerCase()
+
+		// Convert from ISO 639-1 to our ISO 639-3 format
+		const iso3Code =
+			ListSupportedLanguagesMapperIso1to3[
+				languageCode as keyof typeof ListSupportedLanguagesMapperIso1to3
+			]
+
+		// If we don't support this language, fall back to English
+		return iso3Code || ListSupportedLanguagesCodes.eng
+	} catch (error) {
+		console.warn('Failed to detect language:', error)
+		return ListSupportedLanguagesCodes.eng
+	}
 }
 
-/**
- * Creates a new i18n instance with optional plugins and config.
- * Uses the provided language in customOptions.lng if specified, otherwise
- * auto-detects the device/browser language.
- */
-export const initLocalization = async (
-	plugins: Module[] = [],
-	customOptions: Partial<
-		Omit<InitOptions, 'lng'> & { lng?: ListSupportedLanguagesCodes }
-	> = {},
-) => {
-	const defaultOptions: InitOptions = {
-		fallbackLng: ListSupportedLanguagesCodes.eng,
-		lng: customOptions.lng ?? detectDeviceLanguage(),
-		ns: ['common'],
-		resources,
-		supportedLngs: Object.values(ListSupportedLanguagesCodes),
-	}
+const i18n = i18next.use(initReactI18next).init({
+	resources: languages,
+	lng: detectLanguage(),
+	fallbackLng: ListSupportedLanguagesCodes.eng,
+	interpolation: {
+		escapeValue: false, // React already escapes by default
+	},
+	react: {
+		useSuspense: false, // Disable Suspense to avoid issues
+	},
+})
 
-	i18next.use(initReactI18next)
-
-	for (const plugin of plugins) {
-		i18next.use(plugin)
-	}
-
-	await i18next.init({
-		...defaultOptions,
-		...customOptions,
-	})
-
-	return i18next
+// Utility function to change language
+export const changeLanguage = (language: ListSupportedLanguagesCodes) => {
+	return i18next.changeLanguage(language)
 }
+
+export default i18n

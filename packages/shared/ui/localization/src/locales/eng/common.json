@@ -1,1 +1,7 @@
-{}
+{
+	"misc": {
+		"txt": {
+			"loading": "Loading..."
+		}
+	}
+}
