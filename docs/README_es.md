@@ -1,10 +1,10 @@
-# PactoChat
+# Pacte
 
 **Inglés**: Para la versión en inglés de este README, consulta [`README`](../README.md).
 
 ## Resumen
 
-Este repositorio define **PactoChat**, una plataforma de chat integral basada en IA, diseñada para empoderar a **gobiernos e instituciones locales** con capacidades de toma de decisiones seguras y basadas en datos. Utilizando datos regionales, PactoChat facilita la planificación y la toma de decisiones, incluso con la misma calidad que los gobiernos centrales y organizaciones supranacionales como la OMS o la ONU. El sistema se basa en un **servidor Node.js Fastify**, una **interfaz de chat multiplataforma** (web y móvil nativa a través de Expo), un **orquestador LangChain** para flujos de trabajo multiagente y **rastreadores de datos** para recopilar y procesar información regional.
+Este repositorio define **Pacte**, una plataforma de chat integral basada en IA, diseñada para empoderar a **gobiernos e instituciones locales** con capacidades de toma de decisiones seguras y basadas en datos. Utilizando datos regionales, Pacte facilita la planificación y la toma de decisiones, incluso con la misma calidad que los gobiernos centrales y organizaciones supranacionales como la OMS o la ONU. El sistema se basa en un **servidor Node.js Fastify**, una **interfaz de chat multiplataforma** (web y móvil nativa a través de Expo), un **orquestador LangChain** para flujos de trabajo multiagente y **rastreadores de datos** para recopilar y procesar información regional.
 
 Los componentes clave incluyen:
 

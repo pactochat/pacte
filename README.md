@@ -1,10 +1,10 @@
-# PactoChat
+# Pacte Xat
 
 **Español**: For the Spanish version of this README, see [`README`](./docs/README_es.md).
 
 ## Overview
 
-This repository defines **PactoChat**, a full-stack AI-driven chat platform built to empower **local governments and institutions** with secure, data-driven decision-making capabilities. Using regional data, PactoChat enables planning and decisions as good as—or better than—central governments and supranational organizations like the WHO or UN. The system is powered by a **Node.js Fastify server**, a **cross-platform chat interface** (web and native mobile via Expo), a **LangChain orchestrator** for multi-agent workflows, and **data crawlers** to gather and process regional information.
+This repository defines **Pacte**, a full-stack AI-driven chat platform built to empower **local governments and institutions** with secure, data-driven decision-making capabilities. Using regional data, Pacte enables planning and decisions as good as—or better than—central governments and supranational organizations like the WHO or UN. The system is powered by a **Node.js Fastify server**, a **cross-platform chat interface** (web and native mobile via Expo), a **LangChain orchestrator** for multi-agent workflows, and **data crawlers** to gather and process regional information.
 
 Key components include:
 
