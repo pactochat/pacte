@@ -57,6 +57,13 @@ const dmSans = createFont({
 		500: 'DMSans-Medium',
 		700: 'DMSans-Bold',
 	},
+
+	// For native platforms, specify different font files based on weight and style
+	face: {
+		400: { normal: 'DMSans-Regular', italic: 'DMSans-Italic' },
+		500: { normal: 'DMSans-Medium', italic: 'DMSans-MediumItalic' },
+		700: { normal: 'DMSans-Bold', italic: 'DMSans-BoldItalic' },
+	},
 })
 
 const literata = createFont({
@@ -103,6 +110,13 @@ const literata = createFont({
 		400: 'Literata-Regular',
 		500: 'Literata-Medium',
 		700: 'Literata-Bold',
+	},
+
+	// For native platforms, specify different font files based on weight and style
+	face: {
+		400: { normal: 'Literata-Regular', italic: 'Literata-Italic' },
+		500: { normal: 'Literata-Medium', italic: 'Literata-MediumItalic' },
+		700: { normal: 'Literata-Bold', italic: 'Literata-BoldItalic' },
 	},
 })
 
