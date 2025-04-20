@@ -4,10 +4,9 @@ import { createTamagui, createTokens, setupDev } from 'tamagui'
 
 import { animations } from './animations'
 import { borderRadii } from './border_radii'
-import { themeDark, themeLight } from './colors'
+import { themes } from './colors'
 import { fonts } from './fonts'
 import { iconSizes } from './icon_sizes'
-import { imageSizes } from './image_sizes'
 import { media, pageConstraints } from './media'
 import { gap, spacing } from './spacing'
 import { zIndices } from './z_indices'
@@ -27,7 +26,6 @@ export const ThemeName = {
 } as const
 export type ThemeName = keyof typeof ThemeName
 
-const imageSize = { ...imageSizes, true: imageSizes.image40 }
 const radius = {
 	...defaultConfig.tokens.radius,
 	...borderRadii,
@@ -45,30 +43,17 @@ const zIndex = {
 	true: zIndices.default,
 }
 
-const themes =
-	process.env.TAMAGUI_TARGET !== 'web' ||
-	process.env.TAMAGUI_IS_SERVER ||
-	process.env.STORYBOOK
-		? defaultConfig.themes
-		: ({} as typeof defaultConfig.themes)
-
 export const tamaguiConfig = createTamagui({
 	...defaultConfig,
-	...themes,
 	animations,
-	defaultFont: 'body',
 	fonts,
-	image: imageSize,
 	media,
-	shorthands,
-	themes: {
-		[ThemeName.light]: themeLight,
-		[ThemeName.dark]: themeDark,
-	},
+	shorthands: {},
+	themes,
 	tokens: createTokens({
 		...defaultConfig.tokens,
 		color: {
-			true: themeLight.onBackground,
+			true: themes.light.onBackground,
 		},
 		iconSizes,
 		radius,
@@ -79,8 +64,18 @@ export const tamaguiConfig = createTamagui({
 		space,
 		zIndex,
 	}),
-	themeClassNameOnRoot: true,
+	settings: {
+		defaultFont: 'body',
+		shouldAddPrefersColorThemes: true,
+		themeClassNameOnRoot: true,
+	},
 })
 
 // For Babel in Expo app
 export default tamaguiConfig
+
+export type CustomTamaguiConfigType = typeof tamaguiConfig
+
+declare module 'tamagui' {
+	interface TamaguiCustomConfig extends CustomTamaguiConfigType {}
+}
