@@ -19,13 +19,10 @@ type CoParagraphProps = {
 /**
  * CoParagraph component for paragraph text
  */
-export const CoParagraph = ({
-	color = '$onBackground',
-	...props
-}: CoParagraphProps) => (
+export const CoParagraph = (props: CoParagraphProps) => (
 	<Base
 		{...props}
-		color={color}
+		color={props.color ?? '$onSurface'}
 		// For RN compatibility, use 'accessibilityRole' instead of 'role'
 		{...(isWeb ? {} : { accessibilityRole: props.role as AccessibilityRole })}
 	/>
@@ -35,7 +32,6 @@ const Base = styled(Text, {
 	name: 'CoParagraph',
 	tag: 'p',
 
-	color: '$onBackground',
 	whiteSpace: 'normal',
 
 	variants: {

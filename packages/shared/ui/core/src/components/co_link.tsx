@@ -16,7 +16,7 @@ export const CoLink = ({
 	...props
 }: LinkProps) => (
 	<StyledAnchor
-		color='$onBackground'
+		color='$onSurface'
 		// Syntax conditionally includes the href prop only when href is defined and disabled is false.
 		// It ensures that href is either a string or completely omitted.
 		{...(!disabled && href ? { href } : {})}

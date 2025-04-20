@@ -4,6 +4,7 @@
 
 import { cloneElement } from 'react'
 
+import { getTokens } from 'tamagui'
 import type { IconProps } from '../icons'
 import {
 	AnimatePresence,
@@ -62,7 +63,7 @@ export const CoButtonText = ({
 			{icon && !isLoading ? (
 				<ButtonTamagui.Icon>
 					{cloneElement(icon, {
-						size: 'iconLg',
+						size: getTokens().iconSizes.iconLg.val,
 					})}
 				</ButtonTamagui.Icon>
 			) : null}

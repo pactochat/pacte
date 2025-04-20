@@ -2,8 +2,7 @@
  * Inspired in https://tamagui.dev/ui/headings and https://github.com/status-im/status-web/blob/main/packages/components/src/text/text.tsx
  */
 
-import { forwardRef } from 'react'
-import type { AccessibilityRole, Text as RNText } from 'react-native'
+import type { AccessibilityRole } from 'react-native'
 
 import { type TamaguiTextProps, Text, isWeb, styled } from '../theme'
 
@@ -15,27 +14,21 @@ type CoTextProps = {
 	wrap?: false
 } & TamaguiTextProps
 
-type CoTextRef = RNText | HTMLElement
-
 /**
  * CoText based on Material Design https://m3.material.io/styles/typography/
  */
-export const CoText = forwardRef<CoTextRef, CoTextProps>(
-	({ color = '$onBackground', ...props }, ref) => (
-		<Base
-			ref={ref}
-			{...props}
-			color={color}
-			// For RN compatibility, use 'accessibilityRole' instead of 'role'
-			{...(isWeb ? {} : { accessibilityRole: props.role as AccessibilityRole })}
-		/>
-	),
+export const CoText = (props: CoTextProps) => (
+	<Base
+		{...props}
+		color={props.color ?? '$onSurface'}
+		// For RN compatibility, use 'accessibilityRole' instead of 'role'
+		{...(isWeb ? {} : { accessibilityRole: props.role as AccessibilityRole })}
+	/>
 )
 
 const Base = styled(Text, {
 	name: 'CoText',
 
-	color: '$onBackground',
 	whiteSpace: 'normal',
 
 	variants: {

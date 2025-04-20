@@ -53,7 +53,7 @@ export const tamaguiConfig = createTamagui({
 	tokens: createTokens({
 		...defaultConfig.tokens,
 		color: {
-			true: themes.light.onBackground,
+			true: themes.light.onSurface,
 		},
 		iconSizes,
 		radius,

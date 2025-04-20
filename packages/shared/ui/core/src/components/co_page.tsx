@@ -47,7 +47,7 @@ export const CoPage = ({
 						justifyContent='center'
 						narrow='small'
 					>
-						<CoText color='$onBackground'>{t('misc.txt.loading')}</CoText>
+						<CoText>{t('misc.txt.loading')}</CoText>
 					</ContentContainer>
 				</ContentWrapper>
 			</Base>
@@ -66,11 +66,9 @@ export const CoPage = ({
 						narrow='small'
 					>
 						{typeof error === 'string' ? (
-							<CoText color='$onBackground'>{error}</CoText>
+							<CoText>{error}</CoText>
 						) : (
-							<CoText color='$onBackground'>
-								{t('misc.err.something_went_wrong')}
-							</CoText>
+							<CoText>{t('misc.err.something_went_wrong')}</CoText>
 						)}
 					</ContentContainer>
 				</ContentWrapper>
@@ -97,7 +95,8 @@ type CoPageProps = BaseProps & {
 
 const Base = styled(View, {
 	name: 'CoPage',
-	backgroundColor: '$background',
+
+	backgroundColor: '$surface',
 	display: 'flex',
 	flexDirection: 'column',
 	minHeight: '100%',
@@ -123,6 +122,7 @@ type BaseProps = TamaguiGetProps<typeof Base>
 
 const ContentWrapper = styled(YStack, {
 	name: 'CoPage-ContentWrapper',
+
 	flex: 1,
 	width: '100%',
 	variants: {
@@ -140,6 +140,7 @@ const ContentWrapper = styled(YStack, {
 
 const ContentContainer = styled(YStack, {
 	name: 'CoPage-ContentContainer',
+
 	width: '100%',
 	variants: {
 		narrow: {
