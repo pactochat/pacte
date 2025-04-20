@@ -1,0 +1,90 @@
+/**
+ * CoParagraph component based on Tamagui Paragraph
+ * https://tamagui.dev/docs/components/text
+ */
+
+import React from 'react'
+import type { AccessibilityRole } from 'react-native'
+
+import { type TamaguiTextProps, Text, isWeb, styled } from '../theme'
+
+type CoParagraphProps = {
+	lowercase?: boolean
+	select?: false
+	truncate?: boolean
+	uppercase?: boolean
+	wrap?: false
+} & TamaguiTextProps
+
+/**
+ * CoParagraph component for paragraph text
+ */
+export const CoParagraph = ({
+	color = '$onBackground',
+	...props
+}: CoParagraphProps) => (
+	<Base
+		{...props}
+		color={color}
+		// For RN compatibility, use 'accessibilityRole' instead of 'role'
+		{...(isWeb ? {} : { accessibilityRole: props.role as AccessibilityRole })}
+	/>
+)
+
+const Base = styled(Text, {
+	name: 'CoParagraph',
+	tag: 'p',
+
+	color: '$onBackground',
+	whiteSpace: 'normal',
+
+	variants: {
+		'body-l': {
+			true: {
+				fontFamily: '$body',
+				fontSize: '$body-l',
+				fontWeight: '400',
+				letterSpacing: '$body-l',
+				tag: 'p',
+			},
+		},
+		'body-m': {
+			true: {
+				fontFamily: '$body',
+				fontSize: '$body-m',
+				fontWeight: '400',
+				letterSpacing: '$body-m',
+				tag: 'p',
+			},
+		},
+		bold: {
+			true: {
+				fontWeight: '700',
+			},
+		},
+		lowercase: {
+			true: {
+				textTransform: 'lowercase',
+			},
+		},
+		uppercase: {
+			true: {
+				textTransform: 'uppercase',
+			},
+		},
+		wrap: {
+			false: {
+				whiteSpace: 'nowrap',
+			},
+		},
+		ellipsis: {
+			true: {
+				ellipsis: true,
+			},
+		},
+	} as const,
+
+	defaultVariants: {
+		'body-m': true,
+	},
+})
