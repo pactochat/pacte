@@ -1,7 +1,7 @@
 # environment variables
 .env
 .env.*
-!.env.local
+.env.*.example
 !.env.example
 
 # compiled output
@@ -56,8 +56,9 @@ Thumbs.db
 *.key
 *.mobileprovision
 *.orig.*
-web-build/
-cache/
+web-build
+cache
+.cache
 
 # Ignore TLS/SSL certificates and keys
 *.crt

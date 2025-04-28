@@ -2,29 +2,17 @@
 	"$schema": "https://turbo.build/schema.json",
 	"tasks": {
 		"build": {
-			"dependsOn": [
-				"^build"
-			],
-			"inputs": [
-				"$TURBO_DEFAULT$",
-				".env*"
-			],
-			"outputs": [
-				"dist/**/*",
-				"types/**/*"
-			]
+			"dependsOn": ["generate-paths", "^build"],
+			"inputs": ["$TURBO_DEFAULT$", ".env*"],
+			"outputs": ["dist/**/*", "types/**/*"]
 		},
 		"check-types": {
-			"dependsOn": [
-				"^check-types"
-			],
+			"dependsOn": ["generate-paths", "^check-types"],
 			"outputs": []
 		},
 		"generate-paths": {
 			"cache": false,
-			"outputs": [
-				"packages/shared/typescript-config/base.json"
-			]
+			"outputs": ["packages/shared/typescript-config/base.json"]
 		},
 		"start": {
 			"cache": false,

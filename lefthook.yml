@@ -14,7 +14,7 @@ pre-commit:
     check-deps:
       run: |
         echo "📦 Running dependency version consistency checks..."
-        yarn check-sync
+        yarn check-deps
     check-types:
       run: |
         echo "🔍 Running type checks..."

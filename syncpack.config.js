@@ -35,11 +35,6 @@ export default {
 			policy: 'sameRange',
 		},
 		{
-			label: 'Supertokens',
-			dependencies: ['supertoken*'],
-			policy: 'sameRange',
-		},
-		{
 			label: 'Tamagui',
 			dependencies: ['tamagu*', '@tamagui/*'],
 			policy: 'sameRange',
