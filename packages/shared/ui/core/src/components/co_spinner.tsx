@@ -1,4 +1,4 @@
-import { Spinner } from '../theme'
+import { Spinner } from 'tamagui'
 
 interface CoSpinnerProps {
 	size?: 'small' | 'large'

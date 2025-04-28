@@ -4,9 +4,9 @@
  */
 
 import type { ComponentType } from 'react'
+import { Button as ButtonTamagui, type GetProps, styled } from 'tamagui'
 
 import type { IconProps } from '../icons'
-import { Button as ButtonTamagui, type TamaguiGetProps, styled } from '../theme'
 
 export const CoButtonIcon = ({
 	icon: Icon,
@@ -31,18 +31,6 @@ const Base = styled(ButtonTamagui, {
 	name: 'CoButtonIcon',
 
 	size: 40,
-	// cursor: "pointer",
-	// userSelect: "none",
-	// borderRadius: "$10",
-	// display: "flex",
-	// alignItems: "center",
-	// justifyContent: "center",
-	// padding: 4,
-	// width: 40,
-	// height: 40,
-	// borderWidth: 1,
-	// borderColor: "transparent",
-	// animation: "fast",
 
 	variants: {
 		filled: {
@@ -143,4 +131,4 @@ const Base = styled(ButtonTamagui, {
 		standard: true,
 	},
 })
-type BaseProps = TamaguiGetProps<typeof Base>
+type BaseProps = GetProps<typeof Base>

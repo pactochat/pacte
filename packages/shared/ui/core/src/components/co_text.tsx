@@ -3,8 +3,7 @@
  */
 
 import type { AccessibilityRole } from 'react-native'
-
-import { type TamaguiTextProps, Text, isWeb, styled } from '../theme'
+import { Text, type TextProps, isWeb, styled } from 'tamagui'
 
 type CoTextProps = {
 	lowercase?: boolean
@@ -12,7 +11,7 @@ type CoTextProps = {
 	truncate?: boolean
 	uppercase?: boolean
 	wrap?: false
-} & TamaguiTextProps
+} & TextProps
 
 /**
  * CoText based on Material Design https://m3.material.io/styles/typography/
@@ -129,16 +128,6 @@ const Base = styled(Text, {
 				whiteSpace: 'nowrap',
 			},
 		},
-		// truncate: {
-		// 	true: {
-		// 		overflow: 'hidden',
-		// 		textOverflow: 'ellipsis',
-		// 		whiteSpace: 'nowrap',
-		// 		wordWrap: 'normal',
-		// 		maxWidth: '100%',
-		// 		minWidth: 0,
-		// 	},
-		// },
 		ellipsis: {
 			true: {
 				ellipsis: true,

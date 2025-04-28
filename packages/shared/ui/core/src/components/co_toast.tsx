@@ -1,14 +1,8 @@
 import { useEffect, useState } from 'react'
+import { AnimatePresence, View, XStack, styled } from 'tamagui'
 
 import { IconX } from '../icons'
-import {
-	AnimatePresence,
-	View,
-	XStack,
-	styled,
-	useTextDirectionality,
-	useTheme,
-} from '../theme'
+import { useTextDirectionality } from '../theme'
 import { CoButtonIcon } from './co_button_icon'
 import { CoText } from './co_text'
 
@@ -166,7 +160,6 @@ export const useToastState = () => {
  */
 export const CoToastViewport = () => {
 	const toast = useToastState()
-	const theme = useTheme()
 	const toastController = useToast()
 	const startPosition = useTextDirectionality('left')
 
@@ -176,20 +169,6 @@ export const CoToastViewport = () => {
 	const enterX = startPosition === 'left' ? -20 : 20
 	const exitX = startPosition === 'left' ? 20 : -20
 
-	let backgroundColor: string
-	let textColor: string
-
-	switch (toast.state) {
-		case 'error':
-			backgroundColor = theme.errorContainer?.get()
-			textColor = theme.onErrorContainer?.get()
-			break
-		default:
-			backgroundColor = theme.surfaceContainer?.get()
-			textColor = theme.onSurface?.get()
-			break
-	}
-
 	const handleClose = () => {
 		toastController.hide()
 	}
@@ -198,8 +177,7 @@ export const CoToastViewport = () => {
 		<AnimatePresence>
 			<PositionWrapper key={toast.id} place={startPosition}>
 				<ToastContainer
-					backgroundColor={backgroundColor}
-					borderColor={backgroundColor}
+					type={toast.state === 'error' ? 'error' : 'default'}
 					animation='fast'
 					enterStyle={{ opacity: 0, x: enterX }}
 					exitStyle={{ opacity: 0, x: exitX }}
@@ -212,7 +190,14 @@ export const CoToastViewport = () => {
 						justifyContent='space-between'
 						width='100%'
 					>
-						<CoText color={textColor} body-m numberOfLines={0} flexShrink={1}>
+						<CoText
+							color={
+								toast.state === 'error' ? '$onErrorContainer' : '$onSurface'
+							}
+							body-m
+							numberOfLines={0}
+							flexShrink={1}
+						>
 							{toast.text}
 						</CoText>
 						<CoButtonIcon
@@ -244,6 +229,7 @@ export const CoToastViewport = () => {
 // Positioning wrapper
 const PositionWrapper = styled(View, {
 	name: 'ToastPositionWrapper',
+
 	position: 'absolute',
 	top: '$spacingLg',
 	zIndex: '$tooltip',
@@ -255,11 +241,11 @@ const PositionWrapper = styled(View, {
 				right: 'auto',
 			},
 			right: {
-				right: '$spacingLg',
 				left: 'auto',
+				right: '$spacingLg',
 			},
 		},
-	},
+	} as const,
 	defaultVariants: {
 		place: 'left',
 	},
@@ -272,16 +258,28 @@ const PositionWrapper = styled(View, {
 const ToastContainer = styled(View, {
 	name: 'CoToast',
 
-	display: 'flex',
-	flexDirection: 'row',
-
-	paddingHorizontal: '$spacingMd',
-	paddingVertical: '$spacingSm',
 	borderRadius: '$roundedSm',
 	borderWidth: 1,
+	display: 'flex',
+	flexDirection: 'row',
+	paddingHorizontal: '$spacingMd',
+	paddingVertical: '$spacingSm',
 	maxWidth: 300,
 	shadowColor: '$outlineVariant',
 	shadowRadius: 4,
 	shadowOffset: { width: 0, height: 2 },
 	shadowOpacity: 0.2,
+
+	variants: {
+		type: {
+			error: {
+				backgroundColor: '$errorContainer',
+				borderColor: '$onErrorContainer',
+			},
+			default: {
+				backgroundColor: '$surfaceContainerLow',
+				borderColor: '$onSurface',
+			},
+		},
+	} as const,
 })

@@ -1,8 +1,7 @@
 import type React from 'react'
+import { Anchor, type TextProps, isWeb, styled } from 'tamagui'
 
-import { Anchor, type TamaguiTextProps, isWeb, styled } from '../theme'
-
-interface LinkProps extends TamaguiTextProps {
+interface LinkProps extends TextProps {
 	children: React.ReactNode
 	href?: string
 	onPress?: () => void

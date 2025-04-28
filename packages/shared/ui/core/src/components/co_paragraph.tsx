@@ -3,10 +3,8 @@
  * https://tamagui.dev/docs/components/text
  */
 
-import React from 'react'
 import type { AccessibilityRole } from 'react-native'
-
-import { type TamaguiTextProps, Text, isWeb, styled } from '../theme'
+import { Text, type TextProps, isWeb, styled } from 'tamagui'
 
 type CoParagraphProps = {
 	lowercase?: boolean
@@ -14,7 +12,7 @@ type CoParagraphProps = {
 	truncate?: boolean
 	uppercase?: boolean
 	wrap?: false
-} & TamaguiTextProps
+} & TextProps
 
 /**
  * CoParagraph component for paragraph text

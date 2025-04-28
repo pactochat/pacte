@@ -1,13 +1,14 @@
-import { useTranslation } from '@pacto-chat/shared-ui-localization'
 import {
 	CardFrame,
 	CardHeader,
-	type TamaguiTextProps,
+	type TextProps,
 	XStack,
 	YStack,
 	styled,
 	withStaticProperties,
-} from '../theme'
+} from 'tamagui'
+
+import { useTranslation } from '@pacto-chat/shared-ui-localization'
 import { CoSpinner } from './co_spinner'
 import { CoText } from './co_text'
 
@@ -16,8 +17,6 @@ const CardContainer = styled(CardFrame, {
 
 	backgroundColor: '$surfaceContainer',
 	borderRadius: '$roundedMd',
-	// minWidth: '$page.pageWidthMin',
-	// maxWidth: '$page.pageWidthMax',
 	padding: '$spacingSm',
 	paddingBottom: '$spacingMd',
 	unstyled: true,
@@ -31,7 +30,7 @@ const CardContainer = styled(CardFrame, {
 	},
 })
 
-interface CoCardHeaderProps extends TamaguiTextProps {
+interface CoCardHeaderProps extends TextProps {
 	children: string
 }
 

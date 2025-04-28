@@ -3,17 +3,17 @@
  */
 
 import { cloneElement } from 'react'
-
-import { getTokens } from 'tamagui'
-import type { IconProps } from '../icons'
 import {
 	AnimatePresence,
 	ButtonFrame as ButtonFrameTamagui,
 	Button as ButtonTamagui,
+	type GetProps,
 	Spinner,
-	type TamaguiGetProps,
+	getTokenValue,
 	styled,
-} from '../theme'
+} from 'tamagui'
+
+import type { IconProps } from '../icons'
 import { CoText } from './co_text'
 
 /**
@@ -63,7 +63,7 @@ export const CoButtonText = ({
 			{icon && !isLoading ? (
 				<ButtonTamagui.Icon>
 					{cloneElement(icon, {
-						size: getTokens().iconSizes.iconLg.val,
+						size: getTokenValue('$iconSizes.iconLg', '$iconSizes'),
 					})}
 				</ButtonTamagui.Icon>
 			) : null}
@@ -91,14 +91,14 @@ const Base = styled(ButtonFrameTamagui, {
 	variants: {
 		filled: {
 			true: {
-				bc: '$primaryContainer',
+				backgroundColor: '$primaryContainer',
 				color: '$onPrimaryContainer',
 				hoverStyle: {
-					bc: '$primaryContainer',
+					backgroundColor: '$primaryContainer',
 					opacity: 0.88,
 				},
 				pressStyle: {
-					bc: '$primaryContainer',
+					backgroundColor: '$primaryContainer',
 					opacity: 0.76,
 				},
 			},
@@ -111,21 +111,21 @@ const Base = styled(ButtonFrameTamagui, {
 		},
 		filledTonal: {
 			true: {
-				bc: '$secondaryContainer',
+				backgroundColor: '$secondaryContainer',
 				color: '$onSecondaryContainer',
 				hoverStyle: {
-					bc: '$secondaryContainer',
+					backgroundColor: '$secondaryContainer',
 					opacity: 0.92,
 				},
 				pressStyle: {
-					bc: '$secondaryContainer',
+					backgroundColor: '$secondaryContainer',
 					opacity: 0.84,
 				},
 			},
 		},
 		filledTonalDisabled: {
 			true: {
-				bc: '$secondaryContainer',
+				backgroundColor: '$secondaryContainer',
 				color: '$onSecondaryContainer',
 				opacity: 0.3,
 				disabled: true,
@@ -133,17 +133,17 @@ const Base = styled(ButtonFrameTamagui, {
 		},
 		outlined: {
 			true: {
-				bc: 'transparent',
+				backgroundColor: 'transparent',
 				borderWidth: 1,
 				borderColor: '$primary',
 				color: '$primary',
-				hoverStyle: { bc: '$surfaceContainer' },
-				pressStyle: { bc: '$surfaceContainerHigh' },
+				hoverStyle: { backgroundColor: '$surfaceContainer' },
+				pressStyle: { backgroundColor: '$surfaceContainerHigh' },
 			},
 		},
 		outlinedDisabled: {
 			true: {
-				bc: 'transparent',
+				backgroundColor: 'transparent',
 				borderWidth: 1,
 				borderColor: '$surfaceContainerHighest',
 				color: '$surfaceContainerHighest',
@@ -152,15 +152,15 @@ const Base = styled(ButtonFrameTamagui, {
 		},
 		text: {
 			true: {
-				bc: 'transparent',
+				backgroundColor: 'transparent',
 				color: '$primary',
-				hoverStyle: { bc: '$surfaceContainerHigh' },
-				pressStyle: { bc: '$surfaceContainerHighest' },
+				hoverStyle: { backgroundColor: '$surfaceContainerHigh' },
+				pressStyle: { backgroundColor: '$surfaceContainerHighest' },
 			},
 		},
 		textDisabled: {
 			true: {
-				bc: 'transparent',
+				backgroundColor: 'transparent',
 				color: '$primary',
 				opacity: 0.4,
 				disabled: true,
@@ -189,4 +189,4 @@ const Base = styled(ButtonFrameTamagui, {
 		fullWidth: false, // Default is not full-width
 	},
 })
-type BaseProps = TamaguiGetProps<typeof Base>
+type BaseProps = GetProps<typeof Base>

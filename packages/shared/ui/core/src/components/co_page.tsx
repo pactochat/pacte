@@ -1,21 +1,18 @@
+import { type GetProps, View, YStack, styled } from 'tamagui'
+
 import { useTranslation } from '@pacto-chat/shared-ui-localization'
-import {
-	DEFAULT_BOTTOM_FREE_SPACE,
-	type TamaguiGetProps,
-	View,
-	YStack,
-	styled,
-} from '../theme'
+import { DEFAULT_BOTTOM_FREE_SPACE } from '../theme'
 import { CoText } from './co_text'
 
 /**
  * CoPage component for consistent page layouts.
  * Provides responsive sizing and flexible content alignment.
- * When a title is provided, it's always positioned at the top-start of the page.
+ * When a title is provided, it's positioned at the top of the content area
+ * and follows the same width constraints as the content.
  *
  * @component
  * @example
- * <CoPage centered="vertical" narrow="small" title="My Page">
+ * <CoPage narrow="small" title="My Page">
  *   ...
  * </CoPage>
  */
@@ -25,14 +22,14 @@ export const CoPage = ({
 	isLoading,
 	narrow,
 	title,
-	centered, // Explicitly destructure centered
+	centered = 'horizontal',
 	...props
 }: CoPageProps) => {
 	const { t } = useTranslation()
 
 	// Common title rendering component
 	const renderTitle = title && (
-		<YStack width='100%' paddingBottom='$gapMd'>
+		<YStack paddingBottom='$gapMd'>
 			<CoText display-m>{title}</CoText>
 		</YStack>
 	)
@@ -40,13 +37,13 @@ export const CoPage = ({
 	if (isLoading) {
 		return (
 			<Base {...props} centered={centered}>
-				{renderTitle}
 				<ContentWrapper centered='both'>
 					<ContentContainer
 						alignItems='center'
 						justifyContent='center'
 						narrow='small'
 					>
+						{renderTitle}
 						<CoText>{t('misc.txt.loading')}</CoText>
 					</ContentContainer>
 				</ContentWrapper>
@@ -57,7 +54,6 @@ export const CoPage = ({
 	if (error) {
 		return (
 			<Base {...props} centered={centered}>
-				{renderTitle}
 				<ContentWrapper centered='both'>
 					<ContentContainer
 						alignItems='center'
@@ -65,6 +61,7 @@ export const CoPage = ({
 						justifyContent='center'
 						narrow='small'
 					>
+						{renderTitle}
 						{typeof error === 'string' ? (
 							<CoText>{error}</CoText>
 						) : (
@@ -78,9 +75,11 @@ export const CoPage = ({
 
 	return (
 		<Base {...props} centered={centered}>
-			{renderTitle}
 			<ContentWrapper centered={centered}>
-				<ContentContainer narrow={narrow ?? 'big'}>{children}</ContentContainer>
+				<ContentContainer narrow={narrow ?? 'big'}>
+					{renderTitle}
+					{children}
+				</ContentContainer>
 			</ContentWrapper>
 		</Base>
 	)
@@ -91,6 +90,7 @@ type CoPageProps = BaseProps & {
 	isLoading?: boolean
 	narrow?: 'big' | 'none' | 'small'
 	title?: string
+	centered?: 'both' | 'horizontal' | 'none' | 'vertical'
 }
 
 const Base = styled(View, {
@@ -117,8 +117,7 @@ const Base = styled(View, {
 		centered: 'horizontal',
 	},
 })
-
-type BaseProps = TamaguiGetProps<typeof Base>
+type BaseProps = GetProps<typeof Base>
 
 const ContentWrapper = styled(YStack, {
 	name: 'CoPage-ContentWrapper',
