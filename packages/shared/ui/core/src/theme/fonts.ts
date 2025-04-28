@@ -1,4 +1,4 @@
-import { createFont, isWeb } from '@tamagui/core'
+import { createFont, isWeb } from 'tamagui'
 
 export const fontSize = {
 	'display-m': 38,
@@ -13,7 +13,7 @@ export const fontSize = {
 } as const
 
 const dmSans = createFont({
-	family: isWeb ? '"DM Sans", sans-serif' : 'DMSans',
+	family: isWeb ? '"DM Sans", sans-serif' : 'System',
 
 	size: {
 		'display-m': 38,
@@ -53,21 +53,21 @@ const dmSans = createFont({
 
 	// Remember to update the font-weight in the index.html file and Expo app.
 	weight: {
-		400: 'DMSans-Regular',
-		500: 'DMSans-Medium',
-		700: 'DMSans-Bold',
+		400: 'DMSans',
+		500: 'DMSansMedium',
+		700: 'DMSansBold',
 	},
 
 	// For native platforms, specify different font files based on weight and style
 	face: {
-		400: { normal: 'DMSans-Regular', italic: 'DMSans-Italic' },
-		500: { normal: 'DMSans-Medium', italic: 'DMSans-MediumItalic' },
-		700: { normal: 'DMSans-Bold', italic: 'DMSans-BoldItalic' },
+		400: { normal: 'DMSans', italic: 'DMSansItalic' },
+		500: { normal: 'DMSansMedium', italic: 'DMSansMediumItalic' },
+		700: { normal: 'DMSansBold', italic: 'DMSansBoldItalic' },
 	},
 })
 
 const literata = createFont({
-	family: isWeb ? '"Literata", Georgia, serif' : 'Literata',
+	family: isWeb ? '"Literata", Georgia, serif' : 'System',
 
 	size: {
 		'display-m': 38,
@@ -107,16 +107,16 @@ const literata = createFont({
 
 	// Remember to update the font-weight in the index.html file and Expo app.
 	weight: {
-		400: 'Literata-Regular',
-		500: 'Literata-Medium',
-		700: 'Literata-Bold',
+		400: 'Literata',
+		500: 'LiterataMedium',
+		700: 'LiterataBold',
 	},
 
 	// For native platforms, specify different font files based on weight and style
 	face: {
-		400: { normal: 'Literata-Regular', italic: 'Literata-Italic' },
-		500: { normal: 'Literata-Medium', italic: 'Literata-MediumItalic' },
-		700: { normal: 'Literata-Bold', italic: 'Literata-BoldItalic' },
+		400: { normal: 'Literata', italic: 'LiterataItalic' },
+		500: { normal: 'LiterataMedium', italic: 'LiterataMediumItalic' },
+		700: { normal: 'LiterataBold', italic: 'LiterataBoldItalic' },
 	},
 })
 
