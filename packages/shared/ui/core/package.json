@@ -37,29 +37,20 @@
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
 	"dependencies": {
-		"@tamagui/config": "^1.121.10",
-		"@tamagui/font-inter": "^1.121.10",
-		"@tamagui/helpers-icon": "^1.121.10",
-		"@tamagui/lucide-icons": "^1.121.10",
-		"@tamagui/next-theme": "^1.121.10",
-		"@tamagui/roving-focus": "^1.121.10",
-		"@tamagui/shorthands": "^1.121.10",
-		"@tamagui/themes": "^1.121.10",
-		"@tamagui/use-did-finish-ssr": "^1.121.10",
-		"@tamagui/use-direction": "^1.121.10",
-		"@tamagui/web": "^1.121.10",
-		"jotai": "^2.11.3",
-		"tamagui": "^1.121.10"
+		"@tamagui/animations-css": "^1.126.1",
+		"@tamagui/animations-moti": "^1.126.1",
+		"@tamagui/config": "^1.126.1",
+		"@tamagui/helpers-icon": "^1.126.1",
+		"@tamagui/lucide-icons": "^1.126.1",
+		"@tamagui/use-direction": "^1.126.1",
+		"moti": "^0.30.0"
 	},
 	"peerDependencies": {
 		"@pacto-chat/shared-domain": "workspace:*",
 		"@pacto-chat/shared-ui-localization": "workspace:*",
 		"react": "18.3.1",
-		"react-native": "0.76.9"
-	},
-	"devDependencies": {
-		"@pacto-chat/shared-domain": "workspace:*",
-		"@pacto-chat/shared-ui-localization": "workspace:*",
-		"@tamagui/build": "^1.121.10"
+		"react-native": "0.76.9",
+		"react-native-reanimated": "~3.16.1",
+		"tamagui": "^1.126.1"
 	}
 }
