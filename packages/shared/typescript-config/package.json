@@ -8,7 +8,6 @@
 		"./node.json": "./node.json",
 		"./paths": "./tsconfig_paths.js",
 		"./ui.json": "./ui.json",
-		"./ui-native.json": "./ui_native.json",
 		"./vite": "./vite-utils.js"
 	},
 	"scripts": {

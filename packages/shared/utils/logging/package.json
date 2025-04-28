@@ -6,14 +6,14 @@
 	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
-			"types": "./src/index.ts",
-			"import": "./src/index.ts",
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.ts",
 			"require": "./dist/index.js",
-			"web": "./src/index.ts"
+			"web": "./dist/index.ts"
 		}
 	},
 	"scripts": {
-		"build": "tsup ./src/index.ts --format esm --dts --out-dir dist --tsconfig tsconfig.json --silent",
+		"build": "tsdown ./src/index.ts --dts --sourcemap --platform neutral --clean --silent",
 		"check-types": "tsc --noEmit",
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
@@ -23,8 +23,5 @@
 	},
 	"peerDependencies": {
 		"effect": "^3.14.8"
-	},
-	"devDependencies": {
-		"@types/node": "^22.10.10"
 	}
 }

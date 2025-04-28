@@ -1,37 +1,38 @@
 {
 	"name": "@pacto-chat/shared-ui-core",
 	"version": "0.0.1",
+	"main": "./dist/index.js",
 	"type": "module",
+	"types": "./dist/index.d.ts",
+	"module": "./dist/index.js",
 	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.js",
+			"default": "./dist/index.js"
+		},
 		"./components": {
-			"types": "./src/components/index.ts",
+			"types": "./dist/components/index.d.ts",
 			"import": "./dist/components/index.js",
 			"require": "./dist/components/index.js",
 			"default": "./dist/components/index.js"
 		},
 		"./icons": {
-			"types": "./src/icons/index.ts",
+			"types": "./dist/icons/index.d.ts",
 			"import": "./dist/icons/index.js",
 			"require": "./dist/icons/index.js",
-			"default": "./dist/components/index.js"
-		},
-		"./providers": {
-			"types": "./src/providers/index.ts",
-			"import": "./dist/providers/index.js",
-			"require": "./dist/providers/index.js",
-			"default": "./dist/providers/index.js"
+			"default": "./dist/icons/index.js"
 		},
 		"./theme": {
-			"types": "./src/theme/index.tsx",
+			"types": "./dist/theme/index.d.ts",
 			"import": "./dist/theme/index.js",
 			"require": "./dist/theme/index.js",
 			"default": "./dist/theme/index.js"
 		}
 	},
 	"scripts": {
-		"build": "tsup --format esm --dts --tsconfig tsconfig.json --silent",
-		"clean": "tamagui-build clean",
-		"clean:build": "tamagui-build clean:build",
+		"build": "tsdown --config tsdown.config.ts --dts --sourcemap --platform neutral --clean --silent",
 		"check-types": "tsc --noEmit",
 		"watch": "tsc --watch --preserveWatchOutput"
 	},

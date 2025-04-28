@@ -31,3 +31,14 @@ export const logSharedInfraUiRouting =
 // Apps
 export const logAppServer = logApps.getChildCategory('server')
 export const logAppWeb = logApps.getChildCategory('web')
+export const logAppExpo = logApps.getChildCategory('expo')
+
+// Expo subcategories
+export const logExpoAuth = logAppExpo.getChildCategory('auth')
+export const logExpoAuthenticated =
+	logExpoAuth.getChildCategory('authenticated')
+export const logExpoAuthComponents = logExpoAuth.getChildCategory('components')
+export const logExpoAuthHelpers = logExpoAuth.getChildCategory('helpers')
+
+// Expo pages
+export const logExpoPagesAuth = logAppExpo.getChildCategory('pages.auth')

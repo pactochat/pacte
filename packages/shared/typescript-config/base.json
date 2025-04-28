@@ -9,11 +9,12 @@
 		"sourceMap": true,
 		"module": "ESNext",
 		"moduleResolution": "bundler",
-		"resolveJsonModule": true,
-		"allowJs": true,
-		"importHelpers": true,
-		"composite": false,
 		"target": "ES2022",
+		"resolveJsonModule": true,
+		"allowJs": false,
+		"importHelpers": true,
+		"baseUrl": ".",
+		"composite": true,
 		"alwaysStrict": true,
 		"moduleDetection": "force",
 		"exactOptionalPropertyTypes": true,
@@ -37,17 +38,17 @@
 		"allowSyntheticDefaultImports": true,
 		"skipDefaultLibCheck": true,
 		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true
+		"forceConsistentCasingInFileNames": true,
+		"paths": {
+			"@pacto-chat/agents-domain": ["../../agents/domain/src"],
+			"@pacto-chat/shared-domain": ["../domain/src"],
+			"@pacto-chat/shared-ui-core": ["../ui/core/src"],
+			"@pacto-chat/shared-ui-core/*": ["../ui/core/src/*"],
+			"@pacto-chat/shared-ui-localization": ["../ui/localization/src"],
+			"@pacto-chat/shared-utils-env": ["../utils/env/src"],
+			"@pacto-chat/shared-utils-logging": ["../utils/logging/src"]
+		}
 	},
-	"exclude": [
-		"node_modules",
-		"dist"
-	],
-	"include": [
-		"src",
-		"types.d.ts"
-	],
-	"types": [
-		"node"
-	]
+	"exclude": ["node_modules", "dist"],
+	"types": ["node"]
 }
