@@ -1,10 +1,10 @@
-import { Schema } from 'effect'
+import { Schema as S } from 'effect'
 
 import { ZonedDateTimeString } from './datetime'
 
-export const Entity = Schema.Struct({
-	id: Schema.UUID,
+export const Entity = S.Struct({
+	id: S.UUID,
 	createdAt: ZonedDateTimeString,
-	updatedAt: Schema.optional(ZonedDateTimeString),
+	updatedAt: S.optional(ZonedDateTimeString),
 }).annotations({ identifier: '@pacto-chat/shared-domain/Entity' })
 export type Entity = typeof Entity.Type
