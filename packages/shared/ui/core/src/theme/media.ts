@@ -2,8 +2,6 @@
  * Copied from https://github.com/Uniswap/interface/blob/main/packages/ui/src/theme/media.ts
  */
 
-import { createMedia } from 'tamagui'
-
 import { breakpoints } from './breakpoints'
 
 /**
@@ -11,7 +9,7 @@ import { breakpoints } from './breakpoints'
  *
  * `gt` means "greater than"
  */
-export const media = createMedia({
+export const media = {
 	// xs: { maxWidth: 599 },
 	// sm: { minWidth: 600, maxWidth: 959 },
 	// md: { minWidth: 960, maxWidth: 1279 },
@@ -38,7 +36,9 @@ export const media = createMedia({
 	gtXxxl: { minWidth: breakpoints.xxxl + 1 },
 	// short: { maxHeight: heightBreakpoints.short },
 	// midHeight: { maxHeight: heightBreakpoints.midHeight },
-})
+	hoverNone: { hover: 'none' },
+	pointerCoarse: { pointer: 'coarse' },
+} as const
 
 export const pageConstraints = {
 	widthMaxXxs: breakpoints.xxs,

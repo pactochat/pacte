@@ -1,5 +1,4 @@
 import { defaultConfig } from '@tamagui/config/v4'
-import { shorthands } from '@tamagui/shorthands'
 import { createTamagui, createTokens, setupDev } from 'tamagui'
 
 import { animations } from './animations'
@@ -66,16 +65,15 @@ export const tamaguiConfig = createTamagui({
 	}),
 	settings: {
 		defaultFont: 'body',
-		shouldAddPrefersColorThemes: true,
-		themeClassNameOnRoot: true,
+		// shouldAddPrefersColorThemes: true,
+		// themeClassNameOnRoot: true,
 	},
 })
 
 // For Babel in Expo app
 export default tamaguiConfig
 
-export type CustomTamaguiConfigType = typeof tamaguiConfig
-
-declare module 'tamagui' {
-	interface TamaguiCustomConfig extends CustomTamaguiConfigType {}
-}
+// export type CustomTamaguiConfigType = typeof tamaguiConfig
+// declare module 'tamagui' {
+// 	interface TamaguiCustomConfig extends CustomTamaguiConfigType {}
+// }
