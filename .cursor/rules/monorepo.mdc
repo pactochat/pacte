@@ -1,3 +1,8 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
 ## Tech Stack
 
 À la ChatGPT web and app powered by React Native Expo.
@@ -21,5 +26,5 @@
 
 - Try to keep the comments and docs in the code.
 - For UI tasks
- 	- use start-end before left-right terms to support ltr/rtl when Tamagui allows it.
- 	- apply some accessibility best practices
+	- use start-end before left-right terms to support ltr/rtl when Tamagui allows it.
+	- apply some accessibility best practices
