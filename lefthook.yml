@@ -15,10 +15,12 @@ pre-commit:
       run: |
         echo "📦 Running dependency version consistency checks..."
         yarn check-deps
+      stage_fixed: true
     check-types:
       run: |
         echo "🔍 Running type checks..."
         yarn check-types
+      stage_fixed: true
     generate-paths:
       run: |
         echo "🔄 Updating TypeScript paths..."
