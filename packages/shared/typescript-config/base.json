@@ -11,7 +11,7 @@
 		"moduleResolution": "bundler",
 		"target": "ES2022",
 		"resolveJsonModule": true,
-		"allowJs": false,
+		"allowJs": true,
 		"importHelpers": true,
 		"baseUrl": ".",
 		"composite": true,
@@ -40,15 +40,34 @@
 		"skipLibCheck": true,
 		"forceConsistentCasingInFileNames": true,
 		"paths": {
-			"@pacto-chat/agents-domain": ["../../agents/domain/src"],
-			"@pacto-chat/shared-domain": ["../domain/src"],
-			"@pacto-chat/shared-ui-core": ["../ui/core/src"],
-			"@pacto-chat/shared-ui-core/*": ["../ui/core/src/*"],
-			"@pacto-chat/shared-ui-localization": ["../ui/localization/src"],
-			"@pacto-chat/shared-utils-env": ["../utils/env/src"],
-			"@pacto-chat/shared-utils-logging": ["../utils/logging/src"]
+			"@pacto-chat/agents-domain": [
+				"../../agents/domain/src"
+			],
+			"@pacto-chat/shared-domain": [
+				"../domain/src"
+			],
+			"@pacto-chat/shared-ui-core": [
+				"../ui/core/src"
+			],
+			"@pacto-chat/shared-ui-core/*": [
+				"../ui/core/src/*"
+			],
+			"@pacto-chat/shared-ui-localization": [
+				"../ui/localization/src"
+			],
+			"@pacto-chat/shared-utils-env": [
+				"../utils/env/src"
+			],
+			"@pacto-chat/shared-utils-logging": [
+				"../utils/logging/src"
+			]
 		}
 	},
-	"exclude": ["node_modules", "dist"],
-	"types": ["node"]
+	"exclude": [
+		"node_modules",
+		"dist"
+	],
+	"types": [
+		"node"
+	]
 }

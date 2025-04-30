@@ -20,14 +20,9 @@ export default {
 		},
 		{
 			label: 'React',
-			dependencies: [
-				'@tanstack/react-router',
-				'@types/react*',
-				'react',
-				'react-dom',
-				'react-native',
-			],
+			dependencies: ['@types/react*', 'react', 'react-dom', 'react-native'],
 			policy: 'sameRange',
+			// isIgnored: true,
 		},
 		{
 			label: 'Effect',
@@ -37,6 +32,11 @@ export default {
 		{
 			label: 'Tamagui',
 			dependencies: ['tamagu*', '@tamagui/*'],
+			policy: 'sameRange',
+		},
+		{
+			label: 'PayloadCMS',
+			dependencies: ['@payloadcms/*', 'payload'],
 			policy: 'sameRange',
 		},
 	],

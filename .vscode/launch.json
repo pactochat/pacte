@@ -31,6 +31,26 @@
 				"group": "server",
 				"order": 2
 			}
+		},
+		{
+			"name": "Marketing: Next.js debug",
+			"type": "node",
+			"request": "launch",
+			"program": "${workspaceFolder}/apps/marketing/node_modules/next/dist/bin/next",
+			"runtimeArgs": ["--inspect"],
+			"skipFiles": ["<node_internals>/**"],
+			"serverReadyAction": {
+				"action": "debugWithChrome",
+				"killOnServerStop": true,
+				"pattern": "- Local:.+(https?://.+)",
+				"uriFormat": "%s",
+				"webRoot": "${workspaceFolder}/apps/marketing"
+			},
+			"cwd": "${workspaceFolder}/apps/marketing",
+			"presentation": {
+				"group": "marketing",
+				"order": 1
+			}
 		}
 	]
 }

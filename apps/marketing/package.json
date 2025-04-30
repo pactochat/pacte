@@ -1,0 +1,45 @@
+{
+	"name": "@pacto-chat/apps-marketing",
+	"version": "0.1.0",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "cross-env NODE_OPTIONS=--no-deprecation next build",
+		"dev": "cross-env NODE_OPTIONS=--no-deprecation next dev",
+		"devsafe": "rm -rf .next && cross-env NODE_OPTIONS=--no-deprecation next dev",
+		"generate:importmap": "cross-env NODE_OPTIONS=--no-deprecation payload generate:importmap",
+		"generate:types": "cross-env NODE_OPTIONS=--no-deprecation payload generate:types",
+		"payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+		"start": "cross-env NODE_OPTIONS=--no-deprecation next start"
+	},
+	"dependencies": {
+		"@pacto-chat/shared-ui-core": "workspace:*",
+		"@payloadcms/db-postgres": "3.36.0",
+		"@payloadcms/email-resend": "^3.36.0",
+		"@payloadcms/next": "3.36.0",
+		"@payloadcms/payload-cloud": "3.36.0",
+		"@payloadcms/plugin-form-builder": "^3.36.0",
+		"@payloadcms/richtext-lexical": "3.36.0",
+		"@tamagui/next-theme": "^1.126.1",
+		"@tamagui/polyfill-dev": "^1.126.1",
+		"cross-env": "^7.0.3",
+		"graphql": "^16.8.1",
+		"next": "15.2.3",
+		"payload": "3.36.0",
+		"react": "18.3.1",
+		"react-dom": "18.3.1",
+		"react-native": "0.76.9",
+		"react-native-reanimated": "~3.16.1",
+		"react-native-web": "0.20.0",
+		"sharp": "0.32.6",
+		"tamagui": "^1.126.1"
+	},
+	"devDependencies": {
+		"@tamagui/next-plugin": "^1.126.1",
+		"@types/node": "^22.10.10",
+		"@types/react": "~18.3.12",
+		"@types/react-dom": "18.3.1",
+		"typescript": "5.7.2",
+		"webpack": "^5.99.7"
+	}
+}
