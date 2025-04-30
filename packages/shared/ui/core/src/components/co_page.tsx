@@ -1,4 +1,4 @@
-import { type GetProps, View, YStack, styled } from 'tamagui'
+import { type GetProps, ScrollView, View, YStack, styled } from 'tamagui'
 
 import { useTranslation } from '@pacto-chat/shared-ui-localization'
 import { DEFAULT_BOTTOM_FREE_SPACE } from '../theme'
@@ -74,14 +74,16 @@ export const CoPage = ({
 	}
 
 	return (
-		<Base {...props} centered={centered}>
-			<ContentWrapper centered={centered}>
-				<ContentContainer narrow={narrow ?? 'big'}>
-					{renderTitle}
-					{children}
-				</ContentContainer>
-			</ContentWrapper>
-		</Base>
+		<ScrollView>
+			<Base {...props} centered={centered}>
+				<ContentWrapper centered={centered}>
+					<ContentContainer narrow={narrow ?? 'big'}>
+						{renderTitle}
+						{children}
+					</ContentContainer>
+				</ContentWrapper>
+			</Base>
+		</ScrollView>
 	)
 }
 
