@@ -8,9 +8,11 @@ import {
 	Check,
 	ChevronDown,
 	ChevronUp,
+	CircleX,
 	Globe,
 	LayoutGrid,
 	LibraryBig,
+	LogOut,
 	Monitor,
 	Plus,
 	Send,
@@ -50,6 +52,12 @@ export const IconBookText = ({
 	...props
 }: IconProps) => <BookText size={size} color={color} {...props} />
 
+export const IconCircleX = ({
+	size = '$iconLg',
+	color = '$primary',
+	...props
+}: IconProps) => <CircleX size={size} color={color} {...props} />
+
 export const IconCheck = ({
 	size = '$iconLg',
 	color = '$primary',
@@ -74,17 +82,23 @@ export const IconGlobe = ({
 	...props
 }: IconProps) => <Globe size={size} color={color} {...props} />
 
+export const IconLayoutGrid = ({
+	size = '$iconLg',
+	color = '$primary',
+	...props
+}: IconProps) => <LayoutGrid size={size} color={color} {...props} />
+
 export const IconLibraryBig = ({
 	size = '$iconLg',
 	color = '$primary',
 	...props
 }: IconProps) => <LibraryBig size={size} color={color} {...props} />
 
-export const IconLayoutGrid = ({
+export const IconLogOut = ({
 	size = '$iconLg',
 	color = '$primary',
 	...props
-}: IconProps) => <LayoutGrid size={size} color={color} {...props} />
+}: IconProps) => <LogOut size={size} color={color} {...props} />
 
 export const IconMonitor = ({
 	size = '$iconLg',

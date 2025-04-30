@@ -4,7 +4,8 @@
 		"jsx": "react-native",
 		"baseUrl": ".",
 		"paths": {
-			"@components": ["./src/components/index.ts"]
+			"~components": ["./src/components/index.ts"],
+			"~hooks": ["./src/hooks/index.ts"]
 		}
 	},
 	"include": ["src", ".expo/types/**/*.ts", "expo-env.d.ts", "types.d.ts"],

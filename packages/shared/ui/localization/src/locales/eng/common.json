@@ -3,5 +3,78 @@
 		"txt": {
 			"loading": "Loading..."
 		}
+	},
+	"pages": {
+		"login": {
+			"title": "Sign In",
+			"plh": {
+				"email": "Email"
+			},
+			"btn": {
+				"access": "Continue",
+				"create_account": "Create Account"
+			},
+			"txt": {
+				"no_account": "Don't have an account?"
+			},
+			"err": {
+				"not_allowed": "This email is not allowed to sign in",
+				"login_failed": "Failed to sign in. Please try again",
+				"restart_flow": "Your session has expired. Please try signing in again"
+			}
+		},
+		"login_verification": {
+			"title": "Verify Email",
+			"txt": {
+				"otc_in_email": "Please enter the verification code sent to {{email}}",
+				"resend_code": "Didn't receive the code?",
+				"auto_verifying": "Verifying..."
+			},
+			"btn": {
+				"verify": "Verify Code",
+				"resend_code": "Resend Code",
+				"go_to_login": "Back to Sign In"
+			},
+			"err": {
+				"no_email_navigate_to_login": "No email address provided. Please try signing in again",
+				"no_email_passed_in_url": "No email address provided",
+				"no_otp_to_verify": "No verification code to verify",
+				"expired_otc": "Verification code has expired",
+				"incorrect_otc": "Incorrect verification code",
+				"not_allowed": "This email is not allowed to sign in",
+				"verification_failed": "Failed to verify code. Please try again",
+				"resend_failed": "Failed to resend code. Please try again"
+			}
+		},
+		"settings": {
+			"title": "Settings",
+			"appearance": {
+				"title": "Appearance",
+				"dark_mode": "Dark Mode",
+				"theme": {
+					"light": "Light",
+					"dark": "Dark",
+					"system": "System"
+				}
+			},
+			"account": {
+				"title": "Account",
+				"language": "Language",
+				"language_updated": "Language updated successfully",
+				"language_update_failed": "Failed to update language",
+				"email": "Email",
+				"email_verified": "Email verified",
+				"email_not_verified": "Email not verified",
+				"last_sign_in": "Last Sign In",
+				"never": "Never",
+				"created_at": "Account Created",
+				"updated_at": "Last Updated",
+				"sign_out_all_sessions": "Sign Out All Sessions",
+				"sessions_revoked": "All sessions have been revoked",
+				"sessions_revoke_failed": "Failed to revoke sessions",
+				"delete_account": "Delete Account",
+				"delete_failed": "Failed to delete account"
+			}
+		}
 	}
 }

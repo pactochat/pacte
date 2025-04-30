@@ -7,6 +7,7 @@ import { ScrollViewStyleReset } from 'expo-router/html'
 export default function Root({ children }: { children: React.ReactNode }) {
 	return (
 		<html lang='en'>
+			{/* <head style={{ backgroundColor: '#F09458' }}> */}
 			<head>
 				<meta charSet='utf-8' />
 				<meta httpEquiv='X-UA-Compatible' content='IE=edge' />
@@ -14,6 +15,9 @@ export default function Root({ children }: { children: React.ReactNode }) {
 					name='viewport'
 					content='width=device-width, initial-scale=1, shrink-to-fit=no'
 				/>
+				<meta name='mobile-web-app-capable' content='yes' />
+				<meta name='apple-mobile-web-app-title' content='Pacte' />
+				{/* <meta name='theme-color' content='#F09458' /> */}
 
 				{/* 
           Disable body scrolling on web. This makes ScrollView components work closer to how they do on native. 
@@ -21,22 +25,26 @@ export default function Root({ children }: { children: React.ReactNode }) {
         */}
 				<ScrollViewStyleReset />
 
-				{/* Using raw CSS styles as an escape-hatch to ensure the background color never flickers in dark-mode. */}
+				{/*
+				Using raw CSS styles as an escape-hatch to ensure the background color never flickers in dark-mode.
+				And support SSR https://tamagui.dev/docs/core/configuration
+				*/}
+
 				{/* biome-ignore lint/security/noDangerouslySetInnerHtml: <explanation> */}
-				<style dangerouslySetInnerHTML={{ __html: responsiveBackground }} />
-				{/* Add any additional <head> elements that you want globally available on web... */}
+				{/* <style dangerouslySetInnerHTML={{ __html: responsiveBackground }} /> */}
+				{/* <style dangerouslySetInnerHTML={{ __html: tamaguiConfig.getCSS() }} /> */}
 			</head>
 			<body>{children}</body>
 		</html>
 	)
 }
 
-const responsiveBackground = `
-body {
-  background-color: #fff;
-}
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #000;
-  }
-}`
+// const responsiveBackground = `
+// body {
+//   background-color: #fff;
+// }
+// @media (prefers-color-scheme: dark) {
+//   body {
+//     background-color: #000;
+//   }
+// }`

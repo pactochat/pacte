@@ -1,132 +1,84 @@
 /**
  * Documentation at https://docs.expo.io/guides/customizing-metro
  */
-
 const { getDefaultConfig } = require('expo/metro-config')
 const path = require('node:path')
-const fs = require('node:fs')
+// const { FileStore } = require('metro-cache')
+const getMonorepoPackages = require('./utils_metro.cjs')
+const {
+	wrapWithReanimatedMetroConfig,
+} = require('react-native-reanimated/metro-config')
+const { withTamagui } = require('@tamagui/metro-plugin')
 
-/**
- * Scans all packages in the monorepo and returns their paths for Metro configuration
- * @param {string} baseDir - The base directory to scan from (usually __dirname)
- * @returns {Object} - Object with package names as keys and their source paths as values
- */
-function getMonorepoPackages(baseDir) {
-	const packagesDir = path.resolve(baseDir, '../../packages')
-	const results = {}
+const projectRoot = __dirname
+const monorepoRoot = path.resolve(projectRoot, '../..')
+const srcPath = path.resolve(projectRoot, 'src')
 
-	function visit(dir) {
-		const entries = fs.readdirSync(dir, { withFileTypes: true })
-		for (const entry of entries) {
-			const entryPath = path.join(dir, entry.name)
-			if (entry.isDirectory()) {
-				visit(entryPath)
-			} else if (entry.name === 'package.json') {
-				const pkgJsonStr = fs.readFileSync(entryPath, 'utf-8')
-				try {
-					const pkgJson = JSON.parse(pkgJsonStr)
-					if (pkgJson.name) {
-						const pkgFolder = path.dirname(entryPath)
-						const srcFolder = path.join(pkgFolder, 'src')
+// Initialize Metro config with Expo's default
+// const config = getDefaultConfig(projectRoot)
+const config = getDefaultConfig(projectRoot, {
+	// [Web-only]: Enables CSS support in Metro.
+	isCSSEnabled: true,
+})
 
-						// Only process if src folder exists
-						if (fs.existsSync(srcFolder)) {
-							// Always add the base package path for subpath resolution
-							results[pkgJson.name] = srcFolder
+const monorepoPackages = getMonorepoPackages(projectRoot)
 
-							// Handle exports field if it exists
-							if (pkgJson.exports && typeof pkgJson.exports === 'object') {
-								const subpathExports = Object.keys(pkgJson.exports).filter(
-									key => key !== '.' && !key.includes('*'),
-								)
+console.log('Registered monorepo packages:', Object.keys(monorepoPackages))
 
-								// Add specific subpath exports
-								for (const subpath of subpathExports) {
-									const exportPath = pkgJson.exports[subpath]
-									let targetPath
-
-									// Handle different export formats
-									if (typeof exportPath === 'string') {
-										targetPath = exportPath
-									} else if (typeof exportPath === 'object') {
-										// Try to find the appropriate export condition
-										// Priority: development -> default -> first available
-										targetPath =
-											exportPath.development ||
-											exportPath.default ||
-											Object.values(exportPath)[0]
-									}
-
-									if (targetPath) {
-										// Clean up the subpath and target path
-										const cleanSubpath = subpath.replace(/^\.\//, '')
-										const resolvedPath = path.join(
-											pkgFolder,
-											targetPath.replace(/^\.\//, ''),
-										)
-										// Add both the full subpath and the directory path
-										results[`${pkgJson.name}/${cleanSubpath}`] = resolvedPath
-
-										// Add the directory path without the file
-										const dirPath = path.dirname(resolvedPath)
-										const subpathDir = cleanSubpath.split('/')[0]
-										results[`${pkgJson.name}/${subpathDir}`] = path.join(
-											srcFolder,
-											subpathDir,
-										)
-									}
-								}
-
-								// Handle wildcard exports if any exist
-								const wildcardExports = Object.keys(pkgJson.exports).filter(
-									key => key.includes('*'),
-								)
-								for (const wildcard of wildcardExports) {
-									const basePath = wildcard.replace('*', '')
-									const cleanBasePath = basePath
-										.replace(/^\.\//, '')
-										.replace(/\/$/, '')
-									results[`${pkgJson.name}/${cleanBasePath}`] = path.join(
-										srcFolder,
-										cleanBasePath,
-									)
-									results[`${pkgJson.name}/${cleanBasePath}/*`] = path.join(
-										srcFolder,
-										cleanBasePath,
-									)
-								}
-							}
-						}
-					}
-				} catch {
-					// ignore parse errors
-				}
-			}
-		}
-	}
-
-	if (fs.existsSync(packagesDir)) {
-		visit(packagesDir)
-	}
-
-	return results
-}
-
-/** @type {import('expo/metro-config').MetroConfig} */
-const config = getDefaultConfig(__dirname)
-
-// Get all monorepo package paths
-const monorepoModules = getMonorepoPackages(__dirname)
-
-// Debug log to see what's being registered
-console.log('Registered monorepo packages:', monorepoModules)
-
-module.exports = {
+const monorepoConfig = {
 	...config,
+	projectRoot,
+	watchFolders: [
+		// srcPath,
+		...Object.values(monorepoPackages),
+	],
 	resolver: {
-		unstable_enablePackageExports: true, // Enable support for the `exports` field in package.json
-		unstable_conditionNames: ['development', 'default'],
-		sourceExts: ['js', 'jsx', 'ts', 'tsx', 'json', 'cjs', 'mjs'],
-		// extraNodeModules: monorepoModules,
+		extraNodeModules: {
+			...monorepoPackages,
+			assets: path.resolve(projectRoot, 'assets'),
+		},
+		unstable_enablePackageExports: false, // Prevent Tamagui error for the native app. More at https://github.com/tamagui/tamagui/issues/3396#issuecomment-2828685283
+		sourceExts: [
+			...config.resolver.sourceExts,
+			// Expo 49 issue: default metro config needs to include "mjs"
+			// https://github.com/expo/expo/issues/23180
+			'mjs',
+		],
+		// Node module paths for resolution order
+		nodeModulesPaths: [
+			path.resolve(projectRoot, 'node_modules'),
+			path.resolve(monorepoRoot, 'node_modules'),
+		],
 	},
 }
+
+// Add Tamagui web support with optimizing compiler and CSS extraction
+const tamaguiConfig = withTamagui(monorepoConfig, {
+	components: ['@pacto-chat/shared-ui-core', 'tamagui'],
+	config: '../../packages/shared/ui/core/src/theme/tamagui.config.ts',
+	outputCSS: './src/tamagui_web.css',
+})
+// const tamaguiConfig = withTamagui(monorepoConfig, {
+// 	components: ['tamagui'],
+// 	config: './src/theme/tamagui.config.ts',
+// 	outputCSS: './src/tamagui_web.css',
+// })
+
+module.exports = wrapWithReanimatedMetroConfig(tamaguiConfig)
+
+/**
+ * Move the Metro cache to the `.cache/metro` folder.
+ * If you have any environment variables, you can configure Turborepo to invalidate it when needed.
+ *
+ * Inspired by https://github.com/tiesen243/create-yuki-turbo/blob/main/apps/native/metro.config.js
+ *
+ * @see https://turbo.build/repo/docs/reference/configuration#env
+ * @param {import('expo/metro-config').MetroConfig} config
+ * @returns {import('expo/metro-config').MetroConfig}
+ */
+// function withTurborepoManagedCache(config) {
+// 	config.cacheStores = [
+// 		new FileStore({ root: path.join(__dirname, '.cache/metro') }),
+// 	]
+// 	return config
+// }

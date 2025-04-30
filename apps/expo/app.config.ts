@@ -1,7 +1,3 @@
-/**
- * TypeScript-based Expo configuration
- */
-
 import type { ConfigContext, ExpoConfig } from 'expo/config'
 
 import { version } from './package.json'
@@ -25,23 +21,23 @@ const appIconsAndroid = {
 } as const
 
 const appNames = {
-	development: 'Pacto Chat Dev',
-	production: 'Pacto Chat',
+	development: 'Pacte Dev',
+	production: 'Pacte',
 } as const satisfies Record<BuildType, string>
 
 const associatedDomains = {
 	development: ['applinks:localhost:3000'],
-	production: ['applinks:pacto.chat'],
+	production: ['applinks:pacte.ai'],
 } as const satisfies Record<BuildType, string[]>
 
 const bundleIdentifiers = {
-	development: 'chat.pacto.app.dev',
-	production: 'chat.pacto.app',
+	development: 'ai.pacte.dev',
+	production: 'ai.pacte',
 } as const satisfies Record<BuildType, string>
 
 const deepLinkingDomains = {
 	development: ['localhost:3000'],
-	production: ['pacto.chat'],
+	production: ['pacte.ai'],
 } as const satisfies Record<BuildType, string[]>
 
 const projectIds = {
@@ -51,8 +47,10 @@ const projectIds = {
 
 const getPlugins = (domains: string[]): NonNullable<ExpoPlugins> => {
 	const plugins = [
-		'expo-router',
+		'expo-font',
 		'expo-localization',
+		'expo-router',
+		'expo-secure-store',
 		[
 			'expo-splash-screen',
 			{
@@ -65,8 +63,8 @@ const getPlugins = (domains: string[]): NonNullable<ExpoPlugins> => {
 			'expo-build-properties',
 			{
 				android: {
-					compileSdkVersion: 34,
-					targetSdkVersion: 34,
+					compileSdkVersion: 35,
+					targetSdkVersion: 35,
 					intentFilters: [
 						{
 							// Needed for Universal Links
@@ -88,19 +86,6 @@ const getPlugins = (domains: string[]): NonNullable<ExpoPlugins> => {
 		],
 	]
 
-	// You can conditionally add environment-specific plugins
-	// For example, add Sentry only in production:
-	// if (buildType === 'production') {
-	//   plugins.push([
-	//     '@sentry/react-native/expo',
-	//     {
-	//       url: 'https://sentry.io/',
-	//       project: 'pacto-chat',
-	//       organization: 'your-org',
-	//     },
-	//   ]);
-	// }
-
 	return plugins as NonNullable<ExpoPlugins>
 }
 
@@ -116,16 +101,15 @@ export default ({ config }: ConfigContext): ExpoConfig => {
 	const domains = deepLinkingDomains[buildType]
 	const projectId = projectIds[buildType]
 
-	console.log(`Building app for ${buildType} environment`)
+	console.log(`Building app for "${buildType}" environment`)
 
 	return {
 		name: appName,
-		slug: 'pacto-chat',
+		slug: 'pacte',
 		version,
 		orientation: 'portrait',
 		icon: appIconIos,
-		userInterfaceStyle: 'light',
-		newArchEnabled: true,
+		userInterfaceStyle: 'automatic', // Required by Tamagui for dark mode
 		splash: {
 			image: './assets/splash-icon.png',
 			resizeMode: 'contain',
@@ -150,7 +134,7 @@ export default ({ config }: ConfigContext): ExpoConfig => {
 					autoVerify: true,
 					data: [
 						{
-							scheme: 'pacto',
+							scheme: 'pacte',
 						},
 						...domains.map(domain => ({
 							scheme: 'https',
@@ -164,8 +148,8 @@ export default ({ config }: ConfigContext): ExpoConfig => {
 		},
 		web: {
 			bundler: 'metro',
+			favicon: './public/favicon.ico',
 			output: 'static',
-			favicon: './assets/favicon.png',
 		},
 		plugins: getPlugins(domains),
 		experiments: {
@@ -175,17 +159,16 @@ export default ({ config }: ConfigContext): ExpoConfig => {
 			...config.extra,
 			deepLinking: {
 				domains,
-				scheme: 'pacto',
+				scheme: 'pacte',
 			},
 			eas: {
 				projectId,
 			},
 		},
-		scheme: 'pacto',
-		owner: 'your-expo-username', // Replace with your actual Expo account username
-		// You could add a GitHub URL if you have a public repo
-		// githubUrl: 'https://github.com/yourusername/pacto-chat',
+		scheme: 'pacte',
+		// owner: 'expo-username', // Replace with actual Expo account username
 		backgroundColor: '#ffffff',
-		primaryColor: '#6366f1', // Change this to match your app's primary color
+		primaryColor: '#ff3b6939',
+		newArchEnabled: true,
 	}
 }
