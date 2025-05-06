@@ -10,11 +10,12 @@ alwaysApply: true
 - Clean architecture
 - TypeScript v5.7, ESM-only, tsconfig as "bundler"
 - Yarn v4 in node-modules
+- Effect v3.14
 - React
 - Fastify v5
 - Expo v52 (web and native app)
 - Expo Router v4 (web and native app)
-- Clerk for auth (frontend and backend)
+- Clerk for auth (Expo frontend +v2.10 and Fastify backend)
 
 ## Frontend
 
