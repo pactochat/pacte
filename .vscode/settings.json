@@ -9,12 +9,6 @@
 	"explorer.fileNesting.patterns": {
 		"package.json": "package-lock.json, yarn.lock"
 	},
-	"json.schemas": [
-		{
-			"url": "https://cdn.jsdelivr.net/npm/tsup/schema.json",
-			"fileMatch": ["package.json", "tsup.config.json"]
-		}
-	],
 	"search.exclude": {
 		"**/node_modules": true,
 		"**/.tamagui": true,
