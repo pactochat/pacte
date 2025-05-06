@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { useColorScheme } from 'react-native'
 
 import type { ThemeName } from '@pacto-chat/shared-ui-core/theme'
-import { logExpoAuthHooks } from '@pacto-chat/shared-utils-logging'
+import { logExpoHooks } from '@pacto-chat/shared-utils-logging'
 
 export const AVAILABLE_THEMES: ThemeName[] = ['light', 'dark', 'system']
 
@@ -59,16 +59,16 @@ export const ThemeProvider = ({
 					// Validate that the stored theme is valid
 					if (AVAILABLE_THEMES.includes(storedTheme as ThemeName)) {
 						setCurrentTheme(storedTheme as ThemeName)
-						logExpoAuthHooks.debug('Loaded theme preference:', storedTheme)
+						logExpoHooks.debug('Loaded theme preference:', storedTheme)
 					}
 				} else {
-					logExpoAuthHooks.debug(
+					logExpoHooks.debug(
 						'No stored theme preference, using default:',
 						defaultTheme,
 					)
 				}
 			} catch (error) {
-				logExpoAuthHooks.error('Error loading theme preference:', error)
+				logExpoHooks.error('Error loading theme preference:', error)
 			} finally {
 				setIsLoading(false)
 			}
@@ -84,14 +84,14 @@ export const ThemeProvider = ({
 			if (theme === 'system') {
 				// Remove from storage when using system theme
 				await AsyncStorage.removeItem(STORAGE_KEY_THEME)
-				logExpoAuthHooks.debug('Removed theme preference, using system theme')
+				logExpoHooks.debug('Removed theme preference, using system theme')
 			} else {
 				// Store theme preference
 				await AsyncStorage.setItem(STORAGE_KEY_THEME, theme)
-				logExpoAuthHooks.debug('Saved theme preference:', theme)
+				logExpoHooks.debug('Saved theme preference:', theme)
 			}
 		} catch (error) {
-			logExpoAuthHooks.error('Error setting theme preference:', error)
+			logExpoHooks.error('Error setting theme preference:', error)
 		}
 	}
 
