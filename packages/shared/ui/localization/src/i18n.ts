@@ -6,12 +6,15 @@ import {
 	ListSupportedLanguagesCodes,
 	ListSupportedLanguagesMapperIso1to3,
 } from '@pacto-chat/shared-domain'
+import { logSharedUiLocalization } from '@pacto-chat/shared-utils-logging'
+import { getPreferredLanguage } from './language_utils'
 import { languages } from './languages'
 
 import 'intl-pluralrules' // Load Intl.PluralRules polyfill for native
 
 /**
  * Detects the device language and converts it to our ISO 639-3 format
+ * Works in both web and native environments
  */
 export function detectLanguage(): ListSupportedLanguagesCodes {
 	try {
@@ -31,7 +34,7 @@ export function detectLanguage(): ListSupportedLanguagesCodes {
 		// If we don't support this language, fall back to English
 		return iso3Code || ListSupportedLanguagesCodes.eng
 	} catch (error) {
-		console.warn('Failed to detect language:', error)
+		logSharedUiLocalization.warn('Failed to detect language:', error)
 		return ListSupportedLanguagesCodes.eng
 	}
 }
@@ -39,15 +42,24 @@ export function detectLanguage(): ListSupportedLanguagesCodes {
 // Initialize i18next instance
 const i18n: I18nInstance = i18next.createInstance()
 
-// Configure and initialize i18next
-export const initI18n = async (): Promise<I18nInstance> => {
+/**
+ * Initialize i18n with the appropriate language
+ * @param userMetadata - Optional user metadata to extract language preference
+ * @returns The initialized i18n instance
+ */
+export const initI18n = async (
+	userMetadata?: Record<string, unknown> | null,
+) => {
 	if (i18n.isInitialized) {
 		return i18n
 	}
 
+	// Determine language from user metadata or device
+	const language = getPreferredLanguage(userMetadata)
+
 	await i18n.use(initReactI18next).init({
 		resources: languages,
-		lng: detectLanguage(),
+		lng: language,
 		fallbackLng: ListSupportedLanguagesCodes.eng,
 		defaultNS: 'common',
 		interpolation: {
@@ -56,13 +68,20 @@ export const initI18n = async (): Promise<I18nInstance> => {
 		react: {
 			useSuspense: false, // Disable Suspense to avoid issues
 		},
+		// debug: __DEV__, // Enable debug only in development
 	})
 
 	return i18n
 }
 
-// Utility function to change language
-export const changeLanguage = (language: ListSupportedLanguagesCodes) => {
+/**
+ * Change the application language
+ * @param language - The language code to change to
+ * @returns A promise that resolves when the language has been changed
+ */
+export const changeLanguage = (
+	language: ListSupportedLanguagesCodes | 'auto',
+) => {
 	return i18n.changeLanguage(language)
 }
 
