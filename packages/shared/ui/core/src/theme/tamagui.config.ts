@@ -47,7 +47,7 @@ export const tamaguiConfig = createTamagui({
 	animations,
 	fonts,
 	media,
-	shorthands: {},
+	shorthands: {}, // Disabled
 	themes,
 	tokens: createTokens({
 		...defaultConfig.tokens,

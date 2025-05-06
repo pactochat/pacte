@@ -23,6 +23,7 @@ export const gap = {
 	gapSm: spacing.spacingSm,
 	gapMd: spacing.spacingMd,
 	gapLg: spacing.spacingLg,
+	gapXl: spacing.spacingXl,
 	true: spacing.spacingSm,
 } as const
 
