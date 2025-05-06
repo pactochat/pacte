@@ -25,6 +25,7 @@
 		"@pacto-chat/shared-domain": "workspace:*",
 		"@pacto-chat/shared-utils-logging": "workspace:*",
 		"expo-localization": "~16.0.1",
-		"react": "18.3.1"
+		"react": "18.3.1",
+		"tamagui": "^1.126.1"
 	}
 }
