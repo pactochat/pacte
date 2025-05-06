@@ -1,3 +1,4 @@
+import { useDirection } from '@tamagui/use-direction'
 import { forwardRef, useEffect, useRef, useState } from 'react'
 import {
 	type GetProps,
@@ -7,7 +8,6 @@ import {
 	styled,
 } from 'tamagui'
 
-import { useDirection } from '@tamagui/use-direction'
 import { IconCircleX } from '../icons'
 import { CoText } from './co_text'
 
@@ -24,6 +24,7 @@ export const CoTextField = forwardRef<any, CoTextFieldProps>(
 			error,
 			errorMessage,
 			supportingText,
+			disabled,
 			...props
 		},
 		ref,
@@ -44,13 +45,12 @@ export const CoTextField = forwardRef<any, CoTextFieldProps>(
 			inputRef.current = instance
 		}
 
-		// Maintain focus after validation rerenders
+		// Only maintain focus if explicitly focused
 		useEffect(() => {
-			if (isFocused && inputRef.current) {
-				// This ensures we keep focus on the input after a rerender
+			if (isFocused && inputRef.current && !disabled) {
 				inputRef.current.focus()
 			}
-		}, [isFocused, error, hasValue])
+		}, [isFocused, disabled])
 
 		useEffect(() => {
 			if (props.value) {
@@ -72,6 +72,7 @@ export const CoTextField = forwardRef<any, CoTextFieldProps>(
 					paddingVertical='$spacingSm'
 					paddingHorizontal='$spacingSm'
 					height={56}
+					opacity={disabled ? 0.5 : 1}
 				>
 					{label && (
 						<CoText
@@ -100,9 +101,12 @@ export const CoTextField = forwardRef<any, CoTextFieldProps>(
 						ref={combinedRef}
 						focused={isFocused}
 						hasValue={hasValue}
+						disabled={disabled}
 						onFocus={e => {
-							setIsFocused(true)
-							onFocus?.(e)
+							if (!disabled) {
+								setIsFocused(true)
+								onFocus?.(e)
+							}
 						}}
 						onBlur={e => {
 							setIsFocused(false)
@@ -115,6 +119,7 @@ export const CoTextField = forwardRef<any, CoTextFieldProps>(
 						accessibilityLabel={
 							label ? `${label}${required ? ' required' : ''}` : undefined
 						}
+						placeholderTextColor='$surfaceContainerHighest'
 					/>
 					{error && hasValue && (
 						<IconCircleX
@@ -183,4 +188,5 @@ type CoTextFieldProps = GetProps<typeof StyledInput> & {
 	error?: boolean | undefined
 	errorMessage?: string | undefined
 	supportingText?: string | undefined
+	disabled?: boolean | undefined
 }
