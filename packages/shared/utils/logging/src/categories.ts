@@ -5,13 +5,13 @@ import { CategoryProvider } from 'typescript-logging-category-style'
 export const rootProvider = CategoryProvider.createProvider('@pacto-chat', {
 	level: LogLevel.Debug,
 })
-export const logApps = rootProvider.getCategory('apps')
-export const logShared = rootProvider.getCategory('shared')
+const logApps = rootProvider.getCategory('apps')
+const logShared = rootProvider.getCategory('shared')
 
 // Shared
 export const logSharedDomain = logShared.getChildCategory('domain')
 export const logSharedUtils = logShared.getChildCategory('utils')
-export const logSharedUi = logShared.getChildCategory('ui')
+const logSharedUi = logShared.getChildCategory('ui')
 
 // Shared UI
 export const logSharedUiCore = logSharedUi.getChildCategory('core')

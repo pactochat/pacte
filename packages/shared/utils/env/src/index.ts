@@ -2,10 +2,10 @@ import { Path } from '@effect/platform'
 import { NodePath } from '@effect/platform-node'
 import { Effect, Layer } from 'effect'
 
-import { logShared } from '@pacto-chat/shared-utils-logging'
+import { logSharedUtils } from '@pacto-chat/shared-utils-logging'
 import { Dotenv } from './dotenv'
 
-const log = logShared.getChildCategory('utils/env')
+const log = logSharedUtils.getChildCategory('utils/env')
 
 const make = Effect.map(
 	Effect.all({

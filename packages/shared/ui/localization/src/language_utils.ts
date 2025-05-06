@@ -7,6 +7,7 @@ import {
 	ListSupportedLanguagesMapperIso1to3,
 	isValidDeviceLanguageCode,
 } from '@pacto-chat/shared-domain'
+import { logSharedUiLocalization } from '@pacto-chat/shared-utils-logging'
 
 /**
  * Gets the user's preferred language from metadata or device
@@ -92,7 +93,7 @@ export const detectDeviceLanguage =
 				}
 			}
 		} catch (error) {
-			console.warn('Error detecting device language:', error)
+			logSharedUiLocalization.error('Error detecting device language:', error)
 			// Fallback
 			return ListSupportedLanguagesCodes.eng
 		}
