@@ -1,73 +1,69 @@
 {
-	"$schema": "https://json.schemastore.org/tsconfig",
-	"compileOnSave": true,
-	"compilerOptions": {
-		"declaration": true,
-		"declarationMap": true,
-		"noEmit": false,
-		"preserveConstEnums": true,
-		"sourceMap": true,
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-		"target": "ES2022",
-		"resolveJsonModule": true,
-		"allowJs": true,
-		"importHelpers": true,
-		"baseUrl": ".",
-		"composite": true,
-		"alwaysStrict": true,
-		"moduleDetection": "force",
-		"exactOptionalPropertyTypes": true,
-		"noFallthroughCasesInSwitch": true,
-		"noImplicitAny": true,
-		"noImplicitReturns": true,
-		"noImplicitThis": true,
-		"noImplicitOverride": true,
-		"noUncheckedIndexedAccess": true,
-		"strict": true,
-		"strictFunctionTypes": true,
-		"strictNullChecks": true,
-		"strictPropertyInitialization": true,
-		"isolatedDeclarations": false,
-		"isolatedModules": true,
-		"useUnknownInCatchVariables": true,
-		"verbatimModuleSyntax": true,
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"skipDefaultLibCheck": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-		"paths": {
-			"@pacto-chat/agents-domain": [
-				"../../agents/domain/src"
-			],
-			"@pacto-chat/shared-domain": [
-				"../domain/src"
-			],
-			"@pacto-chat/shared-ui-core": [
-				"../ui/core/src"
-			],
-			"@pacto-chat/shared-ui-core/*": [
-				"../ui/core/src/*"
-			],
-			"@pacto-chat/shared-ui-localization": [
-				"../ui/localization/src"
-			],
-			"@pacto-chat/shared-utils-env": [
-				"../utils/env/src"
-			],
-			"@pacto-chat/shared-utils-logging": [
-				"../utils/logging/src"
-			]
-		}
-	},
-	"exclude": [
-		"node_modules",
-		"dist"
-	],
-	"types": [
-		"node"
-	]
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compileOnSave": true,
+  "compilerOptions": {
+    "preserveConstEnums": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2022",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "jsx": "react-jsx",
+    "importHelpers": true,
+    "baseUrl": ".",
+    "composite": true,
+    "alwaysStrict": true,
+    "moduleDetection": "force",
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "isolatedDeclarations": false,
+    "isolatedModules": true,
+    "useUnknownInCatchVariables": true,
+    "verbatimModuleSyntax": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@pacto-chat/agents-domain": [
+        "../../agents/domain/src"
+      ],
+      "@pacto-chat/shared-domain": [
+        "../domain/src"
+      ],
+      "@pacto-chat/shared-ui-core": [
+        "../ui/core/src"
+      ],
+      "@pacto-chat/shared-ui-core/*": [
+        "../ui/core/src/*"
+      ],
+      "@pacto-chat/shared-ui-localization": [
+        "../ui/localization/src"
+      ],
+      "@pacto-chat/shared-utils-env": [
+        "../utils/env/src"
+      ],
+      "@pacto-chat/shared-utils-logging": [
+        "../utils/logging/src"
+      ]
+    }
+  },
+  "exclude": [
+    "node_modules",
+    "dist"
+  ],
+  "types": [
+    "node"
+  ]
 }
