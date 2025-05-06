@@ -23,7 +23,7 @@ const ThemeOption = styled(View, {
 	},
 
 	pressStyle: {
-		backgroundColor: '$surfaceContainerHighest',
+		backgroundColor: '$surfaceContainer',
 		borderColor: '$primary',
 		opacity: 0.76,
 	},
@@ -31,7 +31,7 @@ const ThemeOption = styled(View, {
 	variants: {
 		selected: {
 			true: {
-				backgroundColor: '$surfaceContainerHighest',
+				backgroundColor: '$surfaceContainer',
 				borderColor: '$primary',
 				opacity: 0.76,
 			},
@@ -89,7 +89,6 @@ export const CoThemeSelector = () => {
 		},
 	} as const
 
-	// Available themes for selection
 	const availableThemes: ThemeName[] = ['light', 'dark', 'system']
 
 	return (

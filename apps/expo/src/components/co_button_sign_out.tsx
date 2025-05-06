@@ -4,17 +4,11 @@ import React, { useState } from 'react'
 import { showMessage } from 'react-native-flash-message'
 
 import { CoButtonText } from '@pacto-chat/shared-ui-core/components'
+import { useTranslation } from '@pacto-chat/shared-ui-localization'
 import { logExpoAuthComponents } from '@pacto-chat/shared-utils-logging'
 
-interface ButtonSignOutProps {
-	variant?: 'filled' | 'filledTonal' | 'outlined' | 'text'
-	fullWidth?: boolean
-}
-
-export function ButtonSignOut({
-	variant = 'filled',
-	fullWidth = false,
-}: ButtonSignOutProps) {
+export function CoButtonSignOut() {
+	const { t } = useTranslation()
 	const { signOut } = useClerk()
 	const router = useRouter()
 	const [isLoading, setIsLoading] = useState(false)
@@ -30,8 +24,10 @@ export function ButtonSignOut({
 			logExpoAuthComponents.error('Error signing out:', error)
 
 			showMessage({
-				message: 'Sign out failed',
-				description: 'There was an error signing out. Please try again.',
+				message: t('pages.settings.account.msg.sign_out_failed'),
+				description: t(
+					'pages.settings.account.msg.sign_out_failed_description',
+				),
 				type: 'danger',
 			})
 		} finally {
@@ -43,13 +39,10 @@ export function ButtonSignOut({
 		<CoButtonText
 			onPress={handleSignOut}
 			isLoading={isLoading}
-			filled={variant === 'filled'}
-			filledTonal={variant === 'filledTonal'}
-			outlined={variant === 'outlined'}
-			text={variant === 'text'}
-			fullWidth={fullWidth}
+			outlined
+			fullWidth
 		>
-			Sign Out
+			{t('pages.settings.account.btn.sign_out')}
 		</CoButtonText>
 	)
 }

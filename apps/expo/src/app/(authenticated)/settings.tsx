@@ -11,43 +11,21 @@ import {
 	CoButtonText,
 	CoCard,
 	CoPage,
-	CoParagraph,
 	CoText,
 } from '@pacto-chat/shared-ui-core/components'
 import { useTranslation } from '@pacto-chat/shared-ui-localization'
 import { logExpoPagesSettings } from '@pacto-chat/shared-utils-logging'
-import { ButtonSignOut, CoThemeSelector } from '~components'
+import {
+	CoButtonSignOut,
+	CoLanguageSelector,
+	CoThemeSelector,
+} from '~components'
 
 export default function Settings() {
 	const router = useRouter()
 	const { user, isLoaded } = useUser()
 	const { t } = useTranslation()
 	const [isDeleting, setIsDeleting] = useState(false)
-
-	const updateLanguage = async (
-		language: keyof typeof ListSupportedLanguagesCodes,
-	) => {
-		try {
-			if (!user) return
-
-			await user.update({
-				unsafeMetadata: {
-					language,
-				},
-			})
-
-			showMessage({
-				message: t('pages.settings.account.language_updated'),
-				type: 'success',
-			})
-		} catch (error) {
-			logExpoPagesSettings.error('Error updating language', { error })
-			showMessage({
-				message: t('pages.settings.account.language_update_failed'),
-				type: 'danger',
-			})
-		}
-	}
 
 	const handleDeleteAccount = async () => {
 		if (!user?.deleteSelfEnabled) return
@@ -59,7 +37,7 @@ export default function Settings() {
 		} catch (error) {
 			logExpoPagesSettings.error('Error deleting account:', error)
 			showMessage({
-				message: t('pages.settings.account.delete_failed'),
+				message: t('pages.settings.account.msg.delete_failed'),
 				type: 'danger',
 			})
 		} finally {
@@ -74,13 +52,13 @@ export default function Settings() {
 
 			await Promise.all(sessions.map(session => session.revoke()))
 			showMessage({
-				message: t('pages.settings.account.sessions_revoked'),
+				message: t('pages.settings.account.msg.sessions_revoke_success'),
 				type: 'success',
 			})
 		} catch (error) {
 			logExpoPagesSettings.error('Error revoking sessions:', error)
 			showMessage({
-				message: t('pages.settings.account.sessions_revoke_failed'),
+				message: t('pages.settings.account.msg.sessions_revoke_failed'),
 				type: 'danger',
 			})
 		}
@@ -91,8 +69,10 @@ export default function Settings() {
 	}
 
 	const currentLanguage =
-		(user.publicMetadata
-			?.language as keyof typeof ListSupportedLanguagesCodes) || 'eng'
+		(user.unsafeMetadata?.language as
+			| ListSupportedLanguagesCodes
+			| 'auto'
+			| undefined) || 'auto'
 	const primaryEmail = user.primaryEmailAddress?.emailAddress
 	const hasVerifiedEmail = user.hasVerifiedEmailAddress
 	const lastSignIn = user.lastSignInAt
@@ -101,9 +81,6 @@ export default function Settings() {
 	const createdAt = user.createdAt
 		? format(new Date(user.createdAt.toString()), 'PPpp')
 		: t('pages.settings.account.never')
-	const updatedAt = user.updatedAt
-		? format(new Date(user.updatedAt.toString()), 'PPpp')
-		: t('pages.settings.account.never')
 
 	return (
 		<CoPage title={t('pages.settings.title')}>
@@ -111,107 +88,69 @@ export default function Settings() {
 				<CoCard>
 					<CoCard.Title>{t('pages.settings.appearance.title')}</CoCard.Title>
 					<CoCard.Content>
-						<YStack gap='$gapMd'>
-							<CoThemeSelector />
-						</YStack>
+						<CoThemeSelector />
 					</CoCard.Content>
 				</CoCard>
 
 				<CoCard>
 					<CoCard.Title>{t('pages.settings.account.title')}</CoCard.Title>
 					<CoCard.Content>
-						<YStack gap='$gapMd'>
-							<YStack gap='$gapSm'>
-								<CoText fontWeight='bold'>
-									{t('pages.settings.account.language')}
-								</CoText>
-								<XStack gap='$gapSm'>
-									<CoButtonText
-										variant='outlined'
-										fullWidth
-										onPress={() => updateLanguage('eng')}
-										disabled={currentLanguage === 'eng'}
-									>
-										English
-									</CoButtonText>
-									<CoButtonText
-										variant='outlined'
-										fullWidth
-										onPress={() => updateLanguage('spa')}
-										disabled={currentLanguage === 'spa'}
-									>
-										Español
-									</CoButtonText>
-									<CoButtonText
-										variant='outlined'
-										fullWidth
-										onPress={() => updateLanguage('cat')}
-										disabled={currentLanguage === 'cat'}
-									>
-										Català
-									</CoButtonText>
-								</XStack>
-							</YStack>
+						<YStack gap='$gapLg'>
+							<CoLanguageSelector
+								user={user}
+								currentLanguage={currentLanguage}
+							/>
 
 							<YStack gap='$gapSm'>
 								<CoText fontWeight='bold'>
 									{t('pages.settings.account.email')}
 								</CoText>
-								<CoParagraph>{primaryEmail}</CoParagraph>
-								<CoText color={hasVerifiedEmail ? '$success' : '$warning'}>
-									{hasVerifiedEmail
-										? t('pages.settings.account.email_verified')
-										: t('pages.settings.account.email_not_verified')}
-								</CoText>
+								<XStack gap='$gapSm'>
+									<CoText>{primaryEmail}</CoText>
+									<CoText>
+										{hasVerifiedEmail
+											? t('pages.settings.account.email_verified')
+											: t('pages.settings.account.email_not_verified')}
+									</CoText>
+								</XStack>
 							</YStack>
 
 							<YStack gap='$gapSm'>
 								<CoText fontWeight='bold'>
 									{t('pages.settings.account.last_sign_in')}
 								</CoText>
-								<CoParagraph>{lastSignIn}</CoParagraph>
+								<CoText>{lastSignIn}</CoText>
 							</YStack>
 
 							<YStack gap='$gapSm'>
 								<CoText fontWeight='bold'>
 									{t('pages.settings.account.created_at')}
 								</CoText>
-								<CoParagraph>{createdAt}</CoParagraph>
+								<CoText>{createdAt}</CoText>
 							</YStack>
 
-							<YStack gap='$gapSm'>
-								<CoText fontWeight='bold'>
-									{t('pages.settings.account.updated_at')}
-								</CoText>
-								<CoParagraph>{updatedAt}</CoParagraph>
-							</YStack>
+							<YStack gap='$gapXs'>
+								<CoButtonSignOut />
 
-							<YStack gap='$gapSm'>
 								<CoButtonText
-									variant='outlined'
+									outlined
 									fullWidth
 									onPress={handleSignOutAllSessions}
 								>
-									{t('pages.settings.account.sign_out_all_sessions')}
+									{t('pages.settings.account.btn.sign_out_all_sessions')}
 								</CoButtonText>
-							</YStack>
 
-							<YStack gap='$gapSm'>
-								<ButtonSignOut variant='outlined' fullWidth />
-							</YStack>
-
-							{user.deleteSelfEnabled && (
-								<YStack gap='$gapSm'>
+								{user.deleteSelfEnabled && (
 									<CoButtonText
-										variant='outlined'
+										outlined
 										fullWidth
 										onPress={handleDeleteAccount}
 										disabled={isDeleting}
 									>
-										{t('pages.settings.account.delete_account')}
+										{t('pages.settings.account.btn.delete_account')}
 									</CoButtonText>
-								</YStack>
-							)}
+								)}
+							</YStack>
 						</YStack>
 					</CoCard.Content>
 				</CoCard>

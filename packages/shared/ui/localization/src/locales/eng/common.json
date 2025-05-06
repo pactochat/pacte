@@ -4,6 +4,12 @@
 			"loading": "Loading..."
 		}
 	},
+	"languages": {
+		"automatic": "Automatic",
+		"english": "English",
+		"spanish": "Spanish",
+		"catalan": "Catalan"
+	},
 	"pages": {
 		"login": {
 			"title": "Sign In",
