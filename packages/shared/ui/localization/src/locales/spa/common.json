@@ -1,1 +1,94 @@
-{}
+{
+	"misc": {
+		"txt": {
+			"loading": "Cargando..."
+		}
+	},
+	"languages": {
+		"english": "Inglés",
+		"spanish": "Español",
+		"catalan": "Catalán"
+	},
+	"pages": {
+		"login": {
+			"title": "Iniciar Sesión",
+			"plh": {
+				"email": "Correo electrónico"
+			},
+			"btn": {
+				"access": "Continuar",
+				"create_account": "Crear Cuenta"
+			},
+			"txt": {
+				"no_account": "¿No tienes una cuenta?"
+			},
+			"err": {
+				"not_allowed": "Este correo electrónico no está autorizado para iniciar sesión",
+				"login_failed": "Error al iniciar sesión. Inténtalo de nuevo",
+				"restart_flow": "Tu sesión ha caducado. Intenta iniciar sesión de nuevo"
+			}
+		},
+		"verification": {
+			"title": "Verificar Correo",
+			"txt": {
+				"otc_in_email": "Por favor, introduce el código de verificación enviado a {{email}}",
+				"resend_code": "¿No has recibido el código?",
+				"auto_verifying": "Verificando..."
+			},
+			"btn": {
+				"verify": "Verificar código",
+				"resend_code": "Reenviar código",
+				"go_to_login": "Volver a iniciar sesión"
+			},
+			"err": {
+				"no_email_navigate_to_login": "No se proporcionó una dirección de correo electrónico. Intenta iniciar sesión de nuevo",
+				"no_email_passed_in_url": "No se proporcionó una dirección de correo electrónico",
+				"no_otp_to_verify": "No hay código de verificación para verificar",
+				"expired_otc": "El código de verificación ha caducado",
+				"incorrect_otc": "Código de verificación incorrecto",
+				"not_allowed": "Este correo electrónico no está autorizado para iniciar sesión",
+				"verification_failed": "Error al verificar el código. Inténtalo de nuevo",
+				"resend_failed": "Error al reenviar el código. Inténtalo de nuevo"
+			},
+			"plh": {
+				"code": "Código de 6 dígitos"
+			}
+		},
+		"settings": {
+			"title": "Ajustes",
+			"appearance": {
+				"title": "Apariencia",
+				"dark_mode": "Modo Oscuro",
+				"theme": {
+					"light": "Claro",
+					"dark": "Oscuro",
+					"system": "Sistema"
+				}
+			},
+			"account": {
+				"title": "Cuenta",
+				"language": "Idioma",
+				"email": "Correo electrónico",
+				"email_verified": "(verificado)",
+				"email_not_verified": "(no verificado)",
+				"last_sign_in": "Último inicio de sesión",
+				"never": "Nunca",
+				"created_at": "Cuenta creada",
+				"btn": {
+					"sign_out": "Cerrar sesión",
+					"sign_out_all_sessions": "Cerrar todas las sesiones",
+					"delete_account": "Eliminar cuenta"
+				},
+				"msg": {
+					"language_success": "Idioma actualizado correctamente",
+					"language_failed": "Error al actualizar el idioma",
+					"sign_out_failed": "Error al cerrar sesión",
+					"sign_out_failed_description": "Hubo un error al cerrar sesión. Inténtalo de nuevo.",
+					"sessions_revoke_success": "Todas las sesiones han sido cerradas",
+					"sessions_revoke_failed": "Error al cerrar las sesiones",
+					"delete_failed": "Error al eliminar la cuenta"
+				}
+			}
+		}
+	}
+}

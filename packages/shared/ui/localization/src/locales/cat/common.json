@@ -3,5 +3,92 @@
 		"txt": {
 			"loading": "Carregant..."
 		}
+	},
+	"languages": {
+		"english": "Anglès",
+		"spanish": "Espanyol",
+		"catalan": "Català"
+	},
+	"pages": {
+		"login": {
+			"title": "Iniciar Sessió",
+			"plh": {
+				"email": "Correu electrònic"
+			},
+			"btn": {
+				"access": "Continuar",
+				"create_account": "Crear Compte"
+			},
+			"txt": {
+				"no_account": "No tens un compte?"
+			},
+			"err": {
+				"not_allowed": "Aquest correu electrònic no està autoritzat per iniciar sessió",
+				"login_failed": "Error a l'iniciar sessió. Torna-ho a provar",
+				"restart_flow": "La teva sessió ha caducat. Intenta iniciar sessió de nou"
+			}
+		},
+		"verification": {
+			"title": "Verificar Correu",
+			"txt": {
+				"otc_in_email": "Si us plau, introdueix el codi de verificació enviat a {{email}}",
+				"resend_code": "No has rebut el codi?",
+				"auto_verifying": "Verificant..."
+			},
+			"btn": {
+				"verify": "Verificar codi",
+				"resend_code": "Reenviar codi",
+				"go_to_login": "Tornar a iniciar sessió"
+			},
+			"err": {
+				"no_email_navigate_to_login": "No s'ha proporcionat una adreça de correu electrònic. Intenta iniciar sessió de nou",
+				"no_email_passed_in_url": "No s'ha proporcionat una adreça de correu electrònic",
+				"no_otp_to_verify": "No hi ha codi de verificació per verificar",
+				"expired_otc": "El codi de verificació ha caducat",
+				"incorrect_otc": "Codi de verificació incorrecte",
+				"not_allowed": "Aquest correu electrònic no està autoritzat per iniciar sessió",
+				"verification_failed": "Error al verificar el codi. Torna-ho a provar",
+				"resend_failed": "Error al reenviar el codi. Torna-ho a provar"
+			},
+			"plh": {
+				"code": "Codi de 6 dígits"
+			}
+		},
+		"settings": {
+			"title": "Configuració",
+			"appearance": {
+				"title": "Aparença",
+				"dark_mode": "Mode Fosc",
+				"theme": {
+					"light": "Clar",
+					"dark": "Fosc",
+					"system": "Sistema"
+				}
+			},
+			"account": {
+				"title": "Compte",
+				"language": "Idioma",
+				"email": "Correu electrònic",
+				"email_verified": "(verificat)",
+				"email_not_verified": "(no verificat)",
+				"last_sign_in": "Últim inici de sessió",
+				"never": "Mai",
+				"created_at": "Compte creat",
+				"btn": {
+					"sign_out": "Tancar sessió",
+					"sign_out_all_sessions": "Tancar totes les sessions",
+					"delete_account": "Eliminar compte"
+				},
+				"msg": {
+					"language_success": "Idioma actualitzat correctament",
+					"language_failed": "Error a l'actualitzar l'idioma",
+					"sign_out_failed": "Error al tancar sessió",
+					"sign_out_failed_description": "Hi ha hagut un error al tancar sessió. Torna-ho a provar.",
+					"sessions_revoke_success": "Totes les sessions han estat tancades",
+					"sessions_revoke_failed": "Error al tancar les sessions",
+					"delete_failed": "Error a l'eliminar el compte"
+				}
+			}
+		}
 	}
 }
