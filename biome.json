@@ -51,6 +51,7 @@
 	},
 	"files": {
 		"ignore": [
+			"./**/.next",
 			"./**/.tamagui",
 			"./**/.yarn",
 			"./**/build",
@@ -58,7 +59,8 @@
 			"./**/node_modules",
 			"./**/public",
 			"./**/scripts",
-			"./services"
+			"./services",
+			"apps/marketing/src/payload-types.ts"
 		],
 		"ignoreUnknown": true
 	}
