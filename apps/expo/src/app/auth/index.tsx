@@ -1,7 +1,7 @@
 import { useSignIn, useSignUp } from '@clerk/clerk-expo'
-import { Effect, Schema } from 'effect'
+import { Data, Effect, Match, Schema } from 'effect'
 import { useRouter } from 'expo-router'
-import React, { useCallback, useRef, useEffect } from 'react'
+import React, { useCallback, useRef, useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { showMessage } from 'react-native-flash-message'
 import { YStack } from 'tamagui'
@@ -11,11 +11,11 @@ import {
 	CoButtonText,
 	CoCard,
 	CoPage,
-	CoText,
 	CoTextField,
 } from '@pacto-chat/shared-ui-core/components'
 import { useTranslation } from '@pacto-chat/shared-ui-localization'
 import { logExpoPagesAuth } from '@pacto-chat/shared-utils-logging'
+import { UnknownException } from 'effect/Cause'
 
 const log = logExpoPagesAuth.getChildCategory('login')
 
@@ -23,12 +23,30 @@ type FormValues = {
 	email: string
 }
 
+interface ClerkError {
+	errors?: Array<{
+		code: string
+	}>
+}
+
+interface AuthResult {
+	email: string
+	isSignUp: boolean
+}
+
+class SignInFailed extends Data.TaggedError('SignInFailed') {}
+class SignUpFailed extends Data.TaggedError('SignUpFailed') {}
+class InvalidEmail extends Data.TaggedError('InvalidEmail') {}
+class ErrorPreparingEmailAddressVerification extends Data.TaggedError(
+	'ErrorPreparingEmailAddressVerification',
+) {}
+
 export default function LoginScreen() {
 	const { signIn, isLoaded: isSignInLoaded } = useSignIn()
 	const { signUp, isLoaded: isSignUpLoaded } = useSignUp()
 	const router = useRouter()
 	const { t } = useTranslation()
-	const [loading, setLoading] = React.useState(false)
+	const [loading, setLoading] = useState(false)
 
 	const {
 		control,
@@ -42,7 +60,6 @@ export default function LoginScreen() {
 		mode: 'onChange',
 	})
 
-	// Refs for focus management
 	const inputRef = useRef<any>(null)
 	const wasFocusedRef = useRef(false)
 
@@ -63,64 +80,116 @@ export default function LoginScreen() {
 		[validateEmail],
 	)
 
-	const onSubmit = async (data: FormValues) => {
-		if (!isSignInLoaded || !isSignUpLoaded) return
-
-		log.debug(`Attempting authentication for email: ${data.email}`)
-		setLoading(true)
-
-		// Track if we're in signup flow
-		let isSigningUp = false
-
-		try {
-			if (!validateEmail(data.email)) {
-				setError('email', {
-					type: 'validate',
-				})
-				setLoading(false)
-				return
-			}
-
-			try {
-				await signIn.create({
-					identifier: data.email,
-					strategy: 'email_code',
-				})
-			} catch (err: any) {
-				if (err?.errors?.[0]?.code === 'form_identifier_not_found') {
-					log.debug(`No account found, attempting sign up for ${data.email}`)
-					isSigningUp = true
-
-					await signUp.create({
-						emailAddress: data.email,
-					})
-
-					await signUp.prepareEmailAddressVerification()
-				} else {
-					throw err
+	const onSubmit = (data: FormValues) => {
+		Effect.runPromise(
+			Effect.gen(function* () {
+				if (!isSignInLoaded || !isSignUpLoaded) {
+					log.debug('Auth not loaded, skipping submission...')
+					return Effect.void
 				}
-			}
 
-			// Pass isSignUp parameter in the route to indicate which flow we're in
-			router.push({
-				pathname: '/auth/verification',
-				params: {
-					email: data.email,
-					isSignUp: isSigningUp ? 'true' : 'false',
-					redirectTo: '/', // Default redirect to home
-				},
-			})
+				log.debug(`Attempting authentication for ${data.email}...`)
+				setLoading(true)
+				const isValidEmail = validateEmail(data.email)
 
-			log.debug(`Authentication verification initiated for ${data.email}`)
-		} catch (err) {
-			log.error(`Authentication error for ${data.email}`, err)
-			showMessage({
-				message: t('pages.login.err.login_failed'),
-				type: 'danger',
-			})
-		} finally {
-			setLoading(false)
-		}
+				if (!isValidEmail) {
+					return yield* Effect.fail(new InvalidEmail())
+				}
+
+				const result = yield* Effect.tryPromise({
+					try: () =>
+						// Create a sign-in instance that maintains the sign-in lifecycle state through its "status" property https://github.com/clerk/clerk-docs/blob/main/docs/references/javascript/sign-in.mdx#properties.
+						signIn.create({
+							identifier: data.email,
+							strategy: 'email_code',
+						}),
+					catch: err => {
+						if (
+							typeof err === 'object' &&
+							err !== null &&
+							'errors' in err &&
+							Array.isArray((err as any).errors) &&
+							(err as any).errors?.[0]?.code === 'form_identifier_not_found'
+						) {
+							log.debug(
+								`No account found, attempting sign up for ${data.email}`,
+							)
+
+							return Effect.tryPromise(() =>
+								signUp.create({
+									emailAddress: data.email,
+								}),
+							).pipe(
+								Effect.map(result => {
+									log.debug(
+										'Account created. Now preparing email address verification...',
+										{ signUpResult: result },
+									)
+									return Effect.tryPromise(() =>
+										signUp.prepareEmailAddressVerification(),
+									)
+								}),
+								Effect.map(
+									_ =>
+										({
+											email: data.email,
+											isSignUp: true,
+										}) as AuthResult,
+								),
+								Effect.mapError(
+									_ => new ErrorPreparingEmailAddressVerification(),
+								),
+							)
+						}
+						return Effect.fail(new SignInFailed())
+					},
+				}).pipe(
+					Effect.flatMap(result => {
+						log.debug(`Signed in status "${result.status}"`)
+
+						if (
+							result.status === 'needs_first_factor' || // For sign-in flow
+							result.status === 'complete' // For sign-up flow
+						) {
+							log.debug('Sign in successful')
+
+							// return Effect.succeed({
+							// 	email: data.email,
+							// 	isSignUp: false,
+							// } as AuthResult)
+							router.push({
+								pathname: '/auth/verification',
+								params: {
+									email: data.email,
+									isSignUp: 'false',
+								},
+							})
+							return Effect.void
+						}
+						return Effect.fail(new SignInFailed())
+					}),
+				)
+				return Effect.succeed(result)
+			}).pipe(
+				Effect.catchTags({
+					InvalidEmail: err => {
+						setError('email', { type: 'validate' })
+						return Effect.void
+					},
+					SignInFailed: err => {
+						log.error(`Authentication error for ${data.email}`)
+
+						showMessage({
+							message: t('pages.login.err.login_failed'),
+							type: 'danger',
+						})
+						setLoading(false)
+
+						return Effect.void
+					},
+				}),
+			),
+		)
 	}
 
 	// Restore focus after rerender due to validation
@@ -139,7 +208,7 @@ export default function LoginScreen() {
 			<CoCard>
 				<CoCard.Title>{t('pages.login.title')}</CoCard.Title>
 				<CoCard.Content>
-					<YStack gap='$gapLg' width='100%'>
+					<YStack gap='$gapLg'>
 						<YStack gap='$gapMd'>
 							<Controller
 								control={control}
@@ -149,14 +218,14 @@ export default function LoginScreen() {
 									validate: emailValidator,
 								}}
 								render={({ field: { onChange, onBlur, value } }) => (
-									<YStack gap='$2'>
+									<YStack gap='$gapXs'>
 										<CoTextField
 											ref={inputRef}
 											autoCapitalize='none'
 											keyboardType='email-address'
 											value={value}
 											onChangeText={onChange}
-											onBlur={e => {
+											onBlur={_ => {
 												wasFocusedRef.current = false
 												onBlur()
 											}}

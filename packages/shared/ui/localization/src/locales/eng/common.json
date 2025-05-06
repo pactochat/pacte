@@ -10,6 +10,33 @@
 		"spanish": "Spanish",
 		"catalan": "Catalan"
 	},
+	"components": {
+		"co_auth_verification": {
+			"txt": {
+				"otc_in_email": "Please enter the verification code sent to {{email}}",
+				"resend_code": "Didn't receive the code?",
+				"auto_verifying": "Verifying..."
+			},
+			"btn": {
+				"verify": "Verify code",
+				"resend_code": "Resend code",
+				"go_to_login": "Back to sign in"
+			},
+			"err": {
+				"no_email_navigate_to_login": "No email address provided. Please try signing in again",
+				"no_email_passed_in_url": "No email address provided",
+				"no_otp_to_verify": "No verification code to verify",
+				"expired_otc": "Verification code has expired",
+				"incorrect_otc": "Incorrect verification code",
+				"not_allowed": "This email is not allowed to sign in",
+				"verification_failed": "Failed to verify code. Please try again",
+				"resend_failed": "Failed to resend code. Please try again"
+			},
+			"plh": {
+				"code": "6-digit code"
+			}
+		}
+	},
 	"pages": {
 		"login": {
 			"title": "Sign In",
@@ -29,7 +56,7 @@
 				"restart_flow": "Your session has expired. Please try signing in again"
 			}
 		},
-		"login_verification": {
+		"verification": {
 			"title": "Verify Email",
 			"txt": {
 				"otc_in_email": "Please enter the verification code sent to {{email}}",
@@ -37,9 +64,9 @@
 				"auto_verifying": "Verifying..."
 			},
 			"btn": {
-				"verify": "Verify Code",
-				"resend_code": "Resend Code",
-				"go_to_login": "Back to Sign In"
+				"verify": "Verify code",
+				"resend_code": "Resend code",
+				"go_to_login": "Back to sign in"
 			},
 			"err": {
 				"no_email_navigate_to_login": "No email address provided. Please try signing in again",
@@ -50,6 +77,9 @@
 				"not_allowed": "This email is not allowed to sign in",
 				"verification_failed": "Failed to verify code. Please try again",
 				"resend_failed": "Failed to resend code. Please try again"
+			},
+			"plh": {
+				"code": "6-digit code"
 			}
 		},
 		"settings": {
@@ -66,20 +96,26 @@
 			"account": {
 				"title": "Account",
 				"language": "Language",
-				"language_updated": "Language updated successfully",
-				"language_update_failed": "Failed to update language",
 				"email": "Email",
-				"email_verified": "Email verified",
-				"email_not_verified": "Email not verified",
-				"last_sign_in": "Last Sign In",
+				"email_verified": "(verified)",
+				"email_not_verified": "(not verified)",
+				"last_sign_in": "Last sign in",
 				"never": "Never",
-				"created_at": "Account Created",
-				"updated_at": "Last Updated",
-				"sign_out_all_sessions": "Sign Out All Sessions",
-				"sessions_revoked": "All sessions have been revoked",
-				"sessions_revoke_failed": "Failed to revoke sessions",
-				"delete_account": "Delete Account",
-				"delete_failed": "Failed to delete account"
+				"created_at": "Account created",
+				"btn": {
+					"sign_out": "Sign out",
+					"sign_out_all_sessions": "Sign out all sessions",
+					"delete_account": "Delete account"
+				},
+				"msg": {
+					"language_success": "Language updated successfully",
+					"language_failed": "Failed to update language",
+					"sign_out_failed": "Sign out failed",
+					"sign_out_failed_description": "There was an error signing out. Please try again.",
+					"sessions_revoke_success": "All sessions have been revoked",
+					"sessions_revoke_failed": "Failed to revoke sessions",
+					"delete_failed": "Failed to delete account"
+				}
 			}
 		}
 	}

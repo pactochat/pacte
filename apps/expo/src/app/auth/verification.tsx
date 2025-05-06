@@ -1,23 +1,20 @@
 import { useSignIn, useSignUp } from '@clerk/clerk-expo'
-import { useLocalSearchParams, useRouter } from 'expo-router'
-import React, { useState, useEffect } from 'react'
+import { Effect, Match } from 'effect'
+import { router, useLocalSearchParams, useRouter } from 'expo-router'
+import React, { useState } from 'react'
 import { showMessage } from 'react-native-flash-message'
 
 import { CoPage } from '@pacto-chat/shared-ui-core/components'
 import { useTranslation } from '@pacto-chat/shared-ui-localization'
 import { logExpoAuth } from '@pacto-chat/shared-utils-logging'
-import { AuthVerification } from '~components'
+import { CoAuthVerification } from '~components'
 
 export default function AuthVerificationScreen() {
 	const { signIn, isLoaded: isSignInLoaded } = useSignIn()
 	const { signUp, isLoaded: isSignUpLoaded } = useSignUp()
 	const router = useRouter()
 	const { t } = useTranslation()
-	const {
-		email,
-		isSignUp: isSignUpParam,
-		redirectTo,
-	} = useLocalSearchParams<{
+	const { email, isSignUp: isSignUpParam } = useLocalSearchParams<{
 		email: string
 		isSignUp: string
 		redirectTo?: string
@@ -28,49 +25,68 @@ export default function AuthVerificationScreen() {
 
 	const [loading, setLoading] = useState(false)
 
-	const handleResendCode = async () => {
-		if (
-			(!isSignInLoaded && !isSignUp) ||
-			(!isSignUpLoaded && isSignUp) ||
-			loading
-		)
-			return
+	const handleResendCode = () => {
+		return Effect.gen(function* () {
+			if (
+				(!isSignInLoaded && !isSignUp) ||
+				(!isSignUpLoaded && isSignUp) ||
+				loading
+			)
+				return Effect.void
 
-		try {
 			setLoading(true)
 
 			// Only support resend for sign-up flow
 			if (isSignUp && signUp) {
-				await signUp.prepareEmailAddressVerification()
+				const result = Effect.tryPromise(() =>
+					signUp.prepareEmailAddressVerification(),
+				).pipe(
+					Effect.flatMap(result => {
+						logExpoAuth.debug('Email address verification prepared', {
+							result,
+						})
+
+						showMessage({
+							message: t('pages.verification.msg.code_resent'),
+							type: 'success',
+						})
+						return Effect.void
+					}),
+					Effect.catchAll(err => {
+						logExpoAuth.warn('Error resending code', { error: err })
+
+						const errorCode =
+							typeof err === 'object' &&
+							err !== null &&
+							'errors' in err &&
+							Array.isArray((err as any).errors)
+								? (err as any).errors?.[0]?.code
+								: undefined
+
+						Match.value(errorCode).pipe(
+							Match.when('client_state_invalid', () => {
+								showMessage({
+									message: t('pages.login.err.restart_flow'),
+									type: 'danger',
+								})
+								router.replace('/auth')
+							}),
+							Match.orElse(() => {
+								showMessage({
+									message: t('pages.verification.err.resend_failed'),
+									type: 'danger',
+								})
+							}),
+						)
+						// return Effect.fail('invalid_email')
+						return Effect.void
+					}),
+				)
+				return result
 			}
 
-			showMessage({
-				message: t('pages.login_verification.msg.code_resent'),
-				type: 'success',
-			})
-		} catch (err: any) {
-			logExpoAuth.warn(JSON.stringify(err, null, 2))
-
-			// Handle client_state_invalid error by redirecting to login
-			if (err?.errors?.[0]?.code === 'client_state_invalid') {
-				showMessage({
-					message: t('pages.login.err.restart_flow'),
-					type: 'danger',
-				})
-				router.replace('/auth')
-				return
-			}
-
-			showMessage({
-				message: t('pages.login_verification.err.resend_failed'),
-				description:
-					err?.errors?.[0]?.message ||
-					t('pages.login_verification.err.resend_failed'),
-				type: 'danger',
-			})
-		} finally {
-			setLoading(false)
-		}
+			return Effect.void
+		})
 	}
 
 	if (!email) {
@@ -80,15 +96,14 @@ export default function AuthVerificationScreen() {
 
 	return (
 		<CoPage
-			title={t('pages.login_verification.title')}
+			title={t('pages.verification.title')}
 			narrow='small'
 			centered='both'
 		>
-			<AuthVerification
+			<CoAuthVerification
 				email={email}
 				onResendCode={handleResendCode}
 				isSignUp={isSignUp}
-				redirectTo={redirectTo as string | undefined}
 			/>
 		</CoPage>
 	)

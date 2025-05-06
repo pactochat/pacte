@@ -1,43 +1,33 @@
 import { LogLevel } from 'typescript-logging'
 import { CategoryProvider } from 'typescript-logging-category-style'
 
-export const rootProvider = CategoryProvider.createProvider('@xiroi', {
+// Root categories
+export const rootProvider = CategoryProvider.createProvider('@pacto-chat', {
 	level: LogLevel.Debug,
 })
-
-// Root categories for each bounded context
 export const logApps = rootProvider.getCategory('apps')
-export const logAgents = rootProvider.getCategory('agents')
 export const logShared = rootProvider.getCategory('shared')
-export const logUi = rootProvider.getCategory('ui')
 
-// Agents bounded context subcategories
-export const logAgentsDomain = logAgents.getChildCategory('domain')
-export const logAgentsInfra = logAgents.getChildCategory('infra')
-export const logAgentsRepo = logAgents.getChildCategory('repos')
-
-// Shared subcategories
+// Shared
 export const logSharedDomain = logShared.getChildCategory('domain')
 export const logSharedUtils = logShared.getChildCategory('utils')
+export const logSharedUi = logShared.getChildCategory('ui')
 
-// Shared infrastructure subcategories
-const logSharedInfra = logShared.getChildCategory('infra')
-export const logSharedInfraUiCore = logSharedInfra.getChildCategory('ui-core')
-export const logSharedInfraUiLocalization =
-	logSharedInfra.getChildCategory('ui-localization')
-export const logSharedInfraUiRouting =
-	logSharedInfra.getChildCategory('ui-routing')
+// Shared UI
+export const logSharedUiCore = logSharedUi.getChildCategory('core')
+export const logSharedUiLocalization =
+	logSharedUi.getChildCategory('localization')
 
 // Apps
 export const logAppServer = logApps.getChildCategory('server')
 export const logAppExpo = logApps.getChildCategory('expo')
 
-// Expo subcategories
+// Expo
 export const logExpoAuth = logAppExpo.getChildCategory('auth')
 export const logExpoAuthenticated =
 	logExpoAuth.getChildCategory('authenticated')
-export const logExpoAuthComponents = logExpoAuth.getChildCategory('components')
-export const logExpoAuthHooks = logExpoAuth.getChildCategory('hooks')
+export const logExpoComponents = logAppExpo.getChildCategory('components')
+export const logExpoHooks = logAppExpo.getChildCategory('hooks')
 
 // Expo pages
 export const logExpoPagesAuth = logAppExpo.getChildCategory('pages.auth')
