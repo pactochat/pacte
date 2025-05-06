@@ -3,7 +3,9 @@ import { useEffect } from 'react'
 import React from 'react'
 import { Animated, type ImageSourcePropType, StyleSheet } from 'react-native'
 
-export function AnimatedSplashScreen({
+import { logExpoComponents } from '@pacto-chat/shared-utils-logging'
+
+export function CoAnimatedSplashScreen({
 	children,
 	loading,
 	image,
@@ -18,7 +20,10 @@ export function AnimatedSplashScreen({
 
 	useEffect(() => {
 		if (!loading) {
-			SplashScreen.hideAsync()
+			// SplashScreen.hideAsync()
+			SplashScreen.hideAsync().catch(err =>
+				logExpoComponents.error('Error hiding splash screen:', err),
+			)
 
 			Animated.timing(animation, {
 				toValue: 0,

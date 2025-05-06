@@ -27,17 +27,14 @@ import {
 import { Slot, SplashScreen } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
 import type React from 'react'
-import { useEffect } from 'react'
-import { useColorScheme } from 'react-native'
 import FlashMessage from 'react-native-flash-message'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { TamaguiProvider } from 'tamagui'
 
 import { tamaguiConfig } from '@pacto-chat/shared-ui-core/theme'
-import { initLocalization } from '@pacto-chat/shared-ui-localization'
-import { logExpoAuth } from '@pacto-chat/shared-utils-logging'
-import { AnimatedSplashScreen } from '~components'
-import { ThemeProvider, useTheme } from '~hooks'
+import { logAppExpo } from '@pacto-chat/shared-utils-logging'
+import { CoAnimatedSplashScreen } from '~components'
+import { LocalizationProvider, ThemeProvider, useTheme } from '~hooks'
 
 import '../tamagui_web.css'
 
@@ -45,32 +42,8 @@ export { ErrorBoundary } from 'expo-router'
 
 SplashScreen.preventAutoHideAsync()
 
-// Component to handle theme integration with Tamagui and Navigation
-function ThemeAwareContent({ children }: { children: React.ReactNode }) {
-	const { resolvedTheme, isLoading } = useTheme()
-
-	if (isLoading) {
-		return null // Or a loading indicator if preferred
-	}
-
-	return (
-		<>
-			<TamaguiProvider config={tamaguiConfig} defaultTheme={resolvedTheme}>
-				<NavigationThemeProvider
-					value={resolvedTheme === 'dark' ? DarkTheme : DefaultTheme}
-				>
-					{children}
-					<StatusBar style={resolvedTheme === 'dark' ? 'light' : 'dark'} />
-					<FlashMessage duration={5000} position='top' floating />
-				</NavigationThemeProvider>
-			</TamaguiProvider>
-		</>
-	)
-}
-
 export default function RootLayout() {
 	const navigationRef = useNavigationContainerRef()
-	const systemColorScheme = useColorScheme()
 	const [loaded] = useFonts({
 		DMSans: DMSans_400Regular,
 		DMSansItalic: DMSans_400Regular_Italic,
@@ -93,20 +66,8 @@ export default function RootLayout() {
 		)
 	}
 
-	useEffect(() => {
-		const init = async () => {
-			try {
-				await initLocalization()
-			} catch (error) {
-				logExpoAuth.error('Failed to initialize i18n', { error })
-			}
-		}
-		init()
-	}, [])
-
 	if (!loaded) {
-		logExpoAuth.debug('Loading fonts...')
-		return null
+		logAppExpo.debug('Loading fonts...')
 	}
 
 	const content = (
@@ -119,7 +80,9 @@ export default function RootLayout() {
 				>
 					<ThemeProvider defaultTheme='system'>
 						<ThemeAwareContent>
-							<Slot />
+							<LocalizationProvider>
+								<Slot />
+							</LocalizationProvider>
 						</ThemeAwareContent>
 					</ThemeProvider>
 				</ClerkProvider>
@@ -130,7 +93,9 @@ export default function RootLayout() {
 				>
 					<ThemeProvider defaultTheme='system'>
 						<ThemeAwareContent>
-							<Slot />
+							<LocalizationProvider>
+								<Slot />
+							</LocalizationProvider>
 						</ThemeAwareContent>
 					</ThemeProvider>
 				</ClerkProvider>
@@ -139,11 +104,27 @@ export default function RootLayout() {
 	)
 
 	return (
-		<AnimatedSplashScreen
+		<CoAnimatedSplashScreen
 			loading={!loaded}
 			image={require('../../assets/splash-icon.png')}
 		>
 			{content}
-		</AnimatedSplashScreen>
+		</CoAnimatedSplashScreen>
+	)
+}
+
+function ThemeAwareContent({ children }: { children: React.ReactNode }) {
+	const { resolvedTheme } = useTheme()
+
+	return (
+		<TamaguiProvider config={tamaguiConfig} defaultTheme={resolvedTheme}>
+			<NavigationThemeProvider
+				value={resolvedTheme === 'dark' ? DarkTheme : DefaultTheme}
+			>
+				{children}
+				<StatusBar style={resolvedTheme === 'dark' ? 'light' : 'dark'} />
+				<FlashMessage duration={5000} position='top' floating />
+			</NavigationThemeProvider>
+		</TamaguiProvider>
 	)
 }
