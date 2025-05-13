@@ -48,3 +48,11 @@ Key components include:
 - [ ] Add UI for à la ChatGPT
 - [ ] Scrape data from some local government websites and regions
 - [ ] Put scraped data into a database
+
+## License
+
+Licensed under the MIT License with a visible attribution clause.
+
+Any public use must display the text "Powered by AIPacto.com".
+
+See [LICENSE](./LICENSE) for full details.
