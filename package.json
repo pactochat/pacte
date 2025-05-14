@@ -11,6 +11,7 @@
 	"workspaces": [
 		"apps/*",
 		"packages/agents/*",
+		"packages/agents/infrastructure/*",
 		"packages/shared/*",
 		"packages/shared/ui/*",
 		"packages/shared/utils/*"

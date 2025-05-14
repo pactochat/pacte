@@ -1,0 +1,28 @@
+{
+	"name": "@pacto-chat/agents-infra-langgraph",
+	"version": "0.0.1",
+	"type": "module",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.js",
+			"default": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsdown ./src/index.ts --dts --sourcemap --platform neutral --clean --silent",
+		"check-types": "tsc --noEmit",
+		"watch": "tsc --watch --preserveWatchOutput"
+	},
+	"dependencies": {
+		"@langchain/core": "^0.3.55",
+		"@langchain/langgraph": "^0.2.71",
+		"langchain": "^0.3.24"
+	},
+	"peerDependencies": {
+		"@pacto-chat/agents-domain": "workspace:*",
+		"effect": "^3.14.8"
+	}
+}

@@ -4859,6 +4859,26 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@langchain/core@npm:^0.3.55":
+  version: 0.3.55
+  resolution: "@langchain/core@npm:0.3.55"
+  dependencies:
+    "@cfworker/json-schema": "npm:^4.0.2"
+    ansi-styles: "npm:^5.0.0"
+    camelcase: "npm:6"
+    decamelize: "npm:1.2.0"
+    js-tiktoken: "npm:^1.0.12"
+    langsmith: "npm:^0.3.16"
+    mustache: "npm:^4.2.0"
+    p-queue: "npm:^6.6.2"
+    p-retry: "npm:4"
+    uuid: "npm:^10.0.0"
+    zod: "npm:^3.22.4"
+    zod-to-json-schema: "npm:^3.22.3"
+  checksum: 10/3721ba8f253d2f1b9b2cdc14cfeb9ea6bb0549ac4748f6b9c43a4cfa8610c2d097c0a21470638e4d16835a3c3b932a01d62758c52c2105f089ddc25d83cbd032
+  languageName: node
+  linkType: hard
+
 "@langchain/langgraph-checkpoint@npm:~0.0.17":
   version: 0.0.17
   resolution: "@langchain/langgraph-checkpoint@npm:0.0.17"
@@ -4905,6 +4925,24 @@ __metadata:
     zod-to-json-schema:
       optional: true
   checksum: 10/67a2548a550e2301ea8cf7c1d161a936f4911c3a79daa5f963cf9a405bf4597d2873dc1f9c4c1de8a63116ec1f0f4deb5b597a9149150531d20f4053dc2cbc40
+  languageName: node
+  linkType: hard
+
+"@langchain/langgraph@npm:^0.2.71":
+  version: 0.2.71
+  resolution: "@langchain/langgraph@npm:0.2.71"
+  dependencies:
+    "@langchain/langgraph-checkpoint": "npm:~0.0.17"
+    "@langchain/langgraph-sdk": "npm:~0.0.32"
+    uuid: "npm:^10.0.0"
+    zod: "npm:^3.23.8"
+  peerDependencies:
+    "@langchain/core": ">=0.2.36 <0.3.0 || >=0.3.40 < 0.4.0"
+    zod-to-json-schema: ^3.x
+  peerDependenciesMeta:
+    zod-to-json-schema:
+      optional: true
+  checksum: 10/59dceb678dc29bf46c343d6aa88066fb087298a72877a8dde1c6468fc82346201f26799226ee851486de75226b67f27de3f59998b96a475f8eda1f96715f5a5e
   languageName: node
   linkType: hard
 
@@ -5827,6 +5865,19 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@pacto-chat/agents-infra-langgraph@workspace:packages/agents/infrastructure/langgraph":
+  version: 0.0.0-use.local
+  resolution: "@pacto-chat/agents-infra-langgraph@workspace:packages/agents/infrastructure/langgraph"
+  dependencies:
+    "@langchain/core": "npm:^0.3.55"
+    "@langchain/langgraph": "npm:^0.2.71"
+    langchain: "npm:^0.3.24"
+  peerDependencies:
+    "@pacto-chat/agents-domain": "workspace:*"
+    effect: ^3.14.8
+  languageName: unknown
+  linkType: soft
+
 "@pacto-chat/apps-expo@workspace:apps/expo":
   version: 0.0.0-use.local
   resolution: "@pacto-chat/apps-expo@workspace:apps/expo"
@@ -5952,7 +6003,7 @@ __metadata:
   resolution: "@pacto-chat/shared-domain@workspace:packages/shared/domain"
   dependencies:
     "@types/uuid": "npm:^10.0.0"
-    temporal-polyfill: "npm:^0.2.5"
+    temporal-polyfill: "npm:^0.3.0"
     uuid: "npm:^10.0.0"
   peerDependencies:
     effect: ^3.14.8
@@ -17353,7 +17404,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"langchain@npm:>=0.2.3 <0.3.0 || >=0.3.4 <0.4.0, langchain@npm:^0.3.19":
+"langchain@npm:>=0.2.3 <0.3.0 || >=0.3.4 <0.4.0, langchain@npm:^0.3.19, langchain@npm:^0.3.24":
   version: 0.3.24
   resolution: "langchain@npm:0.3.24"
   dependencies:
@@ -24170,19 +24221,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"temporal-polyfill@npm:^0.2.5":
-  version: 0.2.5
-  resolution: "temporal-polyfill@npm:0.2.5"
+"temporal-polyfill@npm:^0.3.0":
+  version: 0.3.0
+  resolution: "temporal-polyfill@npm:0.3.0"
   dependencies:
-    temporal-spec: "npm:^0.2.4"
-  checksum: 10/0534d6eb41925e88a3be6f320cbd5255bab6f6f529668f619dbefdcb28ec1606cc43f7a73d60fc713c44518e38d8ac3a8ec82e2059713f045481ac5a3d903157
+    temporal-spec: "npm:0.3.0"
+  checksum: 10/e4f5c0e546bf663720569b8b68fc41aa43ea891a77043a5614f6c1f2109cd01fe60c90b9de2f5d4f92f3155bfbdd17ad3ec7de1e9aaf01fa3cf156f230a0e41a
   languageName: node
   linkType: hard
 
-"temporal-spec@npm:^0.2.4":
-  version: 0.2.4
-  resolution: "temporal-spec@npm:0.2.4"
-  checksum: 10/45a68e4f2324752e927976c624699c5cfcbe15d6e9c9558faa5811cc58ea1fb9cef06ec5e1617e40131b744ca16a0011309c877c242b24009562375b407f535b
+"temporal-spec@npm:0.3.0":
+  version: 0.3.0
+  resolution: "temporal-spec@npm:0.3.0"
+  checksum: 10/5863e3e3f364a5cf64bf999c85bf19b08924a91ee8d618489d9bf6cfff2452e4f916080c8ede93fc91de609200fc20002928e0146c7fc15375b123b20234799b
   languageName: node
   linkType: hard
 

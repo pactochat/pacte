@@ -1,0 +1,13 @@
+{
+	"extends": "@pacto-chat/shared-tsconfig/base.json",
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "dist"
+	},
+	"include": ["src"],
+	"references": [
+		{
+			"path": "../../domain"
+		}
+	]
+}
