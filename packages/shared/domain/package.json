@@ -17,7 +17,7 @@
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
 	"dependencies": {
-		"temporal-polyfill": "^0.2.5",
+		"temporal-polyfill": "^0.3.0",
 		"uuid": "^10.0.0"
 	},
 	"peerDependencies": {

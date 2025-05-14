@@ -1,21 +1,7 @@
 import { Data, Either, Schema as S, pipe } from 'effect'
 import { Temporal } from 'temporal-polyfill'
 
-export const TemporalZonedDateTime = Temporal.ZonedDateTime
-
-/**
- * An experimental date time.
- *
- * Documentation at https://github.com/fullcalendar/temporal-polyfill.
- *
- * Get inspiration with EffectJS at https://github.com/PREreview/coar-notify/blob/main/src/Temporal.ts (it is `@js-temporal/polyfill` package)
- *
- * @example
- * const date1 = now()
- * const date2 = Temporal.Now.zonedDateTimeISO()
- */
-export const ZonedDateTime = S.instanceOf(Temporal.ZonedDateTime)
-export type ZonedDateTime = typeof ZonedDateTime.Type
+export const ZonedDateTime = Temporal.ZonedDateTime
 
 /**
  * @deprecated
