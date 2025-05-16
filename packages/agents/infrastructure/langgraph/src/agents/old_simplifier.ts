@@ -2,18 +2,16 @@ import { type BaseMessage, HumanMessage } from '@langchain/core/messages'
 import { ChatPromptTemplate } from '@langchain/core/prompts'
 import type { StateGraph } from '@langchain/langgraph'
 import type { ChatOpenAI } from '@langchain/openai'
-// src/agents/simplifier.ts
 import { Context, Effect, Layer } from 'effect'
 
 import type {
 	SimplifierInput,
 	SimplifierOutput,
 } from '@pacto-chat/agents-domain'
-import { nowZoned } from '@pacto-chat/shared-domain'
+import { type ZonedDateTimeString, nowZoned } from '@pacto-chat/shared-domain'
 import { GraphService } from '../graph'
-import { ModelService } from '../old_services/model'
-import type { BaseGraphState } from '../state'
-import { calculateComplexityScore } from '../utils/text-analysis'
+import type { BaseGraphState, GraphStateDefinition } from '../state'
+import { calculateComplexityScore } from '../utils/text_analysis'
 
 /**
  * Simplifier agent service
@@ -24,7 +22,7 @@ export class SimplifierAgent extends Context.Tag('SimplifierAgent')<
 		/**
 		 * Create a graph for text simplification
 		 */
-		createGraph: () => Effect.Effect<StateGraph, never>
+		createGraph: () => Effect.Effect<StateGraph<GraphStateDefinition>, never>
 
 		/**
 		 * Execute the simplification logic
@@ -41,11 +39,11 @@ export class SimplifierAgent extends Context.Tag('SimplifierAgent')<
 	private static simplifierNode = (
 		state: BaseGraphState,
 		model: ChatOpenAI,
-	): Promise<Partial<BaseGraphState>> => {
-		return Effect.gen(function* ($) {
+	) => {
+		return Effect.gen(function* () {
 			// Get input from state
 			const input = state.input as SimplifierInput
-			const targetLevel = input.targetLevel || 'middle'
+			const targetLevel = input.targetLevel || 'staff'
 			const preserveKeyTerms = input.preserveKeyTerms || []
 
 			// Calculate original complexity score
@@ -79,14 +77,12 @@ export class SimplifierAgent extends Context.Tag('SimplifierAgent')<
 			]
 
 			// Execute the chain
-			const response = yield* $(
-				Effect.promise(() =>
-					chain.invoke({
-						text: input.text,
-						targetLevel,
-						preserveKeyTerms: preserveKeyTerms.join(', ') || 'None specified',
-					}),
-				),
+			const response = yield* Effect.promise(() =>
+				chain.invoke({
+					text: input.text,
+					targetLevel,
+					preserveKeyTerms: preserveKeyTerms.join(', ') || 'None specified',
+				}),
 			)
 
 			// Add response to messages
@@ -107,7 +103,7 @@ export class SimplifierAgent extends Context.Tag('SimplifierAgent')<
 				resultComplexityScore,
 				preservedTerms: preserveKeyTerms,
 				language: input.language,
-				timestamp: nowZoned().toString(),
+				timestamp: nowZoned().toString() as ZonedDateTimeString,
 			}
 
 			// Return updated state
@@ -116,7 +112,7 @@ export class SimplifierAgent extends Context.Tag('SimplifierAgent')<
 				agentOutputs: { simplifier: output },
 				messages,
 			}
-		}).execute()
+		})
 	}
 
 	/**
@@ -124,8 +120,8 @@ export class SimplifierAgent extends Context.Tag('SimplifierAgent')<
 	 */
 	static readonly Live = Layer.effect(
 		SimplifierAgent,
-		Effect.gen(function* ($) {
-			const graphService = yield* $(GraphService)
+		Effect.gen(function* () {
+			const graphService = yield* GraphService
 
 			return {
 				createGraph: () =>
