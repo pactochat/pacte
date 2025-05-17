@@ -4960,6 +4960,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@langchain/openai@npm:^0.5.10":
+  version: 0.5.10
+  resolution: "@langchain/openai@npm:0.5.10"
+  dependencies:
+    js-tiktoken: "npm:^1.0.12"
+    openai: "npm:^4.96.0"
+    zod: "npm:^3.22.4"
+    zod-to-json-schema: "npm:^3.22.3"
+  peerDependencies:
+    "@langchain/core": ">=0.3.48 <0.4.0"
+  checksum: 10/d46bc349ab8afaa11fbcaa28d55fe07f67833a441aae847a9e453227757299f7bf2ea5b0d2b6b96ba14add5829dc22fb058de52a1729f0a9a6006bc2363aca7e
+  languageName: node
+  linkType: hard
+
 "@langchain/textsplitters@npm:>=0.0.0 <0.2.0":
   version: 0.1.0
   resolution: "@langchain/textsplitters@npm:0.1.0"
@@ -5865,13 +5879,15 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pacto-chat/agents-infra-langgraph@workspace:packages/agents/infrastructure/langgraph":
+"@pacto-chat/agents-infra-langgraph@workspace:*, @pacto-chat/agents-infra-langgraph@workspace:packages/agents/infrastructure/langgraph":
   version: 0.0.0-use.local
   resolution: "@pacto-chat/agents-infra-langgraph@workspace:packages/agents/infrastructure/langgraph"
   dependencies:
     "@langchain/core": "npm:^0.3.55"
     "@langchain/langgraph": "npm:^0.2.71"
+    "@langchain/openai": "npm:^0.5.10"
     langchain: "npm:^0.3.24"
+    zod: "npm:^3.24.4"
   peerDependencies:
     "@pacto-chat/agents-domain": "workspace:*"
     effect: ^3.14.8
@@ -5980,6 +5996,7 @@ __metadata:
     "@langchain/core": "npm:^0.3.42"
     "@langchain/langgraph": "npm:^0.2.54"
     "@pacto-chat/agents-domain": "workspace:*"
+    "@pacto-chat/agents-infra-langgraph": "workspace:*"
     "@pacto-chat/shared-domain": "workspace:*"
     "@pacto-chat/shared-utils-env": "workspace:*"
     "@pacto-chat/shared-utils-logging": "workspace:*"
@@ -20086,6 +20103,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"openai@npm:^4.96.0":
+  version: 4.100.0
+  resolution: "openai@npm:4.100.0"
+  dependencies:
+    "@types/node": "npm:^18.11.18"
+    "@types/node-fetch": "npm:^2.6.4"
+    abort-controller: "npm:^3.0.0"
+    agentkeepalive: "npm:^4.2.1"
+    form-data-encoder: "npm:1.7.2"
+    formdata-node: "npm:^4.3.2"
+    node-fetch: "npm:^2.6.7"
+  peerDependencies:
+    ws: ^8.18.0
+    zod: ^3.23.8
+  peerDependenciesMeta:
+    ws:
+      optional: true
+    zod:
+      optional: true
+  bin:
+    openai: bin/cli
+  checksum: 10/bd5eb38725607f2074c35ed72db6af34128197ff03dbf8d685d836670595f3fbe480ca03e9e2c2fe062f3491be9044915cb4ab9a1018cee5f37bce200f038dd6
+  languageName: node
+  linkType: hard
+
 "openapi-types@npm:^12.1.3":
   version: 12.1.3
   resolution: "openapi-types@npm:12.1.3"
@@ -25887,6 +25929,13 @@ __metadata:
   version: 3.24.3
   resolution: "zod@npm:3.24.3"
   checksum: 10/1b15db625ca633324084f3a8587bfb907043bbca407a09f7d5da6a9781b3838c68e9312b49e91e479d2f8bf04cdda5810803ac9504e3b7ccbec3adf2de625fb8
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.24.4":
+  version: 3.24.4
+  resolution: "zod@npm:3.24.4"
+  checksum: 10/3d545792fa54bb27ee5dbc34a5709e81f603185fcc94c8204b5d95c20dc4c81d870ff9c51f3884a30ef05cdc601449f4c4df254ac4783f0827b1faed7c1cdb48
   languageName: node
   linkType: hard
 

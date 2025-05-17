@@ -1,139 +1,9 @@
-import { type BaseMessage, HumanMessage } from '@langchain/core/messages'
 import { ChatPromptTemplate } from '@langchain/core/prompts'
+import type { RunnableConfig } from '@langchain/core/runnables'
 import type { ChatOpenAI } from '@langchain/openai'
 
-import type {
-	PlanStep,
-	PlannerInput,
-	PlannerOutput,
-} from '@pacto-chat/agents-domain'
-import { type ZonedDateTimeString, nowZoned } from '@pacto-chat/shared-domain'
-import type { BaseGraphState } from '../old_state'
-import { logAgentExecution } from './utils'
-
-/**
- * Implementation of the planner node for LangGraph
- */
-export async function plannerNode(
-	state: BaseGraphState,
-	model: ChatOpenAI,
-): Promise<Partial<BaseGraphState>> {
-	try {
-		// Log the execution start
-		const startLog = logAgentExecution('planner', 'started')
-
-		// Get input from state
-		const input = state.input as PlannerInput
-		const goal = input.goal || extractGoal(input.text)
-		const constraints = input.constraints || []
-		const availableResources = input.availableResources || []
-		const timeline = input.timeline || 'No specific timeline provided'
-
-		// Create prompt
-		const prompt = ChatPromptTemplate.fromTemplate(`
-      You are an expert project planner. Create a detailed step-by-step plan to achieve the following goal:
-      
-      Goal: {goal}
-      
-      Important constraints to consider:
-      {constraints}
-      
-      Available resources:
-      {resources}
-      
-      Timeline requirements:
-      {timeline}
-      
-      For each step in your plan, include:
-      1. A clear title
-      2. A detailed description
-      3. Estimated time to complete
-      4. Dependencies on other steps
-      5. Required resources
-      6. Potential risks or challenges
-      
-      Also include:
-      - The total estimated time to complete the entire plan
-      - The critical path of steps that determine the minimum time to completion
-      - Key risks or challenges to the overall plan
-      - Recommendations for successful implementation
-      
-      Format your response to clearly separate each step and section.
-    `)
-
-		// Create chain
-		const chain = prompt.pipe(model)
-
-		// Log messages for tracing
-		const messages: BaseMessage[] = [
-			new HumanMessage(
-				`Create a plan for: "${goal || input.text.substring(0, 50)}${!goal && input.text.length > 50 ? '...' : ''}"`,
-			),
-		]
-
-		// Execute the chain
-		const response = await chain.invoke({
-			goal: goal || input.text,
-			constraints:
-				constraints.length > 0
-					? constraints.join('\n- ')
-					: 'No specific constraints provided',
-			resources:
-				availableResources.length > 0
-					? availableResources.join('\n- ')
-					: 'No specific resources listed',
-			timeline,
-		})
-
-		// Add response to messages
-		messages.push(response)
-
-		// Parse steps from the response
-		const steps = await parseSteps(response.content as string, model)
-
-		// Parse additional plan details
-		const planDetails = await parsePlanDetails(
-			response.content as string,
-			steps,
-			model,
-		)
-
-		// Create the output
-		const output: PlannerOutput = {
-			text: response.content as string,
-			goal: goal || extractGoal(input.text),
-			steps,
-			totalTimeEstimate: planDetails.totalTimeEstimate,
-			estimatedCompletion: planDetails.estimatedCompletion,
-			criticalPath: planDetails.criticalPath,
-			keyRisks: planDetails.keyRisks,
-			recommendations: planDetails.recommendations,
-			language: input.language,
-			timestamp: nowZoned().toString() as ZonedDateTimeString,
-		}
-
-		// Log completion
-		const completeLog = logAgentExecution('planner', 'completed')
-
-		// Return updated state
-		return {
-			output,
-			agentOutputs: { planner: output },
-			messages,
-			executionLog: [startLog, completeLog],
-		}
-	} catch (error) {
-		// Log error
-		const errorLog = logAgentExecution('planner', 'failed')
-
-		// Return error state
-		return {
-			error: `Error in planner: ${error}`,
-			executionLog: [errorLog],
-		}
-	}
-}
-
+import type { PlanStep, PlannerOutput } from '@pacto-chat/agents-domain'
+import type { WorkflowStateType } from '../state'
 /**
  * Extract the goal from text if not explicitly provided
  */
@@ -399,4 +269,50 @@ function messageContentToString(content: unknown): string {
 			.join('')
 	}
 	return ''
+}
+
+export const createPlannerAgent = () => {
+	return async (
+		state: WorkflowStateType,
+		config?: RunnableConfig,
+	): Promise<Partial<WorkflowStateType>> => {
+		try {
+			// Use the input to simulate a plan
+			const input = state.input
+
+			const output: PlannerOutput = {
+				text: `Plan for: ${input.intent.substring(0, 40)}...`,
+				goal: input.intent.substring(0, 40),
+				steps: [
+					{
+						id: 'step-1',
+						title: 'First step',
+						description: 'Do the first thing.',
+					},
+					{
+						id: 'step-2',
+						title: 'Second step',
+						description: 'Do the second thing.',
+					},
+				],
+				totalTimeEstimate: '2 days',
+				estimatedCompletion: 'In 2 days',
+				criticalPath: ['step-1', 'step-2'],
+				keyRisks: ['Risk 1', 'Risk 2'],
+				recommendations: ['Recommendation 1', 'Recommendation 2'],
+				language: input.language,
+			}
+
+			return {
+				planner: output,
+				currentStep: 'rephraser',
+			}
+		} catch (error) {
+			return {
+				error:
+					error instanceof Error ? error.message : 'Unknown error in planner',
+				currentStep: 'end',
+			}
+		}
+	}
 }

@@ -1,155 +1,105 @@
-import { type BaseMessage, HumanMessage } from '@langchain/core/messages'
 import { ChatPromptTemplate } from '@langchain/core/prompts'
-import type { StateGraph } from '@langchain/langgraph'
-import type { ChatOpenAI } from '@langchain/openai'
-import { Context, Effect, Layer } from 'effect'
+import type { RunnableConfig } from '@langchain/core/runnables'
+import { ChatOpenAI } from '@langchain/openai'
 
-import type {
-	SimplifierInput,
-	SimplifierOutput,
-} from '@pacto-chat/agents-domain'
-import { type ZonedDateTimeString, nowZoned } from '@pacto-chat/shared-domain'
-import { GraphService } from '../graph'
-import type { BaseGraphState } from '../state'
+import type { SimplifierOutput } from '@pacto-chat/agents-domain'
+import type { WorkflowStateType } from '../state'
 import { calculateComplexityScore } from '../utils/text_analysis'
 
-/**
- * Simplifier agent service
- */
-export class SimplifierAgent extends Context.Tag('SimplifierAgent')<
-	SimplifierAgent,
-	{
-		/**
-		 * Create a graph for text simplification
-		 */
-		createGraph: () => Effect.Effect<StateGraph, never>
+// Create the prompt template
+const SIMPLIFIER_PROMPT = ChatPromptTemplate.fromTemplate(`
+You are a specialized text simplification agent.
+Simplify the following text to make it more accessible to a {audience} audience.
 
-		/**
-		 * Execute the simplification logic
-		 */
-		execute: (
-			state: BaseGraphState,
-			model: ChatOpenAI,
-		) => Promise<Partial<BaseGraphState>>
-	}
->() {
-	/**
-	 * Create the simplifier node implementation
-	 */
-	private static simplifierNode = (
-		state: BaseGraphState,
-		model: ChatOpenAI,
-	) => {
-		return Effect.gen(function* ($) {
-			// Get input from state
-			const input = state.input as SimplifierInput
-			const targetLevel = input.targetLevel || 'staff'
-			const preserveKeyTerms = input.preserveKeyTerms || []
+TEXT: {text}
 
-			// Calculate original complexity score
-			const originalComplexityScore = calculateComplexityScore(input.text)
+CONTEXT (Impact Analysis): {impactAnalysis}
 
-			// Create prompt
-			const prompt = ChatPromptTemplate.fromTemplate(`
-        You are an expert at simplifying complex text while preserving meaning. 
-        Simplify the following text to a {targetLevel} school reading level.
-        
-        The text should be easy to understand for someone at a {targetLevel} school education level,
-        but still retain all the important information and key concepts.
-        
-        The following key terms should be preserved as-is (you can explain them if needed):
-        {preserveKeyTerms}
-        
-        Original text:
-        {text}
-        
-        Simplified text:
-      `)
+Instructions:
+- Simplify vocabulary and sentence structure
+- Maintain the key points and meaning
+- Target a reading level appropriate for {audience}
+- Keep explanations clear and concise
+- Respond in the language: {language}
+`)
 
-			// Create chain
-			const chain = prompt.pipe(model)
+export const createSimplifierAgent = () => {
+	// Initialize the LLM
+	const llm = new ChatOpenAI({
+		modelName: 'gpt-4o',
+		temperature: 0.3,
+	})
 
-			// Log messages for tracing
-			const messages: BaseMessage[] = [
-				new HumanMessage(
-					`Simplify the following text to ${targetLevel} level: "${input.text.substring(0, 50)}${input.text.length > 50 ? '...' : ''}"`,
-				),
-			]
+	// Create the chain
+	const simplifyChain = SIMPLIFIER_PROMPT.pipe(llm)
 
-			// Execute the chain
-			const response = yield* $(
-				Effect.promise(() =>
-					chain.invoke({
-						text: input.text,
-						targetLevel,
-						preserveKeyTerms: preserveKeyTerms.join(', ') || 'None specified',
-					}),
-				),
+	return async (
+		state: WorkflowStateType,
+		config?: RunnableConfig,
+	): Promise<Partial<WorkflowStateType>> => {
+		try {
+			// Ensure we have both summarizer and impact outputs
+			if (!state.summarizer || !state.impact) {
+				throw new Error(
+					'Both summarizer and impact outputs are required for simplification',
+				)
+			}
+
+			// Calculate complexity score of original text
+			const originalComplexityScore = calculateComplexityScore(
+				state.summarizer.text,
 			)
 
-			// Add response to messages
-			messages.push(response)
+			// Define the target audience
+			const audience = 'citizen'
 
-			// Create the simplified text
-			const simplifiedText = response.content as string
+			// Call the LLM to generate the simplified text
+			const simplifiedResponse = await simplifyChain.invoke(
+				{
+					text: state.summarizer.text,
+					impactAnalysis: state.impact.summary,
+					audience,
+					language: state.input.language || 'en',
+				},
+				config,
+			)
 
-			// Calculate result complexity score
+			// Extract the simplified text
+			const simplifiedText = simplifiedResponse.content.toString()
+
+			// Calculate complexity score of simplified text
 			const resultComplexityScore = calculateComplexityScore(simplifiedText)
 
 			// Create the output
 			const output: SimplifierOutput = {
 				text: simplifiedText,
-				originalText: input.text,
-				targetLevel: targetLevel,
+				originalText: state.summarizer.text,
+				targetLevel: audience,
 				originalComplexityScore,
 				resultComplexityScore,
-				preservedTerms: preserveKeyTerms,
-				language: input.language,
-				timestamp: nowZoned().toString() as ZonedDateTimeString,
+				language: state.input.language,
 			}
 
-			// Return updated state
-			return {
-				output,
-				agentOutputs: { simplifier: output },
-				messages,
+			// Final combined output for streaming
+			const finalOutput = {
+				...output,
+				summary: state.summarizer.text,
+				impacts: state.impact.text,
 			}
-		}).execute()
+
+			return {
+				simplifier: output,
+				output: finalOutput,
+				currentStep: 'end',
+			}
+		} catch (error) {
+			return {
+				error:
+					error instanceof Error
+						? error.message
+						: 'Unknown error in simplification',
+				currentStep: 'end',
+			}
+		}
 	}
-
-	/**
-	 * Live implementation of the SimplifierAgent
-	 */
-	static readonly Live = Layer.effect(
-		SimplifierAgent,
-		Effect.gen(function* ($) {
-			const graphService = yield* $(GraphService)
-
-			return {
-				createGraph: () =>
-					Effect.sync(() => {
-						const graph = graphService.createGraph('simplifier')
-
-						// Add the simplifier node with wrapped execution function
-						graph.addNode('simplifier', state =>
-							Effect.runPromise(
-								graphService.executeNode(
-									'simplifier',
-									SimplifierAgent.simplifierNode,
-								)(state),
-							),
-						)
-
-						// Define the graph flow
-						graph.addEdge('__start__', 'simplifier')
-						graph.addEdge('simplifier', '__end__')
-
-						// Return the compiled graph
-						return graph.compile()
-					}),
-
-				execute: SimplifierAgent.simplifierNode,
-			}
-		}),
-	)
 }

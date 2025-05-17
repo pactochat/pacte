@@ -1,162 +1,82 @@
-import { type BaseMessage, HumanMessage } from '@langchain/core/messages'
 import { ChatPromptTemplate } from '@langchain/core/prompts'
-import type { StateGraph } from '@langchain/langgraph'
-import type { ChatOpenAI } from '@langchain/openai'
-import { Context, Effect, Layer } from 'effect'
+import type { RunnableConfig } from '@langchain/core/runnables'
+import { ChatOpenAI } from '@langchain/openai'
 
-import type {
-	SummarizerInput,
-	SummarizerOutput,
-} from '@pacto-chat/agents-domain'
-import { type ZonedDateTimeString, nowZoned } from '@pacto-chat/shared-domain'
-import { GraphService } from '../graph'
-import type { BaseGraphState } from '../state'
+import type { SummarizerOutput } from '@pacto-chat/agents-domain'
+import type { WorkflowStateType } from '../state'
 import { extractKeyPoints } from '../utils/text_analysis'
+import { truncateText } from '../utils/text_processing'
 
-/**
- * Summarizer agent service
- */
-export class SummarizerAgent extends Context.Tag('SummarizerAgent')<
-	SummarizerAgent,
-	{
-		/**
-		 * Create a graph for text summarization
-		 */
-		createGraph: () => Effect.Effect<StateGraph, never>
+const SUMMARIZER_PROMPT = ChatPromptTemplate.fromTemplate(`
+You are a specialized summarization agent.
+Create a concise summary of the following text:
 
-		/**
-		 * Execute the summarization logic
-		 */
-		execute: (
-			state: BaseGraphState,
-			model: ChatOpenAI,
-		) => Promise<Partial<BaseGraphState>>
-	}
->() {
-	/**
-	 * Create the summarizer node implementation
-	 */
-	private static summarizerNode = (
-		state: BaseGraphState,
-		model: ChatOpenAI,
-	): Promise<Partial<BaseGraphState>> => {
-		return Effect.gen(function* () {
-			// Get input from state
-			const input = state.input as SummarizerInput
-			const maxLength = input.maxLength || 1000
-			const preserveKeyPoints = input.preserveKeyPoints || []
-			const format = input.format || 'paragraph'
+TEXT: {text}
 
-			// Create prompt
-			const prompt = ChatPromptTemplate.fromTemplate(`
-        You are an expert summarizer. Create a concise summary of the following text in {format} format.
-        The summary should be no longer than {maxLength} characters.
-        
-        Make sure that these key points are included in the summary:
-        {preserveKeyPoints}
-        
-        Maintain the main ideas, important details, and overall message of the original text.
-        
-        Original text:
-        {text}
-        
-        {format} summary:
-      `)
+Instructions:
+- Keep the summary clear and concise
+- Maintain the key points and main ideas
+- Target a {format} format
+- Respond in the language: {language}
+`)
 
-			// Create chain
-			const chain = prompt.pipe(model)
+export const createSummarizerAgent = () => {
+	// Initialize the LLM
+	const llm = new ChatOpenAI({
+		modelName: 'gpt-4o',
+		temperature: 0.3,
+	})
 
-			// Log messages for tracing
-			const messages: BaseMessage[] = [
-				new HumanMessage(
-					`Summarize the following text in ${format} format: "${input.text.substring(0, 50)}${input.text.length > 50 ? '...' : ''}"`,
-				),
-			]
+	// Create the chain
+	const summarizeChain = SUMMARIZER_PROMPT.pipe(llm)
 
-			// Execute the chain
-			const response = yield* Effect.promise(() =>
-				chain.invoke({
-					text: input.text,
-					maxLength,
-					preserveKeyPoints: preserveKeyPoints.join('\n- ') || 'None specified',
-					format,
-				}),
+	return async (
+		state: WorkflowStateType,
+		config?: RunnableConfig,
+	): Promise<Partial<WorkflowStateType>> => {
+		try {
+			// Get the input text to summarize
+			const input = state.input
+
+			// Call the LLM to generate the summary
+			const summaryResponse = await summarizeChain.invoke(
+				{
+					text: input.intent,
+					format: 'paragraph',
+					language: input.language || 'en',
+				},
+				config,
 			)
 
-			// Add response to messages
-			messages.push(response)
+			// Extract the summary text from the response
+			const summaryText = summaryResponse.content.toString()
 
-			// Create the summary text
-			const summaryText = response.content as string
+			// Extract key points from the summary
+			const keyPoints = extractKeyPoints(summaryText, 3)
 
-			// Extract key points if not provided
-			const keyPoints =
-				preserveKeyPoints.length > 0
-					? preserveKeyPoints
-					: extractKeyPoints(input.text, 5)
-
-			// Calculate compression ratio
-			const compressionRatio = summaryText.length / input.text.length
-
-			// Estimate reading time (average 200 words per minute)
-			const words = summaryText.split(/\s+/).length
-			const readingTime = Math.ceil((words / 200) * 60) // in seconds
-
-			// Create the output
+			// Create the summarizer output
 			const output: SummarizerOutput = {
 				text: summaryText,
-				originalText: input.text,
+				originalText: input.intent,
 				keyPoints,
 				length: summaryText.length,
-				readingTime,
-				format: format,
-				compressionRatio,
+				format: 'paragraph',
 				language: input.language,
-				timestamp: nowZoned().toString() as ZonedDateTimeString,
 			}
 
-			// Return updated state
 			return {
-				output,
-				agentOutputs: { summarizer: output },
-				messages,
+				summarizer: output,
+				// Move to the next step
+				currentStep: 'impact',
 			}
-		}).execute()
+		} catch (error) {
+			return {
+				error:
+					error instanceof Error
+						? error.message
+						: 'Unknown error in summarizer',
+				currentStep: 'end',
+			}
+		}
 	}
-
-	/**
-	 * Live implementation of the SummarizerAgent
-	 */
-	static readonly Live = Layer.effect(
-		SummarizerAgent,
-		Effect.gen(function* ($) {
-			const graphService = yield* $(GraphService)
-
-			return {
-				createGraph: () =>
-					Effect.sync(() => {
-						const graph = graphService.createGraph('summarizer')
-
-						// Add the summarizer node with wrapped execution function
-						graph.addNode('summarizer', state =>
-							Effect.runPromise(
-								graphService.executeNode(
-									'summarizer',
-									SummarizerAgent.summarizerNode,
-								)(state),
-							),
-						)
-
-						// Define the graph flow
-						graph.addEdge('__start__', 'summarizer')
-						graph.addEdge('summarizer', '__end__')
-
-						// Return the compiled graph
-						return graph.compile()
-					}),
-
-				execute: SummarizerAgent.summarizerNode,
-			}
-		}),
-	)
 }

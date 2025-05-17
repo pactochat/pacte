@@ -1,85 +1,53 @@
 import type { BaseMessage } from '@langchain/core/messages'
+import { Annotation, messagesStateReducer } from '@langchain/langgraph'
+
 import type {
-	Annotation,
-	BinaryOperatorAggregate,
-	LastValue,
-} from '@langchain/langgraph'
-import { Schema as S } from 'effect'
+	BaseAgentInput,
+	BaseAgentOutput,
+	ImpactOutput,
+	PlannerOutput,
+	SimplifierOutput,
+	SummarizerOutput,
+} from '@pacto-chat/agents-domain'
 
-import { type ZonedDateTimeString, nowZoned } from '@pacto-chat/shared-domain'
-import type { GraphStateStatus } from './graph'
+export const WorkflowState = Annotation.Root({
+	// Agent outputs
+	impact: Annotation<ImpactOutput>({
+		reducer: (prev, next) => ({ ...prev, ...next }),
+	}),
+	// legalGap: Annotation<LegalGapOutput>({
+	// 	reducer: (prev, next) => ({ ...prev, ...next }),
+	// }),
+	planner: Annotation<PlannerOutput>({
+		reducer: (prev, next) => ({ ...prev, ...next }),
+	}),
+	simplifier: Annotation<SimplifierOutput>({
+		reducer: (prev, next) => ({ ...prev, ...next }),
+	}),
+	summarizer: Annotation<SummarizerOutput>({
+		reducer: (prev, next) => ({ ...prev, ...next }),
+	}),
 
-/**
- * Execution log entry for tracing agent execution
- */
-export const ExecutionLogEntry = S.Struct({
-	agent: S.String,
-	timestamp: S.String,
-	status: S.Union(
-		S.Literal('started'),
-		S.Literal('completed'),
-		S.Literal('failed'),
-	),
+	// Workflow state
+	input: Annotation<BaseAgentInput>({
+		reducer: (prev, next) => ({ ...prev, ...next }),
+	}),
+	output: Annotation<BaseAgentOutput>({
+		reducer: (prev, next) => ({ ...prev, ...next }),
+	}),
+	currentStep: Annotation<string>(),
+
+	// All messages
+	messages: Annotation<BaseMessage[]>({
+		reducer: messagesStateReducer,
+		default: () => [],
+	}),
+
+	// Error handling
+	error: Annotation<string | null>({
+		reducer: (_prev, next) => next,
+		default: () => null,
+	}),
 })
-export type ExecutionLogEntry = typeof ExecutionLogEntry.Type
 
-/**
- * Base state interface for all agent graphs
- */
-export const BaseGraphState = S.Struct({
-	/** Input to the agent */
-	input: S.Unknown,
-	/** Final output from the agent */
-	output: S.optional(S.Unknown),
-	/** Chat messages history */
-	messages: S.Array(S.Unknown),
-	/** Execution log for tracking agent progress */
-	executionLog: S.Array(ExecutionLogEntry),
-	error: S.optional(S.String),
-	/** Intermediate outputs from each agent */
-	agentOutputs: S.optional(S.Record({ key: S.String, value: S.Unknown })),
-}).annotations({
-	identifier: '@pacto-chat/agents-infra-langgraph/BaseGraphState',
-})
-export type BaseGraphState = typeof BaseGraphState.Type
-
-/**
- * State definition for the agent graph
- */
-export type GraphStateDefinition = {
-	input: LastValue<unknown>
-	output: LastValue<unknown>
-	messages: BinaryOperatorAggregate<BaseMessage[], BaseMessage[]>
-	executionLog: BinaryOperatorAggregate<
-		Array<{
-			agent: string
-			timestamp: string
-			status: GraphStateStatus
-		}>,
-		Array<{
-			agent: string
-			timestamp: string
-			status: GraphStateStatus
-		}>
-	>
-	error: LastValue<string | undefined>
-	agentOutputs: BinaryOperatorAggregate<
-		Record<string, unknown>,
-		Record<string, unknown>
-	>
-}
-
-/**
- * Creates a log entry for agent execution
- */
-export function createLogEntry(
-	agent: string,
-	status: GraphStateStatus,
-	timestamp = nowZoned().toString() as ZonedDateTimeString,
-): ExecutionLogEntry {
-	return {
-		agent,
-		timestamp,
-		status,
-	}
-}
+export type WorkflowStateType = typeof WorkflowState.State

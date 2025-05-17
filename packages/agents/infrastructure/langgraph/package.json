@@ -19,7 +19,9 @@
 	"dependencies": {
 		"@langchain/core": "^0.3.55",
 		"@langchain/langgraph": "^0.2.71",
-		"langchain": "^0.3.24"
+		"@langchain/openai": "^0.5.10",
+		"langchain": "^0.3.24",
+		"zod": "^3.24.4"
 	},
 	"peerDependencies": {
 		"@pacto-chat/agents-domain": "workspace:*",

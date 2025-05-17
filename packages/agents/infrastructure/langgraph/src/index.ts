@@ -1,111 +1,220 @@
-import type { StateGraph } from '@langchain/langgraph'
-import { Context, Effect, Layer } from 'effect'
+import type { BaseAgentInput, BaseAgentOutput } from '@pacto-chat/agents-domain'
+import type { ListLanguageCodes } from '@pacto-chat/shared-domain'
+import type { WorkflowStateType } from './state'
+import { createRoutedWorkflow, runRoutedWorkflow } from './workflows'
+export { WorkflowState } from './state'
 
-import type {
-	ImpactInput,
-	ImpactOutput,
-	SimplifierInput,
-	SimplifierOutput,
-	SummarizerInput,
-	SummarizerOutput,
-} from '@pacto-chat/agents-domain'
-import { ImpactAgent, SimplifierAgent, SummarizerAgent } from './agents'
-import { ModelService } from './old_services/model'
-import type { GraphStateDefinition } from './state'
+/**
+ * Type representing a message in conversation history
+ */
+export interface ConversationMessage {
+	role: 'user' | 'assistant' | 'system'
+	content: string
+}
 
-export * from './state'
-export * from './graph'
-export * from './old_services/model'
-export * from './agents'
-export * from './utils/text_analysis'
-export * from './utils/text_processing'
+/**
+ * Main function to process text using the agent workflow
+ *
+ * @param input Text input with optional language specification
+ * @param messages Optional conversation history
+ * @returns Processed output with summary, impact analysis, and simplified text
+ */
+export const processText = async (
+	input: BaseAgentInput,
+	messages?: ConversationMessage[],
+): Promise<BaseAgentOutput> => {
+	try {
+		// Include previous messages as context if provided
+		const enrichedInput =
+			messages && messages.length > 0
+				? {
+						...input,
+						additionalContext: {
+							...input.additionalContext,
+							conversationHistory: messages,
+						},
+					}
+				: input
 
-export interface AgentServices {
-	simplifier: {
-		createGraph: () => Effect.Effect<StateGraph<GraphStateDefinition>, never>
-		execute: (input: SimplifierInput) => Effect.Effect<SimplifierOutput, Error>
-	}
-	summarizer: {
-		createGraph: () => Effect.Effect<StateGraph<GraphStateDefinition>, never>
-		execute: (input: SummarizerInput) => Effect.Effect<SummarizerOutput, Error>
-	}
-	impact: {
-		createGraph: () => Effect.Effect<StateGraph<GraphStateDefinition>, never>
-		execute: (input: ImpactInput) => Effect.Effect<ImpactOutput, Error>
+		const result = await runRoutedWorkflow(enrichedInput)
+
+		if (result.error) {
+			throw new Error(result.error)
+		}
+
+		if (!result.output) {
+			// If no specific output was generated, create one from the available results
+			return createFinalOutput(result, input)
+		}
+
+		return result.output
+	} catch (error) {
+		// Return an error output
+		return {
+			text: 'An error occurred during processing',
+			metadata: {
+				error: error instanceof Error ? error.message : 'Unknown error',
+			},
+		}
 	}
 }
 
 /**
- * AgentService tag for accessing all agents from a single service
+ * Helper function to create a final output from the state if not explicitly set
  */
-export class AgentService extends Context.Tag('AgentService')<
-	AgentService,
-	AgentServices
->() {
-	static readonly Live = Layer.effect(
-		AgentService,
-		Effect.gen(function* () {
-			const model = yield* ModelService
-			const simplifierAgent = yield* SimplifierAgent
-			const summarizerAgent = yield* SummarizerAgent
-			const impactAgent = yield* ImpactAgent
+function createFinalOutput(
+	state: WorkflowStateType,
+	input: BaseAgentInput,
+): BaseAgentOutput {
+	let text = ''
+	const metadata: Record<string, unknown> = {}
 
-			return {
-				simplifier: {
-					createGraph: simplifierAgent.createGraph,
-					execute: (input: SimplifierInput) =>
-						Effect.tryPromise({
-							try: async () => {
-								const result = await simplifierAgent.execute(
-									{
-										input,
-										messages: [],
-										executionLog: [],
-									},
-									model,
-								)
-								return result.output as SimplifierOutput
-							},
-							catch: error => new Error(`Simplifier error: ${error}`),
-						}),
-				},
-				summarizer: {
-					createGraph: summarizerAgent.createGraph,
-					execute: (input: SummarizerInput) =>
-						Effect.tryPromise({
-							try: async () => {
-								const result = await summarizerAgent.execute(
-									{
-										input,
-										messages: [],
-										executionLog: [],
-									},
-									model,
-								)
-								return result.output as SummarizerOutput
-							},
-							catch: error => new Error(`Summarizer error: ${error}`),
-						}),
-				},
-				impact: {
-					createGraph: impactAgent.createGraph,
-					execute: (input: ImpactInput) =>
-						Effect.tryPromise({
-							try: async () => {
-								const result = await impactAgent.execute(
-									{
-										input,
-										messages: [],
-										executionLog: [],
-									},
-									model,
-								)
-								return result.output as ImpactOutput
-							},
-							catch: error => new Error(`Impact assessment error: ${error}`),
-						}),
-				},
+	// Use the most processed form of the text
+	if (state.simplifier) {
+		text = state.simplifier.text
+		metadata.simplifier = {
+			targetLevel: state.simplifier.targetLevel,
+			complexityReduction:
+				state.simplifier.originalComplexityScore -
+				state.simplifier.resultComplexityScore,
+		}
+	} else if (state.impact) {
+		text = state.impact.text
+		metadata.impact = {
+			overallScore: state.impact.overallImpact,
+			dimensions: state.impact.impacts.map(imp => ({
+				type: imp.type,
+				score: imp.score,
+			})),
+		}
+	} else if (state.summarizer) {
+		text = state.summarizer.text
+		metadata.summary = {
+			keyPoints: state.summarizer.keyPoints,
+			length: state.summarizer.length,
+			format: state.summarizer.format,
+		}
+	} else {
+		// If no processing occurred, return the original text
+		text = input.intent
+	}
+
+	// Add workflow history if available
+	if (state.messages && state.messages.length > 0) {
+		metadata.workflow = {
+			steps: state.messages,
+		}
+	}
+
+	return {
+		text,
+		language: input.language,
+		metadata,
+	}
+}
+
+/**
+ * Create a basic agent input object
+ *
+ * @param text Text to process
+ * @param language Optional language code
+ * @returns Formatted input for the agent workflow
+ */
+export function createAgentInput(
+	text: string,
+	language?: ListLanguageCodes,
+): BaseAgentInput {
+	return {
+		intent: text,
+		language,
+	}
+}
+
+/**
+ * Stream workflow execution for server integration
+ * This allows the frontend to receive incremental updates
+ *
+ * @param input Text input with optional language specification
+ * @param messages Optional conversation history
+ * @yields Progress updates for each step of the workflow
+ */
+export const streamWorkflow = async function* (
+	input: BaseAgentInput,
+	messages?: ConversationMessage[],
+) {
+	const workflow = createRoutedWorkflow()
+
+	// Include previous messages as context if provided
+	const enrichedInput =
+		messages && messages.length > 0
+			? {
+					...input,
+					additionalContext: {
+						...input.additionalContext,
+						conversationHistory: messages,
+					},
+				}
+			: input
+
+	// Initialize the state with the input
+	const initialState = {
+		input: enrichedInput,
+	}
+
+	try {
+		// Stream the workflow execution
+		for await (const chunk of await workflow.stream(initialState)) {
+			// Process each chunk to make it more frontend-friendly
+			const processedChunk = processChunk(chunk, input)
+			if (processedChunk) {
+				yield processedChunk
 			}
+		}
+	} catch (error) {
+		// Handle errors during streaming
+		yield {
+			step: 'error',
+			data: {
+				text: 'An error occurred during processing',
+				error: error instanceof Error ? error.message : 'Unknown error',
+			},
+		}
+	}
+}
+
+/**
+ * Helper function to process chunks for streaming
+ */
+function processChunk(
+	chunk: Record<string, any>,
+	originalInput: BaseAgentInput,
+): Record<string, any> | null {
+	// Filter out empty chunks
+	if (!chunk || Object.keys(chunk).length === 0) {
+		return null
+	}
+
+	const stepNames = Object.keys(chunk)
+	if (stepNames.length === 0) {
+		return null
+	}
+
+	const stepName = stepNames[0]
+	const stepData = stepName ? chunk[stepName] : null
+
+	// Skip internal steps that aren't relevant to the frontend
+	if (stepName === 'messages' || !stepData) {
+		return null
+	}
+
+	// Format the chunk for frontend consumption
+	return {
+		step: stepName,
+		data: stepData,
+		// If the step has completed, also include final response
+		...(stepName === 'output' && {
+			final: true,
+			response: stepData.text || originalInput.intent,
 		}),
-	)
+	}
 }
