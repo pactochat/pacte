@@ -1,21 +1,16 @@
-import type { Server } from 'node:https'
+import 'dotenv/config'
+import { clerkPlugin } from '@clerk/fastify'
 import formbodyPlugin from '@fastify/formbody'
 import { Effect } from 'effect'
-import fastify, { type FastifyHttpOptions } from 'fastify'
-import { errorHandler as superTokensErrorHandler } from 'supertokens-node/framework/fastify'
+import Fastify from 'fastify'
 
 import { Env } from '@pacto-chat/shared-utils-env'
 import { logAppServer } from '@pacto-chat/shared-utils-logging'
-import { corsPlugin } from './plugins/cors.js'
-import { authenticationPlugin, initSupertokens } from './plugins/supertokens.js'
-import { routesCreatorMetadata } from './routes/creator_metadata.js'
+import { routesConversations } from './routes/conversations'
 
 async function main() {
 	try {
 		await Effect.runPromise(Env.load.pipe(Effect.provide(Env.Live)))
-
-		// Initialize Supertokens
-		initSupertokens()
 	} catch (error) {
 		logAppServer.error(
 			'Failed to bootstrap application',
@@ -26,7 +21,7 @@ async function main() {
 
 	logAppServer.info('Starting server at', process.env.SERVER_URL)
 
-	const serverOptions: FastifyHttpOptions<Server> = {
+	const serverOptions = {
 		logger: {
 			level: process.env.NODE_ENV === 'development' ? 'debug' : 'info',
 			transport: {
@@ -40,27 +35,18 @@ async function main() {
 		trustProxy: true, // Respect Caddy's forwarded headers
 	}
 
-	const server = fastify(serverOptions)
+	const server = Fastify(serverOptions)
 
-	server.register(corsPlugin)
-
-	// Register formbody plugin to parse form data (required by SuperTokens)
+	// Register formbody plugin to parse form data (required by Clerk)
 	logAppServer.info('Registering Formbody plugin')
 	server.register(formbodyPlugin)
 
-	server.register(authenticationPlugin)
+	server.register(clerkPlugin)
 
 	logAppServer.info('Setting error handler')
 	server.setErrorHandler((err, request, reply) => {
-		// Telemetry: record the error on the current span
-		const activeSpan = trace.getActiveSpan()
-		if (activeSpan) {
-			activeSpan.setStatus({ code: SpanStatusCode.ERROR })
-			activeSpan.recordException(err)
-		}
-
-		// Pass the error through SuperTokens (SuperTokens might send a response immediately)
-		superTokensErrorHandler()(err, request, reply)
+		// // Pass the error through Clerk (Clerk might send a response immediately)
+		// clerkErrorHandler()(err, request, reply)
 
 		// Do any other fallback logic if the reply is not yet sent
 		if (!reply.sent) {
@@ -70,7 +56,7 @@ async function main() {
 
 	// Routes
 	logAppServer.info('Registering routes')
-	server.register(routesCreatorMetadata)
+	await routesConversations(server)
 
 	// Health check route
 	server.get('/check', async () => {
