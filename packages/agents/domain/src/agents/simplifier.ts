@@ -1,6 +1,6 @@
 import { Schema as S } from 'effect'
 
-import { AgentInput, AgentOutput } from '../types'
+import { BaseAgentInput, BaseAgentOutput } from '../types'
 
 /**
  * Complexity level options for simplification
@@ -9,7 +9,7 @@ export const SimplifierLevel = S.Union(S.Literal('citizen'), S.Literal('staff'))
 export type SimplifierLevel = typeof SimplifierLevel.Type
 
 export const SimplifierInput = S.extend(
-	AgentInput,
+	BaseAgentInput,
 	S.Struct({
 		/**
 		 * The target complexity level for simplification
@@ -24,7 +24,7 @@ export const SimplifierInput = S.extend(
 export type SimplifierInput = typeof SimplifierInput.Type
 
 export const SimplifierOutput = S.extend(
-	AgentOutput,
+	BaseAgentOutput,
 	S.Struct({
 		originalText: S.String,
 		/**

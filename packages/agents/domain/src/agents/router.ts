@@ -1,19 +1,19 @@
-import { Schema as S } from 'effect'
+import { Effect, JSONSchema, Schema as S } from 'effect'
 
-import { AgentInput, AgentOutput } from '../types'
+import { BaseAgentInput, BaseAgentOutput } from '../types'
 
 export const AgentType = S.Union(
 	S.Literal('impact'),
-	S.Literal('legalGap'),
-	S.Literal('planner'),
-	S.Literal('rephraser'),
+	// S.Literal('legalGap'),
+	// S.Literal('planner'),
+	// S.Literal('rephraser'),
 	S.Literal('simplifier'),
 	S.Literal('summarizer'),
 )
 export type AgentType = typeof AgentType.Type
 
 export const RouterInput = S.extend(
-	AgentInput,
+	BaseAgentInput,
 	S.Struct({
 		/**
 		 * List of available agents that can be routed to
@@ -32,20 +32,13 @@ export const RouterInput = S.extend(
 export type RouterInput = typeof RouterInput.Type
 
 export const RouterOutput = S.extend(
-	AgentOutput,
+	BaseAgentOutput,
 	S.Struct({
-		/**
-		 * The next agent to process the request (or array for sequential routing)
-		 */
 		nextAgent: S.Union(AgentType, S.Array(AgentType)),
 		/**
 		 * Explanation of the routing decision
 		 */
 		routingReason: S.String,
-		/**
-		 * Confidence level in the routing decision (0-1)
-		 */
-		confidence: S.optional(S.Number),
 		/**
 		 * Alternative agents that were considered
 		 */

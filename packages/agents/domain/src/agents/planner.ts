@@ -1,6 +1,6 @@
 import { Schema as S } from 'effect'
 
-import { AgentInput, AgentOutput } from '../types'
+import { BaseAgentInput, BaseAgentOutput } from '../types'
 
 /**
  * A single step in a plan
@@ -38,7 +38,7 @@ export const PlanStep = S.Struct({
 export type PlanStep = typeof PlanStep.Type
 
 export const PlannerInput = S.extend(
-	AgentInput,
+	BaseAgentInput,
 	S.Struct({
 		/**
 		 * The specific goal to be achieved by the plan
@@ -61,7 +61,7 @@ export const PlannerInput = S.extend(
 export type PlannerInput = typeof PlannerInput.Type
 
 export const PlannerOutput = S.extend(
-	AgentOutput,
+	BaseAgentOutput,
 	S.Struct({
 		/**
 		 * The goal of the plan

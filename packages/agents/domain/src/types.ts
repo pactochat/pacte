@@ -8,11 +8,11 @@ import {
 /**
  * Base input for all agents
  */
-export const AgentInput = S.Struct({
+export const BaseAgentInput = S.Struct({
 	/**
-	 * The text content to be processed
+	 * Intent of the user
 	 */
-	text: S.String,
+	intent: S.String,
 	/**
 	 * The language of the text (ISO 639-3 code)
 	 */
@@ -26,12 +26,12 @@ export const AgentInput = S.Struct({
 	 */
 	timestamp: S.optional(ZonedDateTimeString),
 }).annotations({ identifier: '@pacto-chat/agents-domain/AgentInput' })
-export type AgentInput = typeof AgentInput.Type
+export type BaseAgentInput = typeof BaseAgentInput.Type
 
 /**
  * Base output for all agents
  */
-export const AgentOutput = S.Struct({
+export const BaseAgentOutput = S.Struct({
 	/**
 	 * The processed text result
 	 */
@@ -49,7 +49,7 @@ export const AgentOutput = S.Struct({
 	 */
 	timestamp: S.optional(ZonedDateTimeString),
 }).annotations({ identifier: '@pacto-chat/agents-domain/AgentOutput' })
-export type AgentOutput = typeof AgentOutput.Type
+export type BaseAgentOutput = typeof BaseAgentOutput.Type
 
 export const ProcessingStatus = S.Union(
 	S.Literal('pending'),

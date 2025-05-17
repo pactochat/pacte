@@ -1,6 +1,6 @@
 import { Schema as S } from 'effect'
 
-import { AgentInput, AgentOutput } from '../types'
+import { BaseAgentInput, BaseAgentOutput } from '../types'
 
 /**
  * Risk level classification for legal gaps
@@ -40,7 +40,7 @@ export const LegalGap = S.Struct({
 export type LegalGap = typeof LegalGap.Type
 
 export const LegalGapInput = S.extend(
-	AgentInput,
+	BaseAgentInput,
 	S.Struct({
 		/**
 		 * Jurisdiction for legal assessment (e.g., "US", "EU", "California")
@@ -63,7 +63,7 @@ export const LegalGapInput = S.extend(
 export type LegalGapInput = typeof LegalGapInput.Type
 
 export const LegalGapOutput = S.extend(
-	AgentOutput,
+	BaseAgentOutput,
 	S.Struct({
 		/**
 		 * List of identified legal gaps

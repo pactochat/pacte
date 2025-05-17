@@ -1,6 +1,6 @@
 import { Schema as S } from 'effect'
 
-import { AgentInput, AgentOutput } from '../types'
+import { BaseAgentInput, BaseAgentOutput } from '../types'
 
 /**
  * Types of impact dimensions that can be assessed
@@ -10,8 +10,8 @@ export const ImpactDimensionType = S.Union(
 	S.Literal('financial'),
 	S.Literal('environmental'),
 	S.Literal('legal'),
-	S.Literal('ethical'),
-	S.Literal('political'),
+	// S.Literal('ethical'),
+	// S.Literal('political'),
 	S.Literal('technological'),
 )
 export type ImpactDimensionType = typeof ImpactDimensionType.Type
@@ -44,7 +44,7 @@ export const ImpactDimension = S.Struct({
 export type ImpactDimension = typeof ImpactDimension.Type
 
 export const ImpactInput = S.extend(
-	AgentInput,
+	BaseAgentInput,
 	S.Struct({
 		/**
 		 * Specific dimensions to assess (defaults to all if not specified)
@@ -63,7 +63,7 @@ export const ImpactInput = S.extend(
 export type ImpactInput = typeof ImpactInput.Type
 
 export const ImpactOutput = S.extend(
-	AgentOutput,
+	BaseAgentOutput,
 	S.Struct({
 		/**
 		 * Assessments for each dimension analyzed

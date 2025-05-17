@@ -1,9 +1,9 @@
 import { Schema as S } from 'effect'
 
-import { AgentInput, AgentOutput } from '../types'
+import { BaseAgentInput, BaseAgentOutput } from '../types'
 
 export const SummarizerInput = S.extend(
-	AgentInput,
+	BaseAgentInput,
 	S.Struct({
 		/**
 		 * Maximum length of the summary in characters
@@ -28,7 +28,7 @@ export const SummarizerInput = S.extend(
 export type SummarizerInput = typeof SummarizerInput.Type
 
 export const SummarizerOutput = S.extend(
-	AgentOutput,
+	BaseAgentOutput,
 	S.Struct({
 		originalText: S.String,
 		/**
