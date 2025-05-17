@@ -2,52 +2,66 @@
 
 **Español**: For the Spanish version of this README, see [`README`](./docs/README_es.md).
 
-## Overview
+## Vision & Mission
 
-This repository defines **Pacte**, a full-stack AI-driven chat platform built to empower **local governments and institutions** with secure, data-driven decision-making capabilities. Using regional data, Pacte enables planning and decisions as good as—or better than—central governments and supranational organizations like the WHO or UN. The system is powered by a **Node.js Fastify server**, a **cross-platform chat interface** (web and native mobile via Expo), a **LangChain orchestrator** for multi-agent workflows, and **data crawlers** to gather and process regional information.
+Pacte Xat is an open-source, AI-powered chat platform designed to revolutionize decision-making and transparency in local and regional governments. Our vision is to set a new global standard for AI in politics and governance, starting with Catalan-speaking regions and expanding internationally. By leveraging advanced language models (like Aina Kit's Salamandra-7b-instruct), we empower public administrations and citizens with data-driven insights and accessible civic engagement tools.
 
-Key components include:
+### Why Pacte Xat?
 
-1. **Chat Interface**: A ChatGPT-like experience for users to query data, generate insights, or request actions. Ask questions like "What’s the health trend in my region?" or "Plan a flood response."
-2. **Data Crawlers**: Collect and structure regional data for analysis.
-3. **Agentic Workflows**: Multi-agent system (e.g., Data Agent, Analysis Agent, Planning Agent) orchestrated via LangChain.
+- **Empower Local Decision-Making**: Provide local governments with tools to analyze regional data and plan effectively, outperforming centralized systems by focusing on hyper-local context.
+- **Enhance Transparency & Access**: Make complex information accessible and actionable for citizens, fostering trust and participation.
+- **Scalable & Sustainable**: Designed for international adaptation, with a free self-hosted version and a paid cloud subscription for long-term viability.
 
-## Primary Goals
+### Example Use Cases
 
-1. **Empower Local Decision-Making**  
-   - Provide local governments with tools to analyze regional data and plan effectively.  
-   - Outperform centralized systems by focusing on hyper-local context.
+**For Citizens:**
 
-2. **Multi-Agent Coordination**  
-   - Leverage LangChain to orchestrate agents for tasks like data crawling, summarization, and decision support.  
-   - Central **Planning Agent** coordinates sub-tasks; specialized agents handle data and analysis.
+- "What did the city council decide about the new equality plan in the last meeting?"
+- "Where can I find information on local cultural events and their economic impact?"
+- "How do I report a broken streetlamp in my neighborhood?"
+- "Explain the Municipal Action Plan in simple terms."
+- "What is the city doing to address the perception that 'nothing ever happens here'?"
+
+**For Government Officials & Staff:**
+
+- "Generate a draft social media thread summarizing the last council meeting."
+- "Identify strengths and weaknesses in the opposition's arguments."
+- "Summarize citizen complaints about street cleaning."
+- "Analyze a large planning document and extract the 5 most relevant points."
+- "Identify mentions of 'economic impact' and 'sustainability' in festival reports."
+
+### Economic & Social Impact
+
+- **Catalonia**: 900+ municipalities, €8B+ annual budget. Even 5% adoption could support €400M+ in managed resources.
+- **Efficiency Gains**: 2-5% savings in operational budgets, potentially €8-20M optimized annually in early stages.
+- **Scalability**: Designed for Spain (8,000+ municipalities, €60B budget) and beyond, with plans for multilingual support.
+
+## Architecture & Tech Stack
+
+Pacte Xat is built with a modern, robust architecture:
+
+- **Clean Architecture & DDD**: The codebase is organized into bounded contexts, following Clean Architecture and Domain-Driven Design principles for maintainability and scalability.
+- **TypeScript Everywhere**: Full stack, cross-platform development in TypeScript for consistency and safety.
+- **Frontend**: React, React Native, Expo, Tamagui (Material Design 3, custom tokens for theming).
+- **Backend**: Fastify (Node.js), Effect, containerized for secure computation.
+- **AI Orchestration**: LangChain, LangGraph for multi-agent workflows.
+- **Semantic Search**: Qdrant.
+- **Core LLMs**: Aina Kit's Salamandra models, with support for OpenAI, DeepSeek, Grok, etc.
+- **Data Storage**: PostgreSQL, Databricks.
+- **Other Tools**: Mass data processing, internet search, GitHub for open-source collaboration.
 
 ## Core Components
 
-1. **Fastify/Node.js Backend**  
-   - TypeScript-based server with APIs to manage chat sessions, process data, and execute agent tasks.  
-   - Integrates with containerized environments for secure computation.  
-   - Serves the chat interface and mobile app backend.
+1. **Chat Interface**: Cross-platform (web/mobile) chat UI for users to query data, generate insights, or request actions.
+2. **Data Crawlers**: Scripts to collect and structure regional data for analysis.
+3. **Agentic Workflows**: Multi-agent system orchestrated via LangChain and LangGraph.
+4. **Backend APIs**: Fastify server managing chat sessions, data processing, and agent tasks.
 
-2. **Cross-Platform Chat (Expo)**  
-   - Built with Expo for web and native mobile (iOS/Android) compatibility.  
-   - Provides a ChatGPT-like UI for querying data and interacting with agents.
+## Getting Involved
 
-3. **LangChain.js Orchestrator**  
-   - Manages multi-agent workflows (e.g., crawling data, generating reports, suggesting plans).  
-   - Powers LLM-driven responses and task delegation.
+We are actively developing the core web and mobile interfaces and the AI agent orchestrator. If you're interested in making a significant impact at the intersection of AI, governance, and open source, we'd love to have you contribute!
 
-4. **Data Crawlers**  
-   - Custom scripts to scrape, aggregate, and clean regional data from various sources.  
-   - Feeds structured data into the system for agent analysis.
-
-## ToDo
-
-- [ ] Bare minimum web and app working on Expo
-- [ ] Add LangChain agents to the server
-- [ ] Add UI for à la ChatGPT
-- [ ] Scrape data from some local government websites and regions
-- [ ] Put scraped data into a database
+Before you start, please read our [Contributing Guide](./CONTRIBUTING.md) for setup instructions, coding standards, and contribution workflow.
 
 ## License
 
