@@ -1,5 +1,5 @@
 {
-	"name": "@pacto-chat/shared-utils-env",
+	"name": "@aipacto/shared-utils-env",
 	"version": "0.0.1",
 	"main": "./src/index.ts",
 	"type": "module",
@@ -21,9 +21,9 @@
 		"dotenv": "^16.4.5"
 	},
 	"peerDependencies": {
+		"@aipacto/shared-utils-logging": "workspace:*",
 		"@effect/platform": "^0.80.8",
 		"@effect/platform-node": "^0.76.16",
-		"@pacto-chat/shared-utils-logging": "workspace:*",
 		"effect": "^3.14.8"
 	}
 }

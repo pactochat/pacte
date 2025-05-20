@@ -1,7 +1,7 @@
-import type { tamaguiConfig } from '@pacto-chat/shared-ui-core/theme'
+import type { tamaguiConfig } from '@aipacto/shared-ui-core/theme'
 
 export type CustomTamaguiConfigType = typeof tamaguiConfig
 
-declare module '@pacto-chat/shared-ui-core' {
+declare module '@aipacto/shared-ui-core' {
 	interface ICustomTamaguiConfig extends CustomTamaguiConfigType {}
 }

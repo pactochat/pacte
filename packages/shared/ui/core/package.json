@@ -1,5 +1,5 @@
 {
-	"name": "@pacto-chat/shared-ui-core",
+	"name": "@aipacto/shared-ui-core",
 	"version": "0.0.1",
 	"main": "./dist/index.js",
 	"type": "module",
@@ -46,8 +46,8 @@
 		"moti": "^0.30.0"
 	},
 	"peerDependencies": {
-		"@pacto-chat/shared-domain": "workspace:*",
-		"@pacto-chat/shared-ui-localization": "workspace:*",
+		"@aipacto/shared-domain": "workspace:*",
+		"@aipacto/shared-ui-localization": "workspace:*",
 		"react": "18.3.1",
 		"react-native": "0.76.9",
 		"react-native-reanimated": "~3.16.1",

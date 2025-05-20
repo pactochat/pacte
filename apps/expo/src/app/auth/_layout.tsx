@@ -2,8 +2,8 @@ import { useAuth } from '@clerk/clerk-expo'
 import { Redirect, Stack } from 'expo-router'
 import React from 'react'
 
-import { useTranslation } from '@pacto-chat/shared-ui-localization'
-import { logExpoAuth } from '@pacto-chat/shared-utils-logging'
+import { useTranslation } from '@aipacto/shared-ui-localization'
+import { logExpoAuth } from '@aipacto/shared-utils-logging'
 
 export default function AuthRoutesLayout() {
 	const { isSignedIn } = useAuth()

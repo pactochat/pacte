@@ -1,5 +1,5 @@
 {
-	"name": "pacto-chat",
+	"name": "aipacto",
 	"version": "0.0.0",
 	"repository": "https://github.com/guillempuche/pacto_chat",
 	"packageManager": "yarn@4.7.0",
@@ -18,15 +18,15 @@
 	],
 	"scripts": {
 		"______ Development ______": "Run applications in development mode",
-		"server": "yarn turbo run @pacto-chat/apps-server#start",
-		"web": "yarn workspace @pacto-chat/apps-expo web",
+		"server": "yarn turbo run @aipacto/apps-server#start",
+		"web": "yarn workspace @aipacto/apps-expo web",
 		"chrome": "\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --remote-debugging-port=9222 &",
 		"______ Build ______": "Build and run the monorepo",
 		"build": "DO_NOT_TRACK=1 TURBO_TELEMETRY_DISABLED=1 turbo run build --verbosity=2",
 		"______ Setup ______": "Project initialization",
 		"prepare": "lefthook install",
 		"setup": "tsx scripts/setup.ts development",
-		"generate-paths": "yarn workspace @pacto-chat/shared-tsconfig generate-paths",
+		"generate-paths": "yarn workspace @aipacto/shared-tsconfig generate-paths",
 		"______ Cleanup ______": "Clean project files and dependencies",
 		"clean-nodemodules": "rm -rf node_modules && rm -rf ./apps/*/node_modules && rm -rf ./packages/**/node_modules && yarn cache clean && rm -rf yarn.lock",
 		"______ Check ______": "Validate code and dependencies",
@@ -44,8 +44,8 @@
 		"docs:all": "yarn docs:apps && yarn docs:agents && yarn docs:shared"
 	},
 	"devDependencies": {
+		"@aipacto/shared-tsconfig": "workspace:*",
 		"@biomejs/biome": "^1.9.4",
-		"@pacto-chat/shared-tsconfig": "workspace:*",
 		"@secretlint/secretlint-rule-no-dotenv": "^9.3.2",
 		"@secretlint/secretlint-rule-preset-recommend": "^9.2.0",
 		"@types/node": "^22.10.10",

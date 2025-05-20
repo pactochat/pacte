@@ -1,5 +1,5 @@
+import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 import { END, START, StateGraph } from '@langchain/langgraph'
-import { logAgentsInfraLangchain } from '@pacto-chat/shared-utils-logging'
 
 import { impactAgentGraph } from '../impact'
 import { plannerAgentGraph } from '../planner'

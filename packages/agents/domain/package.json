@@ -1,5 +1,5 @@
 {
-	"name": "@pacto-chat/agents-domain",
+	"name": "@aipacto/agents-domain",
 	"version": "0.0.1",
 	"type": "module",
 	"types": "./dist/index.d.ts",
@@ -17,7 +17,7 @@
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
 	"peerDependencies": {
-		"@pacto-chat/shared-domain": "workspace:*",
+		"@aipacto/shared-domain": "workspace:*",
 		"effect": "^3.14.8"
 	}
 }

@@ -2,7 +2,7 @@ import { LogLevel } from 'typescript-logging'
 import { CategoryProvider } from 'typescript-logging-category-style'
 
 // Root categories
-export const rootProvider = CategoryProvider.createProvider('@pacto-chat', {
+export const rootProvider = CategoryProvider.createProvider('@aipacto', {
 	level: LogLevel.Debug,
 })
 const logApps = rootProvider.getCategory('apps')

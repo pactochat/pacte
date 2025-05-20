@@ -36,28 +36,28 @@
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "paths": {
-      "@pacto-chat/agents-domain": [
+      "@aipacto/agents-domain": [
         "../../agents/domain/src"
       ],
-      "@pacto-chat/agents-infra-langchain": [
+      "@aipacto/agents-infra-langchain": [
         "../../agents/infrastructure/langchain/src"
       ],
-      "@pacto-chat/shared-domain": [
+      "@aipacto/shared-domain": [
         "../domain/src"
       ],
-      "@pacto-chat/shared-ui-core": [
+      "@aipacto/shared-ui-core": [
         "../ui/core/src"
       ],
-      "@pacto-chat/shared-ui-core/*": [
+      "@aipacto/shared-ui-core/*": [
         "../ui/core/src/*"
       ],
-      "@pacto-chat/shared-ui-localization": [
+      "@aipacto/shared-ui-localization": [
         "../ui/localization/src"
       ],
-      "@pacto-chat/shared-utils-env": [
+      "@aipacto/shared-utils-env": [
         "../utils/env/src"
       ],
-      "@pacto-chat/shared-utils-logging": [
+      "@aipacto/shared-utils-logging": [
         "../utils/logging/src"
       ]
     }

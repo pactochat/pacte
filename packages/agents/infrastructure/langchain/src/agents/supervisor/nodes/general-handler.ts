@@ -5,8 +5,8 @@ import {
 } from '@langchain/core/messages'
 import { ChatOpenAI } from '@langchain/openai'
 
-import { ListLanguageCodes } from '@pacto-chat/shared-domain'
-import { logAgentsInfraLangchain } from '@pacto-chat/shared-utils-logging'
+import { ListLanguageCodes } from '@aipacto/shared-domain'
+import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 import { getLanguageSpecificPrompt } from '../../../tools/language'
 import type { SupervisorState, SupervisorUpdate } from '../types'
 

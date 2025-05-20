@@ -13,7 +13,7 @@ import type { ReactNode } from 'react'
 import { StyleSheet } from 'react-native'
 import { TamaguiProvider } from 'tamagui'
 
-import { tamaguiConfig } from '@pacto-chat/shared-ui-core/theme'
+import { tamaguiConfig } from '@aipacto/shared-ui-core/theme'
 
 export const NextTamaguiProvider = ({ children }: { children: ReactNode }) => {
 	const [theme, setTheme] = useRootTheme()

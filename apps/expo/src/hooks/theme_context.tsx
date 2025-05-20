@@ -3,8 +3,8 @@ import type React from 'react'
 import { createContext, useContext, useEffect, useState } from 'react'
 import { useColorScheme } from 'react-native'
 
-import type { ThemeName } from '@pacto-chat/shared-ui-core/theme'
-import { logExpoHooks } from '@pacto-chat/shared-utils-logging'
+import type { ThemeName } from '@aipacto/shared-ui-core/theme'
+import { logExpoHooks } from '@aipacto/shared-utils-logging'
 
 export const AVAILABLE_THEMES: ThemeName[] = ['light', 'dark', 'system']
 

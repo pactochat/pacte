@@ -1,6 +1,6 @@
+import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 import { HumanMessage, SystemMessage } from '@langchain/core/messages'
 import { ChatOpenAI } from '@langchain/openai'
-import { logAgentsInfraLangchain } from '@pacto-chat/shared-utils-logging'
 import { z } from 'zod'
 
 import { detectLanguage } from '../../../tools/language_detector'

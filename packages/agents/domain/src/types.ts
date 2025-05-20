@@ -3,7 +3,7 @@ import { Schema as S } from 'effect'
 import {
 	ListLanguageCodesLiteral,
 	ZonedDateTimeString,
-} from '@pacto-chat/shared-domain'
+} from '@aipacto/shared-domain'
 
 /**
  * Base input for all agents
@@ -25,7 +25,7 @@ export const BaseAgentInput = S.Struct({
 	 * When the request was created
 	 */
 	timestamp: S.optional(ZonedDateTimeString),
-}).annotations({ identifier: '@pacto-chat/agents-domain/AgentInput' })
+}).annotations({ identifier: '@aipacto/agents-domain/AgentInput' })
 export type BaseAgentInput = typeof BaseAgentInput.Type
 
 /**
@@ -48,7 +48,7 @@ export const BaseAgentOutput = S.Struct({
 	 * When the processing was completed
 	 */
 	timestamp: S.optional(ZonedDateTimeString),
-}).annotations({ identifier: '@pacto-chat/agents-domain/AgentOutput' })
+}).annotations({ identifier: '@aipacto/agents-domain/AgentOutput' })
 export type BaseAgentOutput = typeof BaseAgentOutput.Type
 
 export const ProcessingStatus = S.Union(
@@ -79,5 +79,5 @@ export const AgentState = S.Struct({
 	 * Any error that has occurred during processing
 	 */
 	error: S.optional(S.String),
-}).annotations({ identifier: '@pacto-chat/agents-domain/AgentState' })
+}).annotations({ identifier: '@aipacto/agents-domain/AgentState' })
 export type AgentState = typeof AgentState.Type

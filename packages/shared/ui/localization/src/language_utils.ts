@@ -6,8 +6,8 @@ import {
 	ListSupportedLanguagesCodes,
 	ListSupportedLanguagesMapperIso1to3,
 	isValidDeviceLanguageCode,
-} from '@pacto-chat/shared-domain'
-import { logSharedUiLocalization } from '@pacto-chat/shared-utils-logging'
+} from '@aipacto/shared-domain'
+import { logSharedUiLocalization } from '@aipacto/shared-utils-logging'
 
 /**
  * Gets the user's preferred language from metadata or device

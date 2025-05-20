@@ -6,15 +6,15 @@ import { Controller, useForm } from 'react-hook-form'
 import { showMessage } from 'react-native-flash-message'
 import { YStack } from 'tamagui'
 
-import { Email } from '@pacto-chat/shared-domain'
+import { Email } from '@aipacto/shared-domain'
 import {
 	CoButtonText,
 	CoCard,
 	CoPage,
 	CoTextField,
-} from '@pacto-chat/shared-ui-core/components'
-import { useTranslation } from '@pacto-chat/shared-ui-localization'
-import { logExpoPagesAuth } from '@pacto-chat/shared-utils-logging'
+} from '@aipacto/shared-ui-core/components'
+import { useTranslation } from '@aipacto/shared-ui-localization'
+import { logExpoPagesAuth } from '@aipacto/shared-utils-logging'
 import { UnknownException } from 'effect/Cause'
 
 const log = logExpoPagesAuth.getChildCategory('login')

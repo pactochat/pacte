@@ -3,7 +3,7 @@ import { useEffect } from 'react'
 import React from 'react'
 import { Animated, type ImageSourcePropType, StyleSheet } from 'react-native'
 
-import { logExpoComponents } from '@pacto-chat/shared-utils-logging'
+import { logExpoComponents } from '@aipacto/shared-utils-logging'
 
 export function CoAnimatedSplashScreen({
 	children,

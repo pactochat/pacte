@@ -1,7 +1,7 @@
+import type { BaseAgentOutput } from '@aipacto/agents-domain'
+import { ListLanguageCodes } from '@aipacto/shared-domain'
+import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 import { HumanMessage } from '@langchain/core/messages'
-import type { BaseAgentOutput } from '@pacto-chat/agents-domain'
-import type { ListLanguageCodes } from '@pacto-chat/shared-domain'
-import { logAgentsInfraLangchain } from '@pacto-chat/shared-utils-logging'
 import { supervisorAgentGraph } from './agents/supervisor'
 
 /**
@@ -32,7 +32,7 @@ export const processText = async (
 		const initialState = {
 			context: {
 				question,
-				language,
+				language: language || ListLanguageCodes.cat,
 				additionalContext: {
 					...additionalContext,
 					conversationHistory: messages,
@@ -143,7 +143,7 @@ export const streamWorkflow = async function* (
 	const initialState = {
 		context: {
 			question,
-			language,
+			language: language || ListLanguageCodes.cat,
 			additionalContext: {
 				...additionalContext,
 				conversationHistory: messages,

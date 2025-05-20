@@ -1,7 +1,6 @@
 {
-	"name": "@pacto-chat/apps-marketing",
+	"name": "@aipacto/apps-marketing",
 	"version": "0.1.0",
-	"private": true,
 	"type": "module",
 	"scripts": {
 		"build": "cross-env NODE_OPTIONS=--no-deprecation next build",
@@ -13,7 +12,7 @@
 		"start": "cross-env NODE_OPTIONS=--no-deprecation next start"
 	},
 	"dependencies": {
-		"@pacto-chat/shared-ui-core": "workspace:*",
+		"@aipacto/shared-ui-core": "workspace:*",
 		"@payloadcms/db-postgres": "3.36.0",
 		"@payloadcms/email-resend": "^3.36.0",
 		"@payloadcms/next": "3.36.0",
@@ -41,5 +40,6 @@
 		"@types/react-dom": "18.3.1",
 		"typescript": "5.7.2",
 		"webpack": "^5.99.7"
-	}
+	},
+	"private": true
 }

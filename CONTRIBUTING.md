@@ -28,19 +28,19 @@ yarn workspace <package> <script>
 - Start the Expo app (web/native):
 
   ```sh
-  yarn workspace @pacto-chat/apps-expo start
+  yarn workspace @aipacto/apps-expo start
   ```
 
 - Start the Fastify server:
 
   ```sh
-  yarn workspace @pacto-chat/apps-server start
+  yarn workspace @aipacto/apps-server start
   ```
 
 - Build a shared package:
 
   ```sh
-  yarn workspace @pacto-chat/shared-ui-core build
+  yarn workspace @aipacto/shared-ui-core build
   ```
 
 ## Pre-commit Checks

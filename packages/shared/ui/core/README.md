@@ -37,7 +37,7 @@ All these are built using **Tamagui**, a UI framework that allows us to write co
 If you're working on parts of the application that involve the user interface, you'll typically import components directly from this package. For example:
 
 ```tsx
-import { CoButtonText, CoPage, CoText } from '@pacto-chat/shared-ui-core';
+import { CoButtonText, CoPage, CoText } from '@aipacto/shared-ui-core';
 
 function MyScreen() {
   return (

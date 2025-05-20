@@ -1,7 +1,7 @@
 import { Annotation, MessagesAnnotation } from '@langchain/langgraph'
 
-import type { ImpactOutput } from '@pacto-chat/agents-domain'
-import type { LanguageCode } from '@pacto-chat/shared-domain'
+import type { ImpactOutput } from '@aipacto/agents-domain'
+import type { LanguageCode } from '@aipacto/shared-domain'
 
 export const ImpactAgentState = Annotation.Root({
 	// Messages for conversation history

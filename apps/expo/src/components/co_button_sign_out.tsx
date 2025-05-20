@@ -3,9 +3,9 @@ import { useRouter } from 'expo-router'
 import React, { useState } from 'react'
 import { showMessage } from 'react-native-flash-message'
 
-import { CoButtonText } from '@pacto-chat/shared-ui-core/components'
-import { useTranslation } from '@pacto-chat/shared-ui-localization'
-import { logExpoAuthComponents } from '@pacto-chat/shared-utils-logging'
+import { CoButtonText } from '@aipacto/shared-ui-core/components'
+import { useTranslation } from '@aipacto/shared-ui-localization'
+import { logExpoAuthComponents } from '@aipacto/shared-utils-logging'
 
 export function CoButtonSignOut() {
 	const { t } = useTranslation()

@@ -1,6 +1,6 @@
+import type { SummarizerOutput } from '@aipacto/agents-domain'
+import type { LanguageCode } from '@aipacto/shared-domain'
 import { Annotation, MessagesAnnotation } from '@langchain/langgraph'
-import type { SummarizerOutput } from '@pacto-chat/agents-domain'
-import type { LanguageCode } from '@pacto-chat/shared-domain'
 
 export const SummarizerAgentState = Annotation.Root({
 	// Messages for conversation history

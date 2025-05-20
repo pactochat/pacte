@@ -1,8 +1,7 @@
 {
-	"name": "@pacto-chat/apps-expo",
+	"name": "@aipacto/apps-expo",
 	"version": "0.0.1",
 	"main": "index.ts",
-	"private": true,
 	"type": "module",
 	"scripts": {
 		"start": "METRO_VERBOSE=1 expo start --clear",
@@ -32,16 +31,16 @@
 		"clean": "react-native-clean-project"
 	},
 	"dependencies": {
+		"@aipacto/agents-domain": "workspace:*",
+		"@aipacto/shared-domain": "workspace:*",
+		"@aipacto/shared-ui-core": "workspace:*",
+		"@aipacto/shared-ui-localization": "workspace:*",
+		"@aipacto/shared-utils-logging": "workspace:*",
 		"@clerk/clerk-expo": "^2.10.1",
 		"@clerk/types": "^4.56.0",
 		"@effect/platform": "^0.80.8",
 		"@expo-google-fonts/dm-sans": "^0.3.0",
 		"@expo-google-fonts/literata": "^0.3.0",
-		"@pacto-chat/agents-domain": "workspace:*",
-		"@pacto-chat/shared-domain": "workspace:*",
-		"@pacto-chat/shared-ui-core": "workspace:*",
-		"@pacto-chat/shared-ui-localization": "workspace:*",
-		"@pacto-chat/shared-utils-logging": "workspace:*",
 		"@react-native-async-storage/async-storage": "1.23.1",
 		"@react-navigation/devtools": "^7.0.16",
 		"effect": "^3.14.8",
@@ -84,5 +83,6 @@
 		"expo-build-properties": "~0.13.2",
 		"react-native-clean-project": "^4.0.3",
 		"typescript": "^5.3.3"
-	}
+	},
+	"private": true
 }

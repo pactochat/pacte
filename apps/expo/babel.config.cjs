@@ -18,7 +18,7 @@ module.exports = api => {
 						[
 							'@tamagui/babel-plugin',
 							{
-								components: ['@pacto-chat/shared-ui-core', 'tamagui'],
+								components: ['@aipacto/shared-ui-core', 'tamagui'],
 								config:
 									'../../packages/shared/ui/core/src/theme/tamagui.config.ts',
 								disableExtraction: process.env.NODE_ENV === 'development',

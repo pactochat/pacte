@@ -24,7 +24,7 @@ export const SummarizerInput = S.extend(
 			),
 		),
 	}),
-).annotations({ identifier: '@pacto-chat/agents-domain/SummarizerInput' })
+).annotations({ identifier: '@aipacto/agents-domain/SummarizerInput' })
 export type SummarizerInput = typeof SummarizerInput.Type
 
 export const SummarizerOutput = S.extend(
@@ -56,5 +56,5 @@ export const SummarizerOutput = S.extend(
 		 */
 		compressionRatio: S.optional(S.Number),
 	}),
-).annotations({ identifier: '@pacto-chat/agents-domain/SummarizerOutput' })
+).annotations({ identifier: '@aipacto/agents-domain/SummarizerOutput' })
 export type SummarizerOutput = typeof SummarizerOutput.Type

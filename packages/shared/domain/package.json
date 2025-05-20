@@ -1,5 +1,5 @@
 {
-	"name": "@pacto-chat/shared-domain",
+	"name": "@aipacto/shared-domain",
 	"version": "0.0.1",
 	"type": "module",
 	"types": "./dist/index.d.ts",

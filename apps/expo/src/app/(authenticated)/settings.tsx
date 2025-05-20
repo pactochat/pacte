@@ -6,15 +6,15 @@ import React from 'react'
 import { showMessage } from 'react-native-flash-message'
 import { XStack, YStack } from 'tamagui'
 
-import type { ListSupportedLanguagesCodes } from '@pacto-chat/shared-domain'
+import type { ListSupportedLanguagesCodes } from '@aipacto/shared-domain'
 import {
 	CoButtonText,
 	CoCard,
 	CoPage,
 	CoText,
-} from '@pacto-chat/shared-ui-core/components'
-import { useTranslation } from '@pacto-chat/shared-ui-localization'
-import { logExpoPagesSettings } from '@pacto-chat/shared-utils-logging'
+} from '@aipacto/shared-ui-core/components'
+import { useTranslation } from '@aipacto/shared-ui-localization'
+import { logExpoPagesSettings } from '@aipacto/shared-utils-logging'
 import {
 	CoButtonSignOut,
 	CoLanguageSelector,

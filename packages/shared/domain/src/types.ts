@@ -6,6 +6,6 @@ export const Email = S.String.pipe(
 	),
 	S.brand('Email'),
 ).annotations({
-	identifier: '@pacto-chat/shared-domain/Email',
+	identifier: '@aipacto/shared-domain/Email',
 })
 export type Email = typeof Email.Type

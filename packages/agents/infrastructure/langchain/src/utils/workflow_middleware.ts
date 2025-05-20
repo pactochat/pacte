@@ -1,5 +1,5 @@
-import type { LanguageCode } from '@pacto-chat/shared-domain'
-import { logAgentsInfraLangchain } from '@pacto-chat/shared-utils-logging'
+import type { LanguageCode } from '@aipacto/shared-domain'
+import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 import type { WorkflowStateType } from '../old_state'
 import { detectLanguage } from '../tools/language_detector'
 

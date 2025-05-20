@@ -31,8 +31,8 @@ import FlashMessage from 'react-native-flash-message'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { TamaguiProvider } from 'tamagui'
 
-import { tamaguiConfig } from '@pacto-chat/shared-ui-core/theme'
-import { logAppExpo } from '@pacto-chat/shared-utils-logging'
+import { tamaguiConfig } from '@aipacto/shared-ui-core/theme'
+import { logAppExpo } from '@aipacto/shared-utils-logging'
 import { CoAnimatedSplashScreen } from '~components'
 import { LocalizationProvider, ThemeProvider, useTheme } from '~hooks'
 

@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react'
 import type React from 'react'
 import { ActivityIndicator, View } from 'react-native'
 
-import { ListSupportedLanguagesCodes } from '@pacto-chat/shared-domain'
+import { ListSupportedLanguagesCodes } from '@aipacto/shared-domain'
 import {
 	changeLanguage,
 	detectLanguage,
 	initI18n,
-} from '@pacto-chat/shared-ui-localization'
-import { logAppExpo } from '@pacto-chat/shared-utils-logging'
+} from '@aipacto/shared-ui-localization'
+import { logAppExpo } from '@aipacto/shared-utils-logging'
 
 export function LocalizationProvider({
 	children,

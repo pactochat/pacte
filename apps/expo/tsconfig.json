@@ -1,5 +1,5 @@
 {
-	"extends": "@pacto-chat/shared-tsconfig/ui.json",
+	"extends": "@aipacto/shared-tsconfig/ui.json",
 	"compilerOptions": {
 		"jsx": "react-native",
 		"baseUrl": ".",

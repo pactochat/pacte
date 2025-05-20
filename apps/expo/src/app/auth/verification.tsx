@@ -4,9 +4,9 @@ import { router, useLocalSearchParams, useRouter } from 'expo-router'
 import React, { useState } from 'react'
 import { showMessage } from 'react-native-flash-message'
 
-import { CoPage } from '@pacto-chat/shared-ui-core/components'
-import { useTranslation } from '@pacto-chat/shared-ui-localization'
-import { logExpoAuth } from '@pacto-chat/shared-utils-logging'
+import { CoPage } from '@aipacto/shared-ui-core/components'
+import { useTranslation } from '@aipacto/shared-ui-localization'
+import { logExpoAuth } from '@aipacto/shared-utils-logging'
 import { CoAuthVerification } from '~components'
 
 export default function AuthVerificationScreen() {

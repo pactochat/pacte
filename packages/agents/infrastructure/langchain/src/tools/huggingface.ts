@@ -1,6 +1,6 @@
 import { InferenceClient } from '@huggingface/inference'
 
-import { logAgentsInfraLangchain } from '@pacto-chat/shared-utils-logging'
+import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 
 /**
  * Create a Hugging Face Inference client

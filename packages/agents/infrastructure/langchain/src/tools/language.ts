@@ -3,8 +3,8 @@ import { ChatPromptTemplate } from '@langchain/core/prompts'
 import { DynamicTool } from '@langchain/core/tools'
 import { ChatOpenAI } from '@langchain/openai'
 
-import { type LanguageCode, ListLanguageCodes } from '@pacto-chat/shared-domain'
-import { logAgentsInfraLangchain } from '@pacto-chat/shared-utils-logging'
+import { type LanguageCode, ListLanguageCodes } from '@aipacto/shared-domain'
+import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 import { huggingFaceClient } from './huggingface'
 import { detectLanguage } from './language_detector'
 

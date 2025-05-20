@@ -20,14 +20,14 @@ alwaysApply: true
 - Expo Router v4 (web and native app)
 - Clerk for auth (Expo frontend +v2.10 and Fastify backend)
 - Some apps' packages:
-@pacto-chat/agents-domain: ../../agents/domain/src
-@pacto-chat/agents-infra-langchain: ../../infrastructure/langchain/src
-@pacto-chat/shared-domain: ../domain/src
-@pacto-chat/shared-ui-core: ../ui/core/src
-@pacto-chat/shared-ui-core/*: ../ui/core/src/*
-@pacto-chat/shared-ui-localization: ../ui/localization/src
-@pacto-chat/shared-utils-env: ../utils/env/src
-@pacto-chat/shared-utils-logging: ../utils/logging/src
+@aipacto/agents-domain: ../../agents/domain/src
+@aipacto/agents-infra-langchain: ../../infrastructure/langchain/src
+@aipacto/shared-domain: ../domain/src
+@aipacto/shared-ui-core: ../ui/core/src
+@aipacto/shared-ui-core/*: ../ui/core/src/*
+@aipacto/shared-ui-localization: ../ui/localization/src
+@aipacto/shared-utils-env: ../utils/env/src
+@aipacto/shared-utils-logging: ../utils/logging/src
 ...
 
 ## Frontend

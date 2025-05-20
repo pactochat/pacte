@@ -5,8 +5,8 @@ import { initReactI18next } from 'react-i18next'
 import {
 	ListSupportedLanguagesCodes,
 	ListSupportedLanguagesMapperIso1to3,
-} from '@pacto-chat/shared-domain'
-import { logSharedUiLocalization } from '@pacto-chat/shared-utils-logging'
+} from '@aipacto/shared-domain'
+import { logSharedUiLocalization } from '@aipacto/shared-utils-logging'
 import { getPreferredLanguage } from './language_utils'
 import { languages } from './languages'
 

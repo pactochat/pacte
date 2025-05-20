@@ -3,13 +3,10 @@ import { useState } from 'react'
 import { showMessage } from 'react-native-flash-message'
 import { XStack, YStack } from 'tamagui'
 
-import type { ListSupportedLanguagesCodes } from '@pacto-chat/shared-domain'
-import { CoButtonText, CoText } from '@pacto-chat/shared-ui-core/components'
-import {
-	changeLanguage,
-	useTranslation,
-} from '@pacto-chat/shared-ui-localization'
-import { logExpoPagesSettings } from '@pacto-chat/shared-utils-logging'
+import type { ListSupportedLanguagesCodes } from '@aipacto/shared-domain'
+import { CoButtonText, CoText } from '@aipacto/shared-ui-core/components'
+import { changeLanguage, useTranslation } from '@aipacto/shared-ui-localization'
+import { logExpoPagesSettings } from '@aipacto/shared-utils-logging'
 
 export const CoLanguageSelector = ({
 	user,

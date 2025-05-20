@@ -1,5 +1,5 @@
 {
-	"name": "@pacto-chat/agents-infra-langchain",
+	"name": "@aipacto/agents-infra-langchain",
 	"version": "0.0.1",
 	"type": "module",
 	"types": "./dist/index.d.ts",
@@ -25,8 +25,8 @@
 		"zod": "^3.23.8"
 	},
 	"peerDependencies": {
-		"@pacto-chat/agents-domain": "workspace:*",
-		"@pacto-chat/shared-utils-logging": "workspace:*",
+		"@aipacto/agents-domain": "workspace:*",
+		"@aipacto/shared-utils-logging": "workspace:*",
 		"effect": "^3.14.8",
 		"langchain": "^0.3.24"
 	}

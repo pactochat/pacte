@@ -9,9 +9,9 @@ import {
 	CoButtonText,
 	CoText,
 	CoTextField,
-} from '@pacto-chat/shared-ui-core/components'
-import { useTranslation } from '@pacto-chat/shared-ui-localization'
-import { logExpoComponents } from '@pacto-chat/shared-utils-logging'
+} from '@aipacto/shared-ui-core/components'
+import { useTranslation } from '@aipacto/shared-ui-localization'
+import { logExpoComponents } from '@aipacto/shared-utils-logging'
 
 class VerificationFailed extends Data.TaggedError('VerificationFailed') {}
 class ClientStateInvalid extends Data.TaggedError('ClientStateInvalid') {}

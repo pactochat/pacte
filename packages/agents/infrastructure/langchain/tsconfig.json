@@ -1,5 +1,5 @@
 {
-	"extends": "@pacto-chat/shared-tsconfig/base.json",
+	"extends": "@aipacto/shared-tsconfig/base.json",
 	"compilerOptions": {
 		"rootDir": "src",
 		"outDir": "dist"

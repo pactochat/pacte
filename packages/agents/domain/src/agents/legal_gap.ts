@@ -59,7 +59,7 @@ export const LegalGapInput = S.extend(
 		 */
 		includeDetailedCitations: S.optional(S.Boolean),
 	}),
-).annotations({ identifier: '@pacto-chat/agents-domain/LegalGapInput' })
+).annotations({ identifier: '@aipacto/agents-domain/LegalGapInput' })
 export type LegalGapInput = typeof LegalGapInput.Type
 
 export const LegalGapOutput = S.extend(
@@ -90,5 +90,5 @@ export const LegalGapOutput = S.extend(
 		 */
 		jurisdiction: S.String,
 	}),
-).annotations({ identifier: '@pacto-chat/agents-domain/LegalGapOutput' })
+).annotations({ identifier: '@aipacto/agents-domain/LegalGapOutput' })
 export type LegalGapOutput = typeof LegalGapOutput.Type

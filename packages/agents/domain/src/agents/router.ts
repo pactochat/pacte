@@ -28,7 +28,7 @@ export const RouterInput = S.extend(
 		 */
 		isSequential: S.optional(S.Boolean),
 	}),
-).annotations({ identifier: '@pacto-chat/agents-domain/RouterInput' })
+).annotations({ identifier: '@aipacto/agents-domain/RouterInput' })
 export type RouterInput = typeof RouterInput.Type
 
 export const RouterOutput = S.extend(
@@ -44,5 +44,5 @@ export const RouterOutput = S.extend(
 		 */
 		alternativeAgents: S.optional(S.Array(AgentType)),
 	}),
-).annotations({ identifier: '@pacto-chat/agents-domain/RouterOutput' })
+).annotations({ identifier: '@aipacto/agents-domain/RouterOutput' })
 export type RouterOutput = typeof RouterOutput.Type

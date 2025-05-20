@@ -54,7 +54,7 @@ const monorepoConfig = {
 
 // Add Tamagui web support with optimizing compiler and CSS extraction
 const tamaguiConfig = withTamagui(monorepoConfig, {
-	components: ['@pacto-chat/shared-ui-core', 'tamagui'],
+	components: ['@aipacto/shared-ui-core', 'tamagui'],
 	config: '../../packages/shared/ui/core/src/theme/tamagui.config.ts',
 	outputCSS: './src/tamagui_web.css',
 })

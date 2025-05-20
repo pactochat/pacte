@@ -1,5 +1,5 @@
 {
-	"name": "@pacto-chat/shared-tsconfig",
+	"name": "@aipacto/shared-tsconfig",
 	"version": "0.0.1",
 	"description": "Shared tsconfig base for agentic_platform",
 	"type": "module",

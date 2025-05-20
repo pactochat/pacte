@@ -6,5 +6,5 @@ export const Entity = S.Struct({
 	id: S.UUID,
 	createdAt: ZonedDateTimeString,
 	updatedAt: S.optional(ZonedDateTimeString),
-}).annotations({ identifier: '@pacto-chat/shared-domain/Entity' })
+}).annotations({ identifier: '@aipacto/shared-domain/Entity' })
 export type Entity = typeof Entity.Type

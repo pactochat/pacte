@@ -8,7 +8,7 @@ import {
 	withStaticProperties,
 } from 'tamagui'
 
-import { useTranslation } from '@pacto-chat/shared-ui-localization'
+import { useTranslation } from '@aipacto/shared-ui-localization'
 import { CoSpinner } from './co_spinner'
 import { CoText } from './co_text'
 

@@ -7,8 +7,8 @@ import {
 	type LanguageCode,
 	ListLanguageCodes,
 	ListSupportedLanguagesCodes,
-} from '@pacto-chat/shared-domain'
-import { logAgentsInfraLangchain } from '@pacto-chat/shared-utils-logging'
+} from '@aipacto/shared-domain'
+import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 
 /**
  * Tool for detecting the language of a text

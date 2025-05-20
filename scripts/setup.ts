@@ -91,7 +91,7 @@ const setupCommand = command({
 })
 
 run([setupCommand], {
-	name: 'pacto-chat',
+	name: 'aipacto',
 	description: 'Pacto Chat development environment setup tool',
 	version: '0.1.0',
 })

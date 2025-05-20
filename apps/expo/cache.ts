@@ -2,7 +2,7 @@ import type { TokenCache } from '@clerk/clerk-expo'
 import * as SecureStore from 'expo-secure-store'
 import { Platform } from 'react-native'
 
-import { logAppExpo } from '@pacto-chat/shared-utils-logging'
+import { logAppExpo } from '@aipacto/shared-utils-logging'
 
 const createTokenCache = (): TokenCache => {
 	return {

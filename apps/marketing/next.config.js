@@ -25,7 +25,7 @@ const nextConfig = {
 
 const withTamaguiConfig = withTamagui({
 	config: '../../packages/shared/ui/core/src/theme/tamagui.config.ts',
-	components: ['@pacto-chat/shared-ui-core', 'tamagui'],
+	components: ['@aipacto/shared-ui-core', 'tamagui'],
 	appDir: true,
 	outputCSS:
 		process.env.NODE_ENV === 'production' ? './public/tamagui.css' : null,

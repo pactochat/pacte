@@ -20,7 +20,7 @@ export const SimplifierInput = S.extend(
 		 */
 		preserveKeyTerms: S.optional(S.Array(S.String)),
 	}),
-).annotations({ identifier: '@pacto-chat/agents-domain/SimplifierInput' })
+).annotations({ identifier: '@aipacto/agents-domain/SimplifierInput' })
 export type SimplifierInput = typeof SimplifierInput.Type
 
 export const SimplifierOutput = S.extend(
@@ -44,5 +44,5 @@ export const SimplifierOutput = S.extend(
 		 */
 		preservedTerms: S.optional(S.Array(S.String)),
 	}),
-).annotations({ identifier: '@pacto-chat/agents-domain/SimplifierOutput' })
+).annotations({ identifier: '@aipacto/agents-domain/SimplifierOutput' })
 export type SimplifierOutput = typeof SimplifierOutput.Type

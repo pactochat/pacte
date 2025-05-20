@@ -2,7 +2,7 @@ import { useUser } from '@clerk/clerk-expo'
 import type React from 'react'
 import { XStack, YStack, useMedia } from 'tamagui'
 
-import { CoText } from '@pacto-chat/shared-ui-core/components'
+import { CoText } from '@aipacto/shared-ui-core/components'
 
 interface CoProfileProps {
 	onPress?: () => void

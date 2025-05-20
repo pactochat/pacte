@@ -1,7 +1,7 @@
 import { Annotation, MessagesAnnotation } from '@langchain/langgraph'
 import { z } from 'zod'
 
-import type { LanguageCode } from '@pacto-chat/shared-domain'
+import type { LanguageCode } from '@aipacto/shared-domain'
 
 // Define the supervisor state
 export const SupervisorAnnotation = Annotation.Root({

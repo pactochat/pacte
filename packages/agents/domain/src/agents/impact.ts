@@ -40,7 +40,7 @@ export const ImpactDimension = S.Struct({
 	 * Confidence level in the assessment (0-1)
 	 */
 	confidence: S.optional(S.Number),
-}).annotations({ identifier: '@pacto-chat/agents-domain/ImpactDimension' })
+}).annotations({ identifier: '@aipacto/agents-domain/ImpactDimension' })
 export type ImpactDimension = typeof ImpactDimension.Type
 
 export const ImpactInput = S.extend(
@@ -59,7 +59,7 @@ export const ImpactInput = S.extend(
 		 */
 		includeRecommendations: S.optional(S.Boolean),
 	}),
-).annotations({ identifier: '@pacto-chat/agents-domain/ImpactInput' })
+).annotations({ identifier: '@aipacto/agents-domain/ImpactInput' })
 export type ImpactInput = typeof ImpactInput.Type
 
 export const ImpactOutput = S.extend(
@@ -82,5 +82,5 @@ export const ImpactOutput = S.extend(
 		 */
 		recommendations: S.optional(S.Array(S.String)),
 	}),
-).annotations({ identifier: '@pacto-chat/agents-domain/ImpactOutput' })
+).annotations({ identifier: '@aipacto/agents-domain/ImpactOutput' })
 export type ImpactOutput = typeof ImpactOutput.Type

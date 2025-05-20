@@ -34,7 +34,7 @@ export const PlanStep = S.Struct({
 	 * Potential risks or challenges for this step
 	 */
 	risks: S.optional(S.Array(S.String)),
-}).annotations({ identifier: '@pacto-chat/agents-domain/PlanStep' })
+}).annotations({ identifier: '@aipacto/agents-domain/PlanStep' })
 export type PlanStep = typeof PlanStep.Type
 
 export const PlannerInput = S.extend(
@@ -57,7 +57,7 @@ export const PlannerInput = S.extend(
 		 */
 		timeline: S.optional(S.String),
 	}),
-).annotations({ identifier: '@pacto-chat/agents-domain/PlannerInput' })
+).annotations({ identifier: '@aipacto/agents-domain/PlannerInput' })
 export type PlannerInput = typeof PlannerInput.Type
 
 export const PlannerOutput = S.extend(
@@ -92,5 +92,5 @@ export const PlannerOutput = S.extend(
 		 */
 		recommendations: S.optional(S.Array(S.String)),
 	}),
-).annotations({ identifier: '@pacto-chat/agents-domain/PlannerOutput' })
+).annotations({ identifier: '@aipacto/agents-domain/PlannerOutput' })
 export type PlannerOutput = typeof PlannerOutput.Type

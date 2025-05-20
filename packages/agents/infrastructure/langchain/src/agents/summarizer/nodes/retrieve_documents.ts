@@ -1,7 +1,7 @@
 import type { RunnableConfig } from '@langchain/core/runnables'
 
-import { ListLanguageCodes } from '@pacto-chat/shared-domain'
-import { logAgentsInfraLangchain } from '@pacto-chat/shared-utils-logging'
+import { ListLanguageCodes } from '@aipacto/shared-domain'
+import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 import { detectLanguage } from '../../../tools/language_detector'
 import { languageAwareEmbeddings } from '../../../utils/embedding_robertaca'
 import { qdrantClient } from '../../../utils/qdrant'

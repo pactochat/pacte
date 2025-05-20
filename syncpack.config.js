@@ -15,7 +15,7 @@ export default {
 		},
 		{
 			label: 'Pacto Chat',
-			dependencies: ['@pacto-chat/*'],
+			dependencies: ['@aipacto/*'],
 			policy: 'sameRange',
 		},
 		{
