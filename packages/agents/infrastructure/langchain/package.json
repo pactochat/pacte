@@ -1,5 +1,5 @@
 {
-	"name": "@pacto-chat/agents-infra-langgraph",
+	"name": "@pacto-chat/agents-infra-langchain",
 	"version": "0.0.1",
 	"type": "module",
 	"types": "./dist/index.d.ts",

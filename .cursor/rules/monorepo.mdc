@@ -21,7 +21,7 @@ alwaysApply: true
 - Clerk for auth (Expo frontend +v2.10 and Fastify backend)
 - Some apps' packages:
 @pacto-chat/agents-domain: ../../agents/domain/src
-@pacto-chat/agents-infra-langgraph: ../../infrastructure/langgraph/src
+@pacto-chat/agents-infra-langchain: ../../infrastructure/langchain/src
 @pacto-chat/shared-domain: ../domain/src
 @pacto-chat/shared-ui-core: ../ui/core/src
 @pacto-chat/shared-ui-core/*: ../ui/core/src/*

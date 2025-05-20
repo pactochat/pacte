@@ -4,7 +4,7 @@ import {
 	createAgentInput,
 	processText,
 	streamWorkflow,
-} from '@pacto-chat/agents-infra-langgraph'
+} from '@pacto-chat/agents-infra-langchain'
 import { logAppServer } from '@pacto-chat/shared-utils-logging'
 import type { FastifyInstance, FastifyReply, FastifyRequest } from 'fastify'
 

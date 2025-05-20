@@ -17,7 +17,7 @@
 		"@langchain/core": "^0.3.42",
 		"@langchain/langgraph": "^0.2.54",
 		"@pacto-chat/agents-domain": "workspace:*",
-		"@pacto-chat/agents-infra-langgraph": "workspace:*",
+		"@pacto-chat/agents-infra-langchain": "workspace:*",
 		"@pacto-chat/shared-domain": "workspace:*",
 		"@pacto-chat/shared-utils-env": "workspace:*",
 		"@pacto-chat/shared-utils-logging": "workspace:*",

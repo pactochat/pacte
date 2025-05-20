@@ -39,8 +39,8 @@
       "@pacto-chat/agents-domain": [
         "../../agents/domain/src"
       ],
-      "@pacto-chat/agents-infra-langgraph": [
-        "../../agents/infrastructure/langgraph/src"
+      "@pacto-chat/agents-infra-langchain": [
+        "../../agents/infrastructure/langchain/src"
       ],
       "@pacto-chat/shared-domain": [
         "../domain/src"

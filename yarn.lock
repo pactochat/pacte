@@ -5936,9 +5936,9 @@ __metadata:
   languageName: unknown
   linkType: soft
 
-"@pacto-chat/agents-infra-langgraph@workspace:*, @pacto-chat/agents-infra-langgraph@workspace:packages/agents/infrastructure/langgraph":
+"@pacto-chat/agents-infra-langchain@workspace:*, @pacto-chat/agents-infra-langchain@workspace:packages/agents/infrastructure/langchain":
   version: 0.0.0-use.local
-  resolution: "@pacto-chat/agents-infra-langgraph@workspace:packages/agents/infrastructure/langgraph"
+  resolution: "@pacto-chat/agents-infra-langchain@workspace:packages/agents/infrastructure/langchain"
   dependencies:
     "@huggingface/inference": "npm:^3.13.1"
     "@langchain/core": "npm:^0.3.55"
@@ -6057,7 +6057,7 @@ __metadata:
     "@langchain/core": "npm:^0.3.55"
     "@langchain/langgraph": "npm:^0.2.71"
     "@pacto-chat/agents-domain": "workspace:*"
-    "@pacto-chat/agents-infra-langgraph": "workspace:*"
+    "@pacto-chat/agents-infra-langchain": "workspace:*"
     "@pacto-chat/shared-domain": "workspace:*"
     "@pacto-chat/shared-utils-env": "workspace:*"
     "@pacto-chat/shared-utils-logging": "workspace:*"
