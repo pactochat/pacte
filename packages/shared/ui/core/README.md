@@ -4,7 +4,7 @@ This package is a central library of user interface (UI) building blocks for our
 
 ## What is this?
 
-This package provides a consistent set of UI components and a shared theme (colors, fonts, spacing) for the "À la ChatGPT for City Councils" application. Its main purpose is to ensure that our application has a unified look and feel, following **Material Design 3** guidelines.
+This package provides a consistent set of UI components and a shared theme (colors, fonts, spacing) for Aipacto. Its main purpose is to ensure that our application has a unified look and feel, following **Material Design 3** guidelines.
 
 Material Design 3 is a design system created by Google that helps create high-quality, beautiful digital experiences. By using components from this package, you're helping us stick to this modern design standard.
 
@@ -12,12 +12,10 @@ Material Design 3 is a design system created by Google that helps create high-qu
 
 This package offers several key things:
 
-* **Core UI Components:** These are the fundamental visual elements you'll use to build screens and features. Examples include:
+* **Core UI Components:** These are the fundamental, "atomic" visual elements you'll use to build screens and features. Think of them as the most basic building blocks (like atoms, rather than complex molecules). Most of these components are direct implementations or inspired by the standard components defined in Material Design 3. Examples include:
   * Buttons (`CoButtonText`, `CoButtonIcon`)
-  * Text display elements (`CoText`, `CoParagraph`)
   * Input fields for forms (`CoTextField`)
   * Cards for organizing content (`CoCard`)
-  * Page structures (`CoPage`)
   * And many others for common UI needs.
 * **Theming:** A predefined set of styles based on Material Design 3, which includes:
   * **Colors:** A specific palette for light and dark modes, ensuring consistency and accessibility.
@@ -57,4 +55,4 @@ The components like `CoPage`, `CoText`, and `CoButtonText` will automatically us
 
 ---
 
-This package is the foundation for our application's visual identity. By using its components and theme, we create a more polished, consistent, and user-friendly experience for city councils, their workers, and citizens.
+This package is the foundation for our application's visual identity.
