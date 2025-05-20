@@ -12,7 +12,7 @@ export const BaseAgentInput = S.Struct({
 	/**
 	 * Intent of the user
 	 */
-	intent: S.String,
+	question: S.String,
 	/**
 	 * The language of the text (ISO 639-3 code)
 	 */
@@ -70,11 +70,11 @@ export const AgentState = S.Struct({
 	/**
 	 * Original input to the agent
 	 */
-	input: AgentInput,
+	input: BaseAgentInput,
 	/**
 	 * Current output state (may be partial during processing)
 	 */
-	output: S.optional(AgentOutput),
+	output: S.optional(BaseAgentOutput),
 	/**
 	 * Any error that has occurred during processing
 	 */
