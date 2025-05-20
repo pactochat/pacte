@@ -7,8 +7,8 @@ import {
 	createSimplifierAgent,
 	createSummarizerAgent,
 } from '../agents'
-import { WorkflowState, type WorkflowStateType } from '../state'
-import { createFinalOutput } from './routed'
+import { WorkflowState, type WorkflowStateType } from '../old_state'
+import { createFinalOutput } from './old_routed'
 
 /**
  * Creates a direct workflow with a fixed sequence of agents.

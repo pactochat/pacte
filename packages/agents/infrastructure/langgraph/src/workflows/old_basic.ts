@@ -6,7 +6,7 @@ import {
 	createSimplifierAgent,
 	createSummarizerAgent,
 } from '../agents'
-import { WorkflowState, type WorkflowStateType } from '../state'
+import { WorkflowState, type WorkflowStateType } from '../old_state'
 
 export const createBasicWorkflow = () => {
 	const graph = new StateGraph(WorkflowState)

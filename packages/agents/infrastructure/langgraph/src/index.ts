@@ -1,8 +1,8 @@
-import type { BaseAgentInput, BaseAgentOutput } from '@pacto-chat/agents-domain'
+import { HumanMessage } from '@langchain/core/messages'
+import type { BaseAgentOutput } from '@pacto-chat/agents-domain'
 import type { ListLanguageCodes } from '@pacto-chat/shared-domain'
-import type { WorkflowStateType } from './state'
-import { createRoutedWorkflow, runRoutedWorkflow } from './workflows'
-export { WorkflowState } from './state'
+import { logAgentsInfraLangchain } from '@pacto-chat/shared-utils-logging'
+import { supervisorAgentGraph } from './agents/supervisor'
 
 /**
  * Type representing a message in conversation history
@@ -15,40 +15,43 @@ export interface ConversationMessage {
 /**
  * Main function to process text using the agent workflow
  *
- * @param input Text input with optional language specification
+ * @param question Text input to process
+ * @param language Optional language specification
+ * @param additionalContext Optional additional context
  * @param messages Optional conversation history
  * @returns Processed output with summary, impact analysis, and simplified text
  */
 export const processText = async (
-	input: BaseAgentInput,
+	question: string,
+	language?: ListLanguageCodes,
+	additionalContext?: Record<string, unknown>,
 	messages?: ConversationMessage[],
 ): Promise<BaseAgentOutput> => {
 	try {
-		// Include previous messages as context if provided
-		const enrichedInput =
-			messages && messages.length > 0
-				? {
-						...input,
-						additionalContext: {
-							...input.additionalContext,
-							conversationHistory: messages,
-						},
-					}
-				: input
+		// Create the initial state
+		const initialState = {
+			context: {
+				question,
+				language,
+				additionalContext: {
+					...additionalContext,
+					conversationHistory: messages,
+				},
+			},
+			messages: [new HumanMessage(question)],
+		}
 
-		const result = await runRoutedWorkflow(enrichedInput)
+		// Run the supervisor agent
+		const result = await supervisorAgentGraph.invoke(initialState)
 
 		if (result.error) {
 			throw new Error(result.error)
 		}
 
-		if (!result.output) {
-			// If no specific output was generated, create one from the available results
-			return createFinalOutput(result, input)
-		}
-
-		return result.output
+		// Create final output based on agent results
+		return createFinalOutput(result, question, language)
 	} catch (error) {
+		logAgentsInfraLangchain.error('Error in processText', { error })
 		// Return an error output
 		return {
 			text: 'An error occurred during processing',
@@ -60,11 +63,12 @@ export const processText = async (
 }
 
 /**
- * Helper function to create a final output from the state if not explicitly set
+ * Helper function to create a final output from the state
  */
 function createFinalOutput(
-	state: WorkflowStateType,
-	input: BaseAgentInput,
+	state: any,
+	originalText: string,
+	language?: ListLanguageCodes,
 ): BaseAgentOutput {
 	let text = ''
 	const metadata: Record<string, unknown> = {}
@@ -82,7 +86,7 @@ function createFinalOutput(
 		text = state.impact.text
 		metadata.impact = {
 			overallScore: state.impact.overallImpact,
-			dimensions: state.impact.impacts.map(imp => ({
+			dimensions: state.impact.impacts.map((imp: any) => ({
 				type: imp.type,
 				score: imp.score,
 			})),
@@ -94,9 +98,15 @@ function createFinalOutput(
 			length: state.summarizer.length,
 			format: state.summarizer.format,
 		}
+	} else if (state.planner) {
+		text = `Plan: ${state.planner.title}\n\nObjectives: ${state.planner.objectives.join(', ')}\n\nTimeline: ${state.planner.timeline}`
+		metadata.planner = {
+			steps: state.planner.steps,
+			resources: state.planner.resources,
+		}
 	} else {
 		// If no processing occurred, return the original text
-		text = input.intent
+		text = originalText
 	}
 
 	// Add workflow history if available
@@ -108,25 +118,8 @@ function createFinalOutput(
 
 	return {
 		text,
-		language: input.language,
+		language: language || state.languageDetected || state.context?.language,
 		metadata,
-	}
-}
-
-/**
- * Create a basic agent input object
- *
- * @param text Text to process
- * @param language Optional language code
- * @returns Formatted input for the agent workflow
- */
-export function createAgentInput(
-	text: string,
-	language?: ListLanguageCodes,
-): BaseAgentInput {
-	return {
-		intent: text,
-		language,
 	}
 }
 
@@ -134,43 +127,42 @@ export function createAgentInput(
  * Stream workflow execution for server integration
  * This allows the frontend to receive incremental updates
  *
- * @param input Text input with optional language specification
+ * @param question Text input to process
+ * @param language Optional language specification
+ * @param additionalContext Optional additional context
  * @param messages Optional conversation history
  * @yields Progress updates for each step of the workflow
  */
 export const streamWorkflow = async function* (
-	input: BaseAgentInput,
+	question: string,
+	language?: ListLanguageCodes,
+	additionalContext?: Record<string, unknown>,
 	messages?: ConversationMessage[],
 ) {
-	const workflow = createRoutedWorkflow()
-
-	// Include previous messages as context if provided
-	const enrichedInput =
-		messages && messages.length > 0
-			? {
-					...input,
-					additionalContext: {
-						...input.additionalContext,
-						conversationHistory: messages,
-					},
-				}
-			: input
-
-	// Initialize the state with the input
+	// Initialize the state
 	const initialState = {
-		input: enrichedInput,
+		context: {
+			question,
+			language,
+			additionalContext: {
+				...additionalContext,
+				conversationHistory: messages,
+			},
+		},
+		messages: [new HumanMessage(question)],
 	}
 
 	try {
-		// Stream the workflow execution
-		for await (const chunk of await workflow.stream(initialState)) {
+		// Stream the supervisor agent execution
+		for await (const chunk of await supervisorAgentGraph.stream(initialState)) {
 			// Process each chunk to make it more frontend-friendly
-			const processedChunk = processChunk(chunk, input)
+			const processedChunk = processChunk(chunk, question)
 			if (processedChunk) {
 				yield processedChunk
 			}
 		}
 	} catch (error) {
+		logAgentsInfraLangchain.error('Error in streamWorkflow', { error })
 		// Handle errors during streaming
 		yield {
 			step: 'error',
@@ -187,7 +179,7 @@ export const streamWorkflow = async function* (
  */
 function processChunk(
 	chunk: Record<string, any>,
-	originalInput: BaseAgentInput,
+	originalText: string,
 ): Record<string, any> | null {
 	// Filter out empty chunks
 	if (!chunk || Object.keys(chunk).length === 0) {
@@ -214,7 +206,10 @@ function processChunk(
 		// If the step has completed, also include final response
 		...(stepName === 'output' && {
 			final: true,
-			response: stepData.text || originalInput.intent,
+			response: stepData.text || originalText,
 		}),
 	}
 }
+
+// Export supervisor agent for direct usage
+export { supervisorAgentGraph }

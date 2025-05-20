@@ -10,7 +10,7 @@ import {
 	createSimplifierAgent,
 	createSummarizerAgent,
 } from '../agents'
-import { WorkflowState, type WorkflowStateType } from '../state'
+import { WorkflowState, type WorkflowStateType } from '../old_state'
 
 /**
  * Creates a simplified direct workflow without a router.
@@ -100,7 +100,7 @@ export function createFinalOutput(
 		}
 	} else {
 		// If no processing occurred, return the original text
-		text = input.intent
+		text = input.question
 	}
 
 	// Add workflow history if available

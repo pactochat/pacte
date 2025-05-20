@@ -3,7 +3,7 @@ import type { RunnableConfig } from '@langchain/core/runnables'
 import type { ChatOpenAI } from '@langchain/openai'
 
 import type { PlanStep, PlannerOutput } from '@pacto-chat/agents-domain'
-import type { WorkflowStateType } from '../state'
+import type { WorkflowStateType } from '../old_state'
 /**
  * Extract the goal from text if not explicitly provided
  */
@@ -281,8 +281,8 @@ export const createPlannerAgent = () => {
 			const input = state.input
 
 			const output: PlannerOutput = {
-				text: `Plan for: ${input.intent.substring(0, 40)}...`,
-				goal: input.intent.substring(0, 40),
+				text: `Plan for: ${input.question.substring(0, 40)}...`,
+				goal: input.question.substring(0, 40),
 				steps: [
 					{
 						id: 'step-1',

@@ -17,14 +17,17 @@
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
 	"dependencies": {
+		"@huggingface/inference": "^3.13.1",
 		"@langchain/core": "^0.3.55",
 		"@langchain/langgraph": "^0.2.71",
 		"@langchain/openai": "^0.5.10",
-		"langchain": "^0.3.24",
-		"zod": "^3.24.4"
+		"@qdrant/js-client-rest": "^1.14.0",
+		"zod": "^3.23.8"
 	},
 	"peerDependencies": {
 		"@pacto-chat/agents-domain": "workspace:*",
-		"effect": "^3.14.8"
+		"@pacto-chat/shared-utils-logging": "workspace:*",
+		"effect": "^3.14.8",
+		"langchain": "^0.3.24"
 	}
 }

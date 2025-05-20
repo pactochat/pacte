@@ -1,7 +1,7 @@
 import type { RunnableConfig } from '@langchain/core/runnables'
 
 import type { RephraserOutput } from '@pacto-chat/agents-domain'
-import type { WorkflowStateType } from '../state'
+import type { WorkflowStateType } from '../old_state'
 
 export const createRephraserAgent = () => {
 	return async (
@@ -20,7 +20,7 @@ export const createRephraserAgent = () => {
 			}
 
 			return {
-				rephraser: output,
+				// rephraser: output,
 				currentStep: 'legalgap',
 			}
 		} catch (error) {

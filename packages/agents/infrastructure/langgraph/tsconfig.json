@@ -8,6 +8,9 @@
 	"references": [
 		{
 			"path": "../../domain"
+		},
+		{
+			"path": "../../../shared/utils/logging"
 		}
 	]
 }

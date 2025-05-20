@@ -9,8 +9,12 @@ import type {
 	SimplifierOutput,
 	SummarizerOutput,
 } from '@pacto-chat/agents-domain'
+import type { LanguageCode } from '@pacto-chat/shared-domain'
 
 export const WorkflowState = Annotation.Root({
+	// User language intent
+	languageDetected: Annotation<LanguageCode>(),
+
 	// Agent outputs
 	impact: Annotation<ImpactOutput>({
 		reducer: (prev, next) => ({ ...prev, ...next }),

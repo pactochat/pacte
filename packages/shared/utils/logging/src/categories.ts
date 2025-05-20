@@ -7,6 +7,7 @@ export const rootProvider = CategoryProvider.createProvider('@pacto-chat', {
 })
 const logApps = rootProvider.getCategory('apps')
 const logShared = rootProvider.getCategory('shared')
+const logAgents = rootProvider.getCategory('agents')
 
 // Shared
 export const logSharedDomain = logShared.getChildCategory('domain')
@@ -17,6 +18,11 @@ const logSharedUi = logShared.getChildCategory('ui')
 export const logSharedUiCore = logSharedUi.getChildCategory('core')
 export const logSharedUiLocalization =
 	logSharedUi.getChildCategory('localization')
+
+// Agents
+export const logAgentsInfraLangchain = logAgents
+	.getChildCategory('infra')
+	.getChildCategory('langchain')
 
 // Apps
 export const logAppServer = logApps.getChildCategory('server')

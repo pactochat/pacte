@@ -3,7 +3,7 @@ import type { RunnableConfig } from '@langchain/core/runnables'
 import { ChatOpenAI } from '@langchain/openai'
 
 import type { SimplifierOutput } from '@pacto-chat/agents-domain'
-import type { WorkflowStateType } from '../state'
+import type { WorkflowStateType } from '../old_state'
 import { calculateComplexityScore } from '../utils/text_analysis'
 
 // Create the prompt template

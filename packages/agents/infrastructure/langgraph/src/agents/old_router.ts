@@ -4,7 +4,7 @@ import { ChatOpenAI } from '@langchain/openai'
 import { Effect, JSONSchema, Schema } from 'effect'
 
 import { type RouterInput, RouterOutput } from '@pacto-chat/agents-domain'
-import type { WorkflowStateType } from '../state'
+import type { WorkflowStateType } from '../old_state'
 
 const routerPrompt = ChatPromptTemplate.fromTemplate(`
 You are a routing agent that decides which specialized agent(s) should process a given text. Person wants the text to be processed in {language}
@@ -99,8 +99,8 @@ export const createRouterAgent = () => {
 			const isSequential =
 				input.isSequential !== undefined ? input.isSequential : true
 
-			return await chain.invoke({
-				text: input.intent,
+			return await routerPrompt.invoke({
+				text: input.question,
 				language: input.language,
 				context: input.additionalContext
 					? JSON.stringify(input.additionalContext)

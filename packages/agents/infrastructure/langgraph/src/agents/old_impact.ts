@@ -5,7 +5,7 @@ import { ChatOpenAI } from '@langchain/openai'
 import { z } from 'zod'
 
 import type { ImpactDimension, ImpactOutput } from '@pacto-chat/agents-domain'
-import type { WorkflowStateType } from '../state'
+import type { WorkflowStateType } from '../old_state'
 
 // Create a schema for impact dimensions
 const impactDimensionSchema = z.object({
