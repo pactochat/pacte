@@ -1,9 +1,8 @@
-import { Annotation, MessagesAnnotation } from '@langchain/langgraph'
-import { z } from 'zod'
-
 import type { LanguageCode } from '@aipacto/shared-domain'
+import { Annotation, MessagesAnnotation } from '@langchain/langgraph'
+import { END } from '@langchain/langgraph'
 
-// Define the supervisor state
+// Agent supervisor loop state with context
 export const SupervisorAnnotation = Annotation.Root({
 	// Messages for conversation history
 	messages: MessagesAnnotation.spec.messages,
@@ -12,51 +11,23 @@ export const SupervisorAnnotation = Annotation.Root({
 	context: Annotation<{
 		question?: string
 		language?: LanguageCode
+		languageDetected?: LanguageCode
 		additionalContext?: Record<string, unknown>
 	}>({
 		reducer: (prev, next) => ({ ...prev, ...next }),
 		default: () => ({}),
 	}),
 
-	// Language detection
-	languageDetected: Annotation<LanguageCode>({
-		reducer: (_prev, next) => next,
-		default: () => 'cat',
+	// The agent node that last performed work or should act next
+	next: Annotation<string>({
+		reducer: (x, y) => y ?? x ?? END,
+		default: () => END,
 	}),
 
-	// Routing
-	next: Annotation<
-		'summarizer' | 'impact' | 'simplifier' | 'planner' | 'general'
-	>(),
-
-	// Error handling
 	error: Annotation<string | null>({
 		reducer: (_prev, next) => next,
 		default: () => null,
 	}),
 })
-
-// Export types for the supervisor
 export type SupervisorState = typeof SupervisorAnnotation.State
 export type SupervisorUpdate = typeof SupervisorAnnotation.Update
-
-// Configuration for the supervisor
-export const SupervisorZodConfiguration = z.object({
-	/**
-	 * The model ID to use for the agent.
-	 */
-	model: z
-		.string()
-		.optional()
-		.describe('The model to use for the supervisor agent'),
-
-	/**
-	 * The temperature to use for generation.
-	 */
-	temperature: z
-		.number()
-		.optional()
-		.describe(
-			'Controls randomness in generation (0 = deterministic, 1 = creative)',
-		),
-})

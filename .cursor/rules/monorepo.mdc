@@ -5,7 +5,7 @@ alwaysApply: true
 ---
 ## Project
 
-À la ChatGPT web and app for city councils, its workers and citizens.
+Aipacto is à la ChatGPT web and app for city councils, its workers and citizens.
 
 ## Tech Stack
 
@@ -34,8 +34,8 @@ alwaysApply: true
 
 - Tamagui +v1.126 for web & native.
 - Follow Material Design 3 guidelines.
-- @xiroi/shared-ui-core/*: Exports Tamagui components, components, providers, icons…
-- Always prioritize custom tokens from `@xiroi/shared-ui-core/theme` for colors, spacing, gaps, z-index...
+- @aipacto/shared-ui-core/*: Exports Tamagui components, components, providers, icons…
+- Always prioritize custom tokens from `@aipacto/shared-ui-core/theme` for colors, spacing, gaps, z-index...
 - When adding text for UI, add it also to common.json or other i18n files.
 
 ## Requirements

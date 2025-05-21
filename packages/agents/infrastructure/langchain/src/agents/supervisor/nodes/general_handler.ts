@@ -42,15 +42,16 @@ export async function generalHandler(
 			}
 		}
 
-		// Get language-specific context
-		const language =
-			state.languageDetected || state.context?.language || ListLanguageCodes.cat
+		// // Get language-specific context
+		// const language =
+		// 	state.languageDetected || state.context?.language || ListLanguageCodes.cat
+		// const contextDescription =
 		const contextDescription =
 			'You are a helpful municipal assistant that provides information to citizens.'
-		const promptTemplate = getLanguageSpecificPrompt(
-			language,
-			contextDescription,
-		)
+		// const promptTemplate = getLanguageSpecificPrompt(
+		// 	// language,
+		// 	contextDescription,
+		// )
 
 		// Set up the LLM
 		const llm = new ChatOpenAI({
@@ -59,7 +60,7 @@ export async function generalHandler(
 		})
 
 		// Create system message
-		const systemMessage = new SystemMessage(promptTemplate)
+		const systemMessage = new SystemMessage(contextDescription)
 
 		// Call the LLM
 		const response = await llm.invoke([

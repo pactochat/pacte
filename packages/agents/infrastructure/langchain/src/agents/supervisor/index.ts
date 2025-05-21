@@ -1,62 +1,38 @@
-import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
+import { RunnableLambda } from '@langchain/core/runnables'
 import { END, START, StateGraph } from '@langchain/langgraph'
+import type { CompiledGraph } from '@langchain/langgraph'
 
-import { impactAgentGraph } from '../impact'
-import { plannerAgentGraph } from '../planner'
 import { simplifierAgentGraph } from '../simplifier'
 import { summarizerAgentGraph } from '../summarizer'
-import { generalHandler } from './nodes/general-handler'
-import { router } from './nodes/router'
-import {
-	SupervisorAnnotation,
-	type SupervisorState,
-	SupervisorZodConfiguration,
-} from './types'
+import { generalHandler } from './nodes/general_handler'
+import { supervisorNode } from './nodes/router'
+import { SupervisorAnnotation, type SupervisorState } from './types'
 
-/**
- * Routes the request to the appropriate agent based on the next value
- */
-function handleRoute(state: SupervisorState): string {
-	logAgentsInfraLangchain.debug(
-		`[Supervisor.handleRoute] Routing to ${state.next}`,
-		{ languageDetected: state.languageDetected },
-	)
-	return state.next
-}
+const AGENT_NAMES = ['summarizer', 'simplifier', 'general'] as const
+type AgentName = (typeof AGENT_NAMES)[number]
 
-/**
- * Create the supervisor agent graph
- */
-export const supervisorAgentGraph = new StateGraph(
-	SupervisorAnnotation,
-	SupervisorZodConfiguration,
-)
-	// Agents
-	.addNode('router', router)
+// Create the supervisor agent graph (agent supervisor loop)
+const workflow = new StateGraph(SupervisorAnnotation)
+	.addNode('supervisor', supervisorNode)
 	.addNode('summarizer', summarizerAgentGraph)
-	.addNode('impact', impactAgentGraph)
 	.addNode('simplifier', simplifierAgentGraph)
-	.addNode('planner', plannerAgentGraph)
 	.addNode('general', generalHandler)
 
-	// Edges
-	.addEdge(START, 'router')
-	.addConditionalEdges('router', handleRoute, [
-		'summarizer',
-		'impact',
-		'simplifier',
-		'planner',
-		'general',
-	])
-	.addEdge('summarizer', END)
-	.addEdge('impact', END)
-	.addEdge('simplifier', END)
-	.addEdge('planner', END)
-	.addEdge('general', END)
-	.compile()
+	// Connections: supervisor -> agent
+	.addConditionalEdges(
+		'supervisor',
+		RunnableLambda.from((state: SupervisorState) => state.next),
+		[...AGENT_NAMES, END],
+	)
+	.addEdge(START, 'supervisor')
 
-export {
-	type SupervisorState,
-	SupervisorAnnotation,
-	SupervisorZodConfiguration,
+// Connections: agent -> supervisor
+for (const agent of AGENT_NAMES) {
+	workflow.addEdge(agent, 'supervisor')
 }
+
+export const supervisorAgentGraph: CompiledGraph<
+	AgentName | 'supervisor' | typeof START
+> = workflow.compile()
+
+export { type SupervisorState, SupervisorAnnotation }

@@ -1,128 +1,88 @@
-import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 import { HumanMessage, SystemMessage } from '@langchain/core/messages'
+import { END } from '@langchain/langgraph'
 import { ChatOpenAI } from '@langchain/openai'
 import { z } from 'zod'
 
-import { detectLanguage } from '../../../tools/language_detector'
+import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 import type { SupervisorState, SupervisorUpdate } from '../types'
 
 // List of available agents for routing
+const AGENT_NAMES = [
+	'summarizer',
+	'simplifier',
+	'general',
+	// Add more agent names here as needed
+]
+const options = [END, ...AGENT_NAMES]
+
 const AVAILABLE_AGENTS = `
 - summarizer: Summarizes text content, extracting key points from documents
-- impact: Analyzes the impact of text on different dimensions (social, economic, etc.)
 - simplifier: Simplifies complex text to make it more accessible
-- planner: Creates action plans based on the content
 - general: Handles general queries that don't fit other categories
 `
 
 /**
- * Router node that determines which agent should handle the request
+ * Supervisor node that determines which agent should handle the request next
  */
-export async function router(
+export async function supervisorNode(
 	state: SupervisorState,
 ): Promise<Partial<SupervisorUpdate>> {
 	try {
-		logAgentsInfraLangchain.debug('[Supervisor.router] Routing request')
+		logAgentsInfraLangchain.debug(
+			'[Supervisor.supervisorNode] Deciding next agent',
+		)
 
-		// Get the user's query from the last message or context
-		const lastMessage = state.messages[state.messages.length - 1]
-		const userQuery =
-			typeof lastMessage?.content === 'string'
-				? lastMessage.content
-				: state.context?.question
-
-		if (!userQuery) {
-			logAgentsInfraLangchain.warn(
-				'[Supervisor.router] Missing question in input',
-			)
-			return {
-				error: 'Question is missing',
-				next: 'general',
-			}
-		}
-
-		// Save the query to context if not already there
-		const contextUpdate = !state.context?.question
-			? { context: { question: userQuery } }
-			: {}
-
-		// Detect language if not already provided
-		const language =
-			state.languageDetected ||
-			state.context?.language ||
-			(await detectLanguage(userQuery))
-
-		// Define the router schema
-		const routerSchema = z.object({
-			route: z
-				.enum(['summarizer', 'impact', 'simplifier', 'planner', 'general'])
-				.describe('The agent to route the request to based on the user query'),
+		// Define the routing schema
+		const routingSchema = z.object({
+			next: z.enum(options),
 		})
 
-		// Create the router tool
-		const routerTool = {
-			name: 'router',
-			description: 'Routes the user query to the appropriate agent',
-			schema: routerSchema,
+		const routingTool = {
+			name: 'route',
+			description: 'Select the next agent to act.',
+			schema: routingSchema,
 		}
 
-		// Set up the LLM with the router tool
-		const llm = new ChatOpenAI({
-			model: 'gpt-4o',
-			temperature: 0,
-		}).bindTools([routerTool], { tool_choice: 'router' })
-
-		// Create the prompt
-		const systemPrompt = `You are a routing agent that determines which specialized agent should handle a user query.
+		const systemPrompt = `You are a supervisor managing these agents: {members}.
+Given the conversation so far, select the next agent to act, or FINISH (${END}).
 Available agents:
-${AVAILABLE_AGENTS}
+${AVAILABLE_AGENTS}`
 
-Your job is to analyze the user's query and route it to the most appropriate agent.
-If the query doesn't clearly match any specialized agent, route to 'general'.`
+		const llm = new ChatOpenAI({ model: 'gpt-4o', temperature: 0 })
+		const response = await llm
+			.bindTools([routingTool], { tool_choice: 'route' })
+			.invoke([
+				new SystemMessage(
+					systemPrompt.replace('{members}', AGENT_NAMES.join(', ')),
+				),
+				...state.messages,
+				new HumanMessage(
+					`Given the conversation above, who should act next? Or should we FINISH? Select one of: ${options.join(', ')}`,
+				),
+			])
 
-		// Call the LLM to determine the route
-		const response = await llm.invoke([
-			new SystemMessage(systemPrompt),
-			new HumanMessage(userQuery),
-		])
-
-		// Extract the route from the tool call
 		const toolCall = response.tool_calls?.[0]?.args as
-			| z.infer<typeof routerSchema>
+			| { next: string }
 			| undefined
-
 		if (!toolCall) {
 			logAgentsInfraLangchain.warn(
-				'[Supervisor.router] No valid route returned by LLM',
+				'[Supervisor.supervisorNode] No valid route returned by LLM',
 			)
-			return {
-				error: 'Failed to determine appropriate agent',
-				next: 'general',
-				languageDetected: language,
-				...contextUpdate,
-			}
+			return { error: 'Failed to determine next agent', next: END }
 		}
 
 		logAgentsInfraLangchain.debug(
-			`[Supervisor.router] Routing to ${toolCall.route}`,
-			{ language },
+			`[Supervisor.supervisorNode] Routing to ${toolCall.next}`,
 		)
-
-		// Return the determined route
-		return {
-			next: toolCall.route,
-			languageDetected: language,
-			error: null,
-			...contextUpdate,
-		}
+		return { next: toolCall.next, error: null }
 	} catch (error) {
 		logAgentsInfraLangchain.error(
-			'[Supervisor.router] Error determining route',
+			'[Supervisor.supervisorNode] Error determining next agent',
 			{ error },
 		)
 		return {
 			error: error instanceof Error ? error.message : 'Unknown routing error',
-			next: 'general',
+			next: END,
 		}
 	}
 }
