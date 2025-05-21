@@ -13,7 +13,7 @@ const AGENT_NAMES = [
 	'general',
 	// Add more agent names here as needed
 ]
-const options = [END, ...AGENT_NAMES]
+const options = [END, ...AGENT_NAMES] as const
 
 const AVAILABLE_AGENTS = `
 - summarizer: Summarizes text content, extracting key points from documents
