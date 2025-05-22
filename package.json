@@ -13,6 +13,7 @@
 		"packages/agents/*",
 		"packages/agents/infrastructure/*",
 		"packages/harvesting/*",
+		"packages/harvesting/infrastructure/*",
 		"packages/shared/*",
 		"packages/shared/ui/*",
 		"packages/shared/utils/*"

@@ -31,14 +31,14 @@ __metadata:
   resolution: "@aipacto/agents-infra-langchain@workspace:packages/agents/infrastructure/langchain"
   dependencies:
     "@huggingface/inference": "npm:^3.13.1"
-    "@langchain/core": "npm:^0.3.55"
     "@langchain/langgraph": "npm:^0.2.71"
     "@langchain/openai": "npm:^0.5.10"
     "@qdrant/js-client-rest": "npm:^1.14.0"
-    zod: "npm:^3.23.8"
+    zod: "npm:^3.25.17"
   peerDependencies:
     "@aipacto/agents-domain": "workspace:*"
     "@aipacto/shared-utils-logging": "workspace:*"
+    "@langchain/core": ^0.3.55
     effect: ^3.14.8
     langchain: ^0.3.24
   languageName: unknown
@@ -134,6 +134,18 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@aipacto/apps-scrapper@workspace:apps/scrapper":
+  version: 0.0.0-use.local
+  resolution: "@aipacto/apps-scrapper@workspace:apps/scrapper"
+  dependencies:
+    "@aipacto/shared-utils-env": "workspace:*"
+    "@aipacto/shared-utils-logging": "workspace:*"
+    "@mendable/firecrawl-js": "npm:^1.25.1"
+    "@types/node": "npm:^22.10.10"
+    tsx: "npm:^4.19.2"
+  languageName: unknown
+  linkType: soft
+
 "@aipacto/apps-server@workspace:apps/server":
   version: 0.0.0-use.local
   resolution: "@aipacto/apps-server@workspace:apps/server"
@@ -163,6 +175,27 @@ __metadata:
     react: "npm:18.3.1"
     supertokens-node: "npm:^21.1.0"
     tsx: "npm:^4.19.2"
+  languageName: unknown
+  linkType: soft
+
+"@aipacto/harvesting-domain@workspace:packages/harvesting/domain":
+  version: 0.0.0-use.local
+  resolution: "@aipacto/harvesting-domain@workspace:packages/harvesting/domain"
+  peerDependencies:
+    "@aipacto/shared-domain": "workspace:*"
+    effect: ^3.14.8
+  languageName: unknown
+  linkType: soft
+
+"@aipacto/harvesting-infra-pipeline@workspace:packages/harvesting/infrastructure/pipeline":
+  version: 0.0.0-use.local
+  resolution: "@aipacto/harvesting-infra-pipeline@workspace:packages/harvesting/infrastructure/pipeline"
+  dependencies:
+    "@mendable/firecrawl-js": "npm:^1.25.1"
+  peerDependencies:
+    "@aipacto/harvesting-domain": "workspace:*"
+    "@aipacto/shared-domain": "workspace:*"
+    effect: ^3.14.8
   languageName: unknown
   linkType: soft
 
@@ -5418,6 +5451,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@mendable/firecrawl-js@npm:^1.25.1":
+  version: 1.25.1
+  resolution: "@mendable/firecrawl-js@npm:1.25.1"
+  dependencies:
+    axios: "npm:^1.6.8"
+    typescript-event-target: "npm:^1.1.1"
+    zod: "npm:^3.23.8"
+    zod-to-json-schema: "npm:^3.23.0"
+  checksum: 10/e7827c9ea2d41db21187508e55c13d2f9514cb7ab99a40817865dfb077bc2ddc523143a5232c3249d4a6bbe316f8cc647c0dcfa5fbd96550a986e65cb618f199
+  languageName: node
+  linkType: hard
+
 "@modelcontextprotocol/sdk@npm:^1.6.1":
   version: 1.11.4
   resolution: "@modelcontextprotocol/sdk@npm:1.11.4"
@@ -10607,6 +10652,31 @@ __metadata:
   languageName: node
   linkType: hard
 
+"aipacto@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "aipacto@workspace:."
+  dependencies:
+    "@aipacto/shared-tsconfig": "workspace:*"
+    "@biomejs/biome": "npm:^1.9.4"
+    "@secretlint/secretlint-rule-no-dotenv": "npm:^9.3.2"
+    "@secretlint/secretlint-rule-preset-recommend": "npm:^9.2.0"
+    "@types/node": "npm:^22.10.10"
+    effect: "npm:^3.14.8"
+    lefthook: "npm:^1.11.12"
+    react: "npm:18.3.1"
+    react-native: "npm:0.76.9"
+    repomix: "npm:^0.2.34"
+    secretlint: "npm:^9.2.0"
+    syncpack: "npm:^13.0.2"
+    tsdown: "npm:^0.11.0"
+    turbo: "npm:^2.5.2"
+    typescript: "npm:5.7.2"
+  dependenciesMeta:
+    agentic:
+      built: true
+  languageName: unknown
+  linkType: soft
+
 "ajv-formats@npm:^2.1.1":
   version: 2.1.1
   resolution: "ajv-formats@npm:2.1.1"
@@ -10944,7 +11014,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.0":
+"axios@npm:^1.6.0, axios@npm:^1.6.8":
   version: 1.9.0
   resolution: "axios@npm:1.9.0"
   dependencies:
@@ -19916,31 +19986,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pacto-chat@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "pacto-chat@workspace:."
-  dependencies:
-    "@aipacto/shared-tsconfig": "workspace:*"
-    "@biomejs/biome": "npm:^1.9.4"
-    "@secretlint/secretlint-rule-no-dotenv": "npm:^9.3.2"
-    "@secretlint/secretlint-rule-preset-recommend": "npm:^9.2.0"
-    "@types/node": "npm:^22.10.10"
-    effect: "npm:^3.14.8"
-    lefthook: "npm:^1.11.12"
-    react: "npm:18.3.1"
-    react-native: "npm:0.76.9"
-    repomix: "npm:^0.2.34"
-    secretlint: "npm:^9.2.0"
-    syncpack: "npm:^13.0.2"
-    tsdown: "npm:^0.11.0"
-    turbo: "npm:^2.5.2"
-    typescript: "npm:5.7.2"
-  dependenciesMeta:
-    agentic:
-      built: true
-  languageName: unknown
-  linkType: soft
-
 "pako@npm:^2.1.0":
   version: 2.1.0
   resolution: "pako@npm:2.1.0"
@@ -24369,6 +24414,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"typescript-event-target@npm:^1.1.1":
+  version: 1.1.1
+  resolution: "typescript-event-target@npm:1.1.1"
+  checksum: 10/199c5f761cfedab59ac6a1198c597ffd03723002b0171f03fc060b4b9312cab40ac6eea117786ecd2c6d3d6a25bb7a007695ad4398de9dccfe60b7da782b893f
+  languageName: node
+  linkType: hard
+
 "typescript-logging-category-style@npm:^2.2.0":
   version: 2.2.0
   resolution: "typescript-logging-category-style@npm:2.2.0"
@@ -25451,7 +25503,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"zod-to-json-schema@npm:^3.22.3, zod-to-json-schema@npm:^3.22.5, zod-to-json-schema@npm:^3.24.1":
+"zod-to-json-schema@npm:^3.22.3, zod-to-json-schema@npm:^3.22.5, zod-to-json-schema@npm:^3.23.0, zod-to-json-schema@npm:^3.24.1":
   version: 3.24.5
   resolution: "zod-to-json-schema@npm:3.24.5"
   peerDependencies:
@@ -25464,6 +25516,13 @@ __metadata:
   version: 3.25.7
   resolution: "zod@npm:3.25.7"
   checksum: 10/276350c5e58b4fe29924c813fbbad12f4297177d6edee3cc719ed265e237f922f8a1068538226c88c62c1ed2ed96855536d8e50f27fe3dbc67b7bcaefeac1a6e
+  languageName: node
+  linkType: hard
+
+"zod@npm:^3.25.17":
+  version: 3.25.17
+  resolution: "zod@npm:3.25.17"
+  checksum: 10/132a61be241c9c09b90ed85ec3cbe2a8c9146b96048ca2c3e62f53fcec4fc06c0047f00ef49521cd63bf133a6a6ed54ff733e68d3b4dc375fc1e34d9ad182a16
   languageName: node
   linkType: hard
 

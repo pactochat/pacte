@@ -45,6 +45,9 @@
       "@aipacto/harvesting-domain": [
         "../../harvesting/domain/src"
       ],
+      "@aipacto/harvesting-infra-pipeline": [
+        "../../harvesting/infrastructure/pipeline/src"
+      ],
       "@aipacto/shared-domain": [
         "../domain/src"
       ],
