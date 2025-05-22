@@ -42,6 +42,9 @@
       "@aipacto/agents-infra-langchain": [
         "../../agents/infrastructure/langchain/src"
       ],
+      "@aipacto/harvesting-domain": [
+        "../../harvesting/domain/src"
+      ],
       "@aipacto/shared-domain": [
         "../domain/src"
       ],

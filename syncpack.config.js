@@ -14,7 +14,7 @@ export default {
 			isIgnored: true,
 		},
 		{
-			label: 'Pacto Chat',
+			label: 'Aipacto',
 			dependencies: ['@aipacto/*'],
 			policy: 'sameRange',
 		},

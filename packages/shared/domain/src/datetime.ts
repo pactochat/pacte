@@ -12,8 +12,8 @@ export const now = () => Temporal.Now.zonedDateTimeISO().toInstant()
 /**
  * Get the current date time as an ISO 8601 string.
  */
-export const currentIsoDateTimeString = () =>
-	Temporal.Now.zonedDateTimeISO().toInstant().toString()
+export const currentIsoDateTimeString = (): ZonedDateTimeString =>
+	Temporal.Now.zonedDateTimeISO().toInstant().toString() as ZonedDateTimeString
 
 /**
  * Get the current date time as a ZonedDateTime.
