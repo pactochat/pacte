@@ -5,8 +5,8 @@ import { ChatOpenAI } from '@langchain/openai'
 import type { SummarizerOutput } from '@aipacto/agents-domain'
 import { ListLanguageCodes } from '@aipacto/shared-domain'
 import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
+import { getLocalizedErrorMessage } from '../../../utils/errors'
 import { extractKeyPoints } from '../../../utils/text_analysis'
-import { getLocalizedErrorMessage } from '../../../utils/workflow_middleware'
 import type { SummarizerAgentStateType } from '../types'
 
 const SUMMARIZER_PROMPT_TEMPLATE = `

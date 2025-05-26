@@ -82,23 +82,6 @@ Return only the three-letter language code (cat, eng, or spa).
 	},
 })
 
-// /**
-//  * Detect if text is in Catalan
-//  * @param text Text to analyze
-//  * @returns True if text is detected as Catalan
-//  */
-// export async function isCatalan(text: string): Promise<boolean> {
-// 	try {
-// 		const detectedLanguage = await detectLanguageTool.invoke(text)
-// 		return detectedLanguage === 'cat'
-// 	} catch (error) {
-// 		logAgentsInfraLangchain.error('Error checking if text is Catalan', {
-// 			error,
-// 		})
-// 		return false
-// 	}
-// }
-
 /**
  * Detect language of text
  * @param text Text to analyze

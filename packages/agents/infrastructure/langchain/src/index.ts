@@ -1,7 +1,8 @@
+import { HumanMessage } from '@langchain/core/messages'
+
 import type { BaseAgentOutput } from '@aipacto/agents-domain'
 import { ListLanguageCodes } from '@aipacto/shared-domain'
 import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
-import { HumanMessage } from '@langchain/core/messages'
 import { supervisorAgentGraph } from './agents/supervisor'
 
 /**

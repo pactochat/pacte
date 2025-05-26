@@ -4,12 +4,10 @@ import { ListLanguageCodes } from '@aipacto/shared-domain'
 import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 import { detectLanguage } from '../../../tools/language_detector'
 import { languageAwareEmbeddings } from '../../../utils/embedding_robertaca'
+import { getLocalizedErrorMessage } from '../../../utils/errors'
 import { qdrantClient } from '../../../utils/qdrant'
 import { buildQdrantFilter } from '../../../utils/qdrant_utils'
-import {
-	formatRetrievalResults,
-	getLocalizedErrorMessage,
-} from '../../../utils/workflow_middleware'
+import { formatRetrievalResults } from '../../../utils/retrieval'
 import type { SummarizerAgentStateType } from '../types'
 
 const COLLECTION_NAME =

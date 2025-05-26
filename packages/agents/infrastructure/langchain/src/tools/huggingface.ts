@@ -3,8 +3,7 @@ import { InferenceClient } from '@huggingface/inference'
 import { logAgentsInfraLangchain } from '@aipacto/shared-utils-logging'
 
 /**
- * Create a Hugging Face Inference client
- * @returns Configured InferenceClient
+ * The Hugging Face Inference client
  */
 export function createHuggingFaceClient(): InferenceClient {
 	const accessToken = process.env.HUGGING_FACE_API_KEY
@@ -13,8 +12,7 @@ export function createHuggingFaceClient(): InferenceClient {
 		throw new Error('HUGGING_FACE_API_KEY environment variable is required')
 	}
 
-	// For Inference Endpoints (if configured)
-	const endpointUrl = process.env.ROBERTA_CA_ENDPOINT
+	const endpointUrl = process.env.EMBEDDING_HOST
 
 	if (endpointUrl) {
 		logAgentsInfraLangchain.debug(
@@ -24,7 +22,6 @@ export function createHuggingFaceClient(): InferenceClient {
 		return new InferenceClient(accessToken, { endpointUrl })
 	}
 
-	// Standard Inference API
 	return new InferenceClient(accessToken)
 }
 

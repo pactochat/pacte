@@ -18,15 +18,15 @@
 	},
 	"dependencies": {
 		"@huggingface/inference": "^3.13.1",
-		"@langchain/core": "^0.3.55",
 		"@langchain/langgraph": "^0.2.71",
 		"@langchain/openai": "^0.5.10",
 		"@qdrant/js-client-rest": "^1.14.0",
-		"zod": "^3.23.8"
+		"zod": "^3.25.17"
 	},
 	"peerDependencies": {
 		"@aipacto/agents-domain": "workspace:*",
 		"@aipacto/shared-utils-logging": "workspace:*",
+		"@langchain/core": "^0.3.55",
 		"effect": "^3.14.8",
 		"langchain": "^0.3.24"
 	}

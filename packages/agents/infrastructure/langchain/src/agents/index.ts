@@ -1,4 +1,3 @@
-// Export individual agents
 export {
 	impactAgentGraph,
 	type ImpactAgentStateType,
@@ -19,10 +18,8 @@ export {
 	type SummarizerAgentStateType,
 } from './summarizer'
 
-// Export supervisor agent
 export {
 	supervisorAgentGraph,
 	type SupervisorState,
 	SupervisorAnnotation,
-	SupervisorZodConfiguration,
 } from './supervisor'
