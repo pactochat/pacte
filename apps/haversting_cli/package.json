@@ -1,0 +1,26 @@
+{
+	"name": "@aipacto/apps-harvesting-cli",
+	"version": "0.0.1",
+	"main": "src/index.ts",
+	"type": "module",
+	"scripts": {
+		"build": "tsdown ./src/index.ts --dts --sourcemap --platform node --clean --silent",
+		"watch": "tsdown ./src/index.ts --dts --sourcemap --platform node --watch",
+		"start": "node dist/index.js",
+		"cli": "tsx src/index.ts",
+		"crawl": "tsx src/index.ts",
+		"scrape": "tsx src/index.ts"
+	},
+	"dependencies": {
+		"@aipacto/harvesting-domain": "workspace:*",
+		"@aipacto/harvesting-infra-pipeline": "workspace:*",
+		"@aipacto/shared-utils-env": "workspace:*",
+		"@aipacto/shared-utils-logging": "workspace:*",
+		"@clack/prompts": "^0.10.1",
+		"@mendable/firecrawl-js": "^1.25.1"
+	},
+	"devDependencies": {
+		"tsdown": "^0.11.0",
+		"tsx": "^4.19.2"
+	}
+}

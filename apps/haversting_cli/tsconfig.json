@@ -1,0 +1,16 @@
+{
+	"extends": "@aipacto/shared-tsconfig/node.json",
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "dist",
+		"resolveJsonModule": true
+	},
+	"include": ["src"],
+	"exclude": ["node_modules", "dist"],
+	"references": [
+		{ "path": "../../packages/harvesting/domain" },
+		{ "path": "../../packages/harvesting/infrastructure/pipeline" },
+		{ "path": "../../packages/shared/utils/env" },
+		{ "path": "../../packages/shared/utils/logging" }
+	]
+}
