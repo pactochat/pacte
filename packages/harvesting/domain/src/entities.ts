@@ -27,99 +27,96 @@ export type HarvestingOperationType = typeof HarvestingOperationType.Type
 /**
  * Base harvesting job entity
  */
-export const HarvestingJob = S.extend(
-	Entity,
-	S.Struct({
-		/**
-		 * Type of harvesting operation
-		 */
-		type: HarvestingOperationType,
-		/**
-		 * Current status of the job
-		 */
-		status: HarvestingJobStatus,
-		/**
-		 * The URL being processed
-		 */
-		url: S.String,
-		/**
-		 * Additional configuration for the job
-		 */
-		config: S.optional(S.Record({ key: S.String, value: S.Unknown })),
-		/**
-		 * When the job started processing
-		 */
-		startedAt: S.optional(ZonedDateTimeString),
-		/**
-		 * When the job completed
-		 */
-		completedAt: S.optional(ZonedDateTimeString),
-		/**
-		 * Error message if job failed
-		 */
-		errorMessage: S.optional(S.String),
-		/**
-		 * Processing metadata
-		 */
-		metadata: S.optional(S.Record({ key: S.String, value: S.Unknown })),
-	}),
-).annotations({ identifier: '@aipacto/harvesting-domain/HarvestingJob' })
-export type HarvestingJob = typeof HarvestingJob.Type
+export class HarvestingJob extends S.Class<HarvestingJob>(
+	'@aipacto/harvesting-domain/HarvestingJob',
+)({
+	...Entity.fields,
+	/**
+	 * Type of harvesting operation
+	 */
+	type: HarvestingOperationType,
+	/**
+	 * Current status of the job
+	 */
+	status: HarvestingJobStatus,
+	/**
+	 * The URL being processed
+	 */
+	url: S.String,
+	/**
+	 * Additional configuration for the job
+	 */
+	config: S.optional(S.Record({ key: S.String, value: S.Unknown })),
+	/**
+	 * When the job started processing
+	 */
+	startedAt: S.optional(ZonedDateTimeString),
+	/**
+	 * When the job completed
+	 */
+	completedAt: S.optional(ZonedDateTimeString),
+	/**
+	 * Error message if job failed
+	 */
+	errorMessage: S.optional(S.String),
+	/**
+	 * Processing metadata
+	 */
+	metadata: S.optional(S.Record({ key: S.String, value: S.Unknown })),
+}) {}
 
 /**
  * Crawl job specific entity
  */
-export const CrawlJob = S.extend(
-	HarvestingJob,
-	S.Struct({
-		type: S.Literal('crawl'),
-		/**
-		 * Search parameter for filtering URLs
-		 */
-		searchQuery: S.optional(S.String),
-		/**
-		 * Maximum number of URLs to discover
-		 */
-		maxUrls: S.optional(S.Number),
-		/**
-		 * Discovered URLs from crawling
-		 */
-		discoveredUrls: S.optional(S.Array(S.String)),
-		/**
-		 * Number of URLs discovered
-		 */
-		urlCount: S.optional(S.Number),
-	}),
-).annotations({ identifier: '@aipacto/harvesting-domain/CrawlJob' })
-export type CrawlJob = typeof CrawlJob.Type
+export class CrawlJob extends S.Class<CrawlJob>(
+	'@aipacto/harvesting-domain/CrawlJob',
+)({
+	...HarvestingJob.fields,
+	type: S.Literal('crawl'),
+	/**
+	 * Search parameter for filtering URLs
+	 */
+	searchQuery: S.optional(S.String),
+	/**
+	 * Maximum number of URLs to discover
+	 */
+	maxUrls: S.optional(S.Number),
+	/**
+	 * Discovered URLs from crawling
+	 */
+	discoveredUrls: S.optional(S.Array(S.String)),
+	/**
+	 * Number of URLs discovered
+	 */
+	urlCount: S.optional(S.Number),
+}) {}
 
 /**
  * Scrape job specific entity
  */
-export const ScrapeJob = S.extend(
-	HarvestingJob,
-	S.Struct({
-		type: S.Union(S.Literal('scrape'), S.Literal('batch_scrape')),
-		/**
-		 * Output formats requested
-		 */
-		formats: S.optional(S.Array(S.String)),
-		/**
-		 * Whether to include screenshots
-		 */
-		includeScreenshot: S.optional(S.Boolean),
-		/**
-		 * Actions to perform before scraping
-		 */
-		actions: S.optional(S.Array(S.Record({ key: S.String, value: S.Unknown }))),
-		/**
-		 * Scraped content
-		 */
-		content: S.optional(S.Record({ key: S.String, value: S.Unknown })),
-		/**
-		 * Size of scraped content in bytes
-		 */
-		contentSize: S.optional(S.Number),
-	}),
-).annotations({ identifier: '@aipacto/harvesting-domain/ScrapeJob' })
-export type ScrapeJob = typeof ScrapeJob.Type
+export class ScrapeJob extends S.Class<ScrapeJob>(
+	'@aipacto/harvesting-domain/ScrapeJob',
+)({
+	...HarvestingJob.fields,
+	type: S.Union(S.Literal('scrape'), S.Literal('batch_scrape')),
+	/**
+	 * Output formats requested
+	 */
+	formats: S.optional(S.Array(S.String)),
+	/**
+	 * Whether to include screenshots
+	 */
+	includeScreenshot: S.optional(S.Boolean),
+	/**
+	 * Actions to perform before scraping
+	 */
+	actions: S.optional(S.Array(S.Record({ key: S.String, value: S.Unknown }))),
+	/**
+	 * Scraped content
+	 */
+	content: S.optional(S.Record({ key: S.String, value: S.Unknown })),
+	/**
+	 * Size of scraped content in bytes
+	 */
+	contentSize: S.optional(S.Number),
+}) {}
