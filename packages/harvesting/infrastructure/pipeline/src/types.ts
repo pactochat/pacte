@@ -1,5 +1,6 @@
-import { ListLanguageCodesLiteral } from '@aipacto/shared-domain'
 import { Data, Schema as S } from 'effect'
+
+import { ListLanguageCodesLiteral } from '@aipacto/shared-domain'
 
 /**
  * Firecrawl output formats

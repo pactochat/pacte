@@ -8,7 +8,10 @@ import {
 	BaseHarvestingInput,
 	BaseHarvestingOutput,
 } from '@aipacto/harvesting-domain'
-import { currentIsoDateTimeString } from '@aipacto/shared-domain'
+import {
+	type ZonedDateTimeString,
+	currentIsoDateTimeString,
+} from '@aipacto/shared-domain'
 import { ErrorPipelineApiKey } from './types'
 
 const CrawlInput = S.extend(
@@ -106,18 +109,18 @@ const make = Effect.gen(function* () {
 					totalLinks: response.links?.length ?? 0,
 					truncated: false,
 					searchQuery: input.search,
-					timestamp: currentIsoDateTimeString(),
+					timestamp: currentIsoDateTimeString() as ZonedDateTimeString,
 					metadata: {},
 				}),
 			),
 		)
 
-	return { crawl }
+	return { crawl } as const
 })
 
 export class Crawler extends Context.Tag('Crawler')<
 	ICrawler,
 	Effect.Effect.Success<typeof make>
 >() {
-	static readonly layer = Layer.effect(this, make)
+	static readonly Live = Layer.effect(this, make)
 }

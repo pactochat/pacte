@@ -5,7 +5,10 @@ import {
 	BaseHarvestingInput,
 	BaseHarvestingOutput,
 } from '@aipacto/harvesting-domain'
-import { currentIsoDateTimeString } from '@aipacto/shared-domain'
+import {
+	type ZonedDateTimeString,
+	currentIsoDateTimeString,
+} from '@aipacto/shared-domain'
 import {
 	ErrorPipelineApiKey,
 	FirecrawlAction,
@@ -230,19 +233,19 @@ const make = Effect.gen(function* () {
 					description: response.description,
 					// language: response.language,
 					// actionsPerformed: response.actionsPerformed,
-					timestamp: currentIsoDateTimeString(),
+					timestamp: currentIsoDateTimeString() as ZonedDateTimeString,
 					metadata: {},
 				} satisfies ScrapeOutput
 			},
 			catch: error => new ErrorScraperScrape({ url: input.url, error }),
 		})
 
-	return { scrape }
+	return { scrape } as const
 })
 
 export class Scraper extends Context.Tag('Scraper')<
 	IScraper,
 	Effect.Effect.Success<typeof make>
 >() {
-	static readonly layer = Layer.effect(this, make)
+	static readonly Live = Layer.effect(this, make)
 }
