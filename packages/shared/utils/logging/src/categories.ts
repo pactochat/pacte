@@ -8,6 +8,7 @@ export const rootProvider = CategoryProvider.createProvider('@aipacto', {
 const logApps = rootProvider.getCategory('apps')
 const logShared = rootProvider.getCategory('shared')
 const logAgents = rootProvider.getCategory('agents')
+const logWorkspace = rootProvider.getCategory('workspace')
 
 // Shared
 export const logSharedDomain = logShared.getChildCategory('domain')
@@ -23,6 +24,11 @@ export const logSharedUiLocalization =
 export const logAgentsInfraLangchain = logAgents
 	.getChildCategory('infra')
 	.getChildCategory('langchain')
+
+// Workspace
+export const logWorkspaceInfraAuthz = logWorkspace
+	.getChildCategory('infra')
+	.getChildCategory('authz')
 
 // Apps
 export const logAppServer = logApps.getChildCategory('server')

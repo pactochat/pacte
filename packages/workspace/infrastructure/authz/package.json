@@ -1,5 +1,5 @@
 {
-	"name": "@aipacto/workspace-infra-storage",
+	"name": "@aipacto/workspace-infra-authz",
 	"version": "0.0.1",
 	"type": "module",
 	"main": "./dist/index.js",
@@ -17,6 +17,7 @@
 		"@openfga/sdk": "^0.8.1"
 	},
 	"peerDependencies": {
+		"@aipacto/shared-utils-logging": "workspace:*",
 		"@aipacto/workspace-domain": "workspace:*",
 		"effect": "^3.14.8"
 	}

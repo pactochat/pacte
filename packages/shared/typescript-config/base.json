@@ -69,6 +69,9 @@
       "@aipacto/workspace-domain": [
         "../../workspace/domain/src"
       ],
+      "@aipacto/workspace-infra-authz": [
+        "../../workspace/infrastructure/authz/src"
+      ],
       "@aipacto/workspace-infra-storage": [
         "../../workspace/infrastructure/storage/src"
       ]
