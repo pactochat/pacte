@@ -5,11 +5,11 @@ alwaysApply: true
 ---
 ## Project
 
-Aipacto is à la ChatGPT web and app for city councils, its workers and citizens.
+Aipacto is a web and mobile app inspired by ChatGPT, designed for city councils, their workers, and citizens. It provides AI-driven interactions and includes a collaborative workspace à la Google Workspace, enabling organizations, groups, folders, and document management with real-time editing, permissions, and storage.
 
 ## Tech Stack
 
-- Clean architecture
+- Clean Architecture
 - TypeScript v5.7, ESM-only, tsconfig as "bundler"
 - Yarn v4 in node-modules
 - Effect +v3.14
@@ -18,29 +18,38 @@ Aipacto is à la ChatGPT web and app for city councils, its workers and citizens
 - Fastify v5
 - Expo v52 (web and native app)
 - Expo Router v4 (web and native app)
-- Clerk for auth (Expo frontend +v2.10 and Fastify backend)
-- Some apps' packages:
-@aipacto/agents-domain: ../../agents/domain/src
-@aipacto/agents-infra-langchain: ../../infrastructure/langchain/src
-@aipacto/shared-domain: ../domain/src
-@aipacto/shared-ui-core: ../ui/core/src
-@aipacto/shared-ui-core/*: ../ui/core/src/*
-@aipacto/shared-ui-localization: ../ui/localization/src
-@aipacto/shared-utils-env: ../utils/env/src
-@aipacto/shared-utils-logging: ../utils/logging/src
-...
+- Clerk for auth (Expo frontend +v2.10 and Fastify backend, including workspace-level permissions)
+- Workspace storage:
+  - Loro.dev for collaborative editing, undo/redo, and versioning
+  - S3 for document snapshots
+  - PostgreSQL for metadata
+- Packages:
+  @aipacto/agents-domain: ../../agents/domain/src
+  @aipacto/agents-infra-langchain: ../../infrastructure/langchain/src
+  @aipacto/shared-domain: ../domain/src
+  @aipacto/shared-ui-core: ../ui/core/src
+  @aipacto/shared-ui-core/*: ../ui/core/src/*
+  @aipacto/shared-ui-localization: ../ui/localization/src
+  @aipacto/shared-utils-env: ../utils/env/src
+  @aipacto/shared-utils-logging: ../utils/logging/src
+  @aipacto/workspace-domain: ../../workspace/domain/src
+  @aipacto/workspace-infra-authz: ../../workspace/infrastructure/authz/src
+  @aipacto/workspace-infra-storage: ../../workspace/infrastructure/storage/src
+  …
 
 ## Frontend
 
-- Tamagui +v1.126 for web & native.
-- Follow Material Design 3 guidelines.
-- @aipacto/shared-ui-core/*: Exports Tamagui components, components, providers, icons…
+- Tamagui +v1.126 for web & native
+- Follow Material Design 3 guidelines
+- @aipacto/shared-ui-core/*: Exports Tamagui components, providers, icons, and workspace-specific UI (e.g., document editors, folder views)
 - Always prioritize custom tokens from `@aipacto/shared-ui-core/theme` for colors, spacing, gaps, z-index...
-- When adding text for UI, add it also to common.json or other i18n files.
+- When adding text for UI add it to common.json or other i18n files
 
 ## Requirements
 
-- Try to keep the comments and docs in the code.
-- For UI tasks
-	- use start-end before left-right terms to support ltr/rtl when Tamagui allows it.
-	- apply some accessibility best practices
+- Try to keep comments and docs in the code
+- For UI tasks:
+  - Use start-end before left-right terms to support ltr/rtl when Tamagui allows it
+- Apply accessibility best practices
+
+## Instructions

@@ -65,6 +65,10 @@
       ],
       "@aipacto/shared-utils-logging": [
         "../utils/logging/src"
+      ],
+      "@aipacto/workspace-domain": [
+        "../../workspace/domain/src"
+      ],
       ]
     }
   },

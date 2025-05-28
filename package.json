@@ -16,7 +16,8 @@
 		"packages/harvesting/infrastructure/*",
 		"packages/shared/*",
 		"packages/shared/ui/*",
-		"packages/shared/utils/*"
+		"packages/shared/utils/*",
+		"packages/workspace/*",
 	],
 	"scripts": {
 		"______ Development ______": "Run applications in development mode",

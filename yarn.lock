@@ -283,6 +283,26 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@aipacto/workspace-domain@workspace:packages/workspace/domain":
+  version: 0.0.0-use.local
+  resolution: "@aipacto/workspace-domain@workspace:packages/workspace/domain"
+  peerDependencies:
+    "@aipacto/shared-domain": "workspace:*"
+    effect: ^3.14.8
+  languageName: unknown
+  linkType: soft
+
+"@aipacto/workspace-infra-authz@workspace:packages/workspace/infrastructure/authz":
+  version: 0.0.0-use.local
+  resolution: "@aipacto/workspace-infra-authz@workspace:packages/workspace/infrastructure/authz"
+  dependencies:
+    "@openfga/sdk": "npm:^0.8.1"
+  peerDependencies:
+    "@aipacto/workspace-domain": "workspace:*"
+    effect: ^3.14.8
+  languageName: unknown
+  linkType: soft
+
 "@ampproject/remapping@npm:^2.2.0":
   version: 2.3.0
   resolution: "@ampproject/remapping@npm:2.3.0"
@@ -5936,6 +5956,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@openfga/sdk@npm:^0.8.1":
+  version: 0.8.1
+  resolution: "@openfga/sdk@npm:0.8.1"
+  dependencies:
+    "@opentelemetry/api": "npm:^1.9.0"
+    axios: "npm:^1.8.3"
+    tiny-async-pool: "npm:^2.1.0"
+  checksum: 10/67cdc171e95e63d6aedc6fd365681bad78f7fd59badd6cd6c9e2a658a16aed5429b66d423346e3ad4e27de27a29614f1fa4038fa3f81ace63b7c31bc754da282
+  languageName: node
+  linkType: hard
+
+"@opentelemetry/api@npm:^1.9.0":
+  version: 1.9.0
+  resolution: "@opentelemetry/api@npm:1.9.0"
+  checksum: 10/a607f0eef971893c4f2ee2a4c2069aade6ec3e84e2a1f5c2aac19f65c5d9eeea41aa72db917c1029faafdd71789a1a040bdc18f40d63690e22ccae5d7070f194
+  languageName: node
+  linkType: hard
+
 "@oxc-project/types@npm:0.70.0":
   version: 0.70.0
   resolution: "@oxc-project/types@npm:0.70.0"
@@ -11017,7 +11055,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"axios@npm:^1.6.0, axios@npm:^1.6.8":
+"axios@npm:^1.6.0, axios@npm:^1.6.8, axios@npm:^1.8.3":
   version: 1.9.0
   resolution: "axios@npm:1.9.0"
   dependencies:
@@ -23997,6 +24035,13 @@ __metadata:
   version: 1.0.21
   resolution: "tiktoken@npm:1.0.21"
   checksum: 10/e894a4e72688693c0cc4d0fd5ef6614dc6edbc3d4cd53b949a4e22b083bf9be243849d5041fe6f6be2dc149b705e3a6aa223bcd131d75badca1f674faed4c409
+  languageName: node
+  linkType: hard
+
+"tiny-async-pool@npm:^2.1.0":
+  version: 2.1.0
+  resolution: "tiny-async-pool@npm:2.1.0"
+  checksum: 10/8891326f30e587590f94c5e1f8cab59c9aa305e442fc5b9f7ea997f8611d805a797aae2ea93cd00b42b494ef749353df38b4555e2a769d6fff31a3db7add7208
   languageName: node
   linkType: hard
 
