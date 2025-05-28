@@ -1,0 +1,414 @@
+name: Workspace
+
+model_file: ./fga.mod
+
+tuples:
+  # Users
+  # Alice is an organization admin
+  - user: user:alice
+    relation: admin
+    object: organization:acme_corp
+
+  # Bob is an organization member
+  - user: user:bob
+    relation: member
+    object: organization:acme_corp
+
+  # Charlie is an external user (not in organization)
+  # No tuple needed - Charlie has no organization membership
+
+  # Groups
+  # Engineering group with Alice as direct member
+  - user: user:alice
+    relation: direct_member
+    object: group:engineering
+
+  # Marketing group with Bob as direct member
+  - user: user:bob
+    relation: direct_member
+    object: group:marketing
+
+  # Engineering is a subgroup of all_staff
+  - user: group:engineering
+    relation: subgroup
+    object: group:all_staff
+
+  # Marketing is a subgroup of all_staff
+  - user: group:marketing
+    relation: subgroup
+    object: group:all_staff
+
+  # Workspaces
+  # Alice owns the main workspace
+  - user: user:alice
+    relation: owner
+    object: workspace:main_workspace
+
+  # Engineering group has editor access to main workspace
+  - user: group:engineering#member
+    relation: editor
+    object: workspace:main_workspace
+
+  # All staff group has viewer access to main workspace
+  - user: group:all_staff#member
+    relation: viewer
+    object: workspace:main_workspace
+
+  # Bob owns a personal workspace
+  - user: user:bob
+    relation: owner
+    object: workspace:bob_personal
+
+  # Folders
+  # Root folder owned by Alice
+  - user: user:alice
+    relation: owner
+    object: folder:root
+
+  # Projects folder under root
+  - user: folder:root
+    relation: parent
+    object: folder:projects
+
+  # Engineering folder under projects
+  - user: folder:projects
+    relation: parent
+    object: folder:engineering_docs
+
+  # Marketing folder under projects
+  - user: folder:projects
+    relation: parent
+    object: folder:marketing_docs
+
+  # Public folder with viewer access for all users
+  - user: user:*
+    relation: viewer
+    object: folder:public_resources
+
+  # Engineering group has editor access to engineering folder
+  - user: group:engineering#member
+    relation: editor
+    object: folder:engineering_docs
+
+  # Marketing group has editor access to marketing folder
+  - user: group:marketing#member
+    relation: editor
+    object: folder:marketing_docs
+
+  # Documents
+  # Technical spec owned by Alice in engineering folder
+  - user: user:alice
+    relation: owner
+    object: doc:technical_spec
+
+  - user: folder:engineering_docs
+    relation: parent
+    object: doc:technical_spec
+
+  # Marketing plan with Bob as editor
+  - user: user:bob
+    relation: editor
+    object: doc:marketing_plan
+
+  - user: folder:marketing_docs
+    relation: parent
+    object: doc:marketing_plan
+
+  # Public document viewable by all
+  - user: user:*
+    relation: viewer
+    object: doc:company_handbook
+
+  - user: folder:public_resources
+    relation: parent
+    object: doc:company_handbook
+
+  # Shared document with specific user permissions
+  - user: user:alice
+    relation: editor
+    object: doc:shared_proposal
+
+  - user: user:bob
+    relation: viewer
+    object: doc:shared_proposal
+
+  - user: folder:projects
+    relation: parent
+    object: doc:shared_proposal
+
+  # Files
+  # Logo file in marketing folder
+  - user: user:bob
+    relation: owner
+    object: file:company_logo
+
+  - user: folder:marketing_docs
+    relation: parent
+    object: file:company_logo
+
+  # Source code file in engineering folder
+  - user: user:alice
+    relation: owner
+    object: file:source_code
+
+  - user: folder:engineering_docs
+    relation: parent
+    object: file:source_code
+
+  # Public file
+  - user: user:*
+    relation: viewer
+    object: file:public_template
+
+  - user: folder:public_resources
+    relation: parent
+    object: file:public_template
+
+tests:
+  - name: Test organization permissions
+    check:
+      - user: user:alice
+        object: organization:acme_corp
+        assertions:
+          admin: true
+          member: false  # Admin is not automatically a member
+          can_view: true
+          can_create_workspace: true
+          can_manage: true
+      
+      - user: user:bob
+        object: organization:acme_corp
+        assertions:
+          admin: false
+          member: true
+          can_view: true
+          can_create_workspace: true
+          can_manage: false
+
+      - user: user:charlie
+        object: organization:acme_corp
+        assertions:
+          admin: false
+          member: false
+          can_view: false
+          can_create_workspace: false
+          can_manage: false
+
+  - name: Test group membership inheritance
+    check:
+      - user: user:alice
+        object: group:engineering
+        assertions:
+          direct_member: true
+          member: true
+      
+      - user: user:alice
+        object: group:all_staff
+        assertions:
+          direct_member: false
+          member: true  # Through engineering subgroup
+
+      - user: user:bob
+        object: group:all_staff
+        assertions:
+          direct_member: false
+          member: true  # Through marketing subgroup
+
+  - name: Test workspace permissions
+    check:
+      - user: user:alice
+        object: workspace:main_workspace
+        assertions:
+          owner: true
+          editor: true   # Alice is editor through engineering group membership
+          viewer: true   # Alice is viewer through all_staff group membership (via engineering subgroup)
+          can_view: true
+          can_create_folder: true
+          can_edit: true
+          can_delete: true
+          can_share: true
+
+      - user: user:bob
+        object: workspace:main_workspace
+        assertions:
+          owner: false
+          editor: false  # Bob is in marketing, not engineering
+          viewer: true   # Through all_staff group
+          can_view: true
+          can_create_folder: false
+          can_edit: false
+          can_delete: false
+          can_share: false
+
+  - name: Test folder permission inheritance
+    check:
+      - user: user:alice
+        object: folder:root
+        assertions:
+          owner: true
+          can_view_content: true
+          can_list_children: true
+          can_create_file: true
+          can_create_folder: true
+          can_share: true
+          can_delete: true
+
+      - user: user:alice
+        object: folder:projects
+        assertions:
+          owner: false  # Not directly owned
+          can_view_content: true  # Inherited from parent
+          can_list_children: true
+          can_create_file: true
+          can_create_folder: true
+          can_share: true
+          can_delete: false  # Only direct owner can delete
+
+      - user: user:alice
+        object: folder:engineering_docs
+        assertions:
+          editor: true  # Through engineering group
+          can_view_content: true
+          can_create_file: true
+          can_share: true
+
+      - user: user:bob
+        object: folder:engineering_docs
+        assertions:
+          editor: false  # Bob is not in engineering
+          can_view_content: false
+          can_create_file: false
+
+  - name: Test document permissions
+    check:
+      - user: user:alice
+        object: doc:technical_spec
+        assertions:
+          owner: true
+          can_read: true
+          can_write: true
+          can_share: true
+          can_delete: true
+
+      - user: user:bob
+        object: doc:technical_spec
+        assertions:
+          owner: false
+          can_read: false  # No access through folder
+          can_write: false
+          can_share: false
+          can_delete: false
+
+      - user: user:bob
+        object: doc:marketing_plan
+        assertions:
+          editor: true
+          can_read: true
+          can_write: true
+          can_share: true
+          can_delete: false  # Not owner
+
+      - user: user:charlie
+        object: doc:company_handbook
+        assertions:
+          viewer: true  # Public document
+          can_read: true
+          can_write: false
+          can_share: false
+          can_delete: false
+
+  - name: Test file permissions
+    check:
+      - user: user:bob
+        object: file:company_logo
+        assertions:
+          owner: true
+          can_read: true
+          can_write: true
+          can_share: true
+          can_delete: true
+
+      - user: user:alice
+        object: file:company_logo
+        assertions:
+          owner: false
+          editor: false  # Alice is not in marketing group, so no editor access
+          can_read: false  # No access to marketing folder content
+          can_write: false
+          can_share: false
+          can_delete: false
+
+      - user: user:charlie
+        object: file:public_template
+        assertions:
+          viewer: true  # Public file
+          can_read: true
+          can_write: false
+          can_share: false
+          can_delete: false
+
+  - name: Test public folder access
+    check:
+      - user: user:charlie
+        object: folder:public_resources
+        assertions:
+          viewer: true  # Public folder
+          can_view_content: true
+          can_list_children: true
+          can_create_file: false  # Viewer cannot create
+          can_create_folder: false
+          can_share: false
+          can_delete: false
+
+  - name: Test shared document with mixed permissions
+    check:
+      - user: user:alice
+        object: doc:shared_proposal
+        assertions:
+          editor: true
+          can_read: true
+          can_write: true
+          can_share: true
+          can_delete: false  # Not owner
+
+      - user: user:bob
+        object: doc:shared_proposal
+        assertions:
+          viewer: true
+          can_read: true
+          can_write: false  # Viewer cannot write
+          can_share: false
+          can_delete: false
+
+  - name: Test deep folder hierarchy permissions
+    check:
+      - user: user:alice
+        object: folder:marketing_docs
+        assertions:
+          owner: false
+          editor: false  # Alice is in engineering, not marketing group
+          can_view_content: true  # Inherited from root ownership
+          can_create_file: true   # Inherited from root ownership
+          can_share: true         # Inherited from root ownership
+
+  - name: Test workspace isolation
+    check:
+      - user: user:alice
+        object: workspace:bob_personal
+        assertions:
+          owner: false
+          can_view: false
+          can_create_folder: false
+          can_edit: false
+          can_delete: false
+          can_share: false
+
+      - user: user:bob
+        object: workspace:bob_personal
+        assertions:
+          owner: true
+          can_view: true
+          can_create_folder: true
+          can_edit: true
+          can_delete: true
+          can_share: true 

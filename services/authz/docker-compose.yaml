@@ -1,0 +1,80 @@
+name: aipacto_authz
+
+services:
+  postgres:
+    image: postgres:17.2-alpine3.21
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - PGPORT=${POSTGRES_PORT}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aipacto_network
+
+  migrate:
+    depends_on:
+      postgres:
+        condition: service_healthy
+    image: openfga/openfga:v1.8.13
+    command: migrate
+    environment: # Full list https://github.com/openfga/openfga/blob/main/cmd/migrate/flags.go
+      - OPENFGA_DATASTORE_ENGINE=postgres
+      - OPENFGA_DATASTORE_URI=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable
+      - OPENFGA_VERBOSE=true
+    networks:
+      - aipacto_network
+
+  openfga:
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    image: openfga/openfga:v1.8.13
+    environment: # Full list https://github.com/openfga/openfga/blob/main/cmd/run/flags.go, https://github.com/openfga/openfga/blob/main/.config-schema.json
+      - OPENFGA_ACCESS_CONTROL_STORE_ID=${OPENFGA_ACCESS_CONTROL_STORE_ID}
+      - OPENFGA_AUTHN_METHOD=preshared
+      - OPENFGA_AUTHN_PRESHARED_KEYS=${OPENFGA_AUTHN_PRESHARED_KEYS}
+      - OPENFGA_DATASTORE_ENGINE=postgres
+      - OPENFGA_DATASTORE_URI=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable
+      - OPENFGA_HTTP_CORS_ALLOWED_ORIGINS=${OPENFGA_HTTP_CORS_ALLOWED_ORIGINS}
+      - OPENFGA_HTTP_CORS_ALLOWED_HEADERS=Content-Type,Authorization
+      - OPENFGA_HTTP_TLS_ENABLED=true
+      # - OPENFGA_HTTP_TLS_CERT=${OPENFGA_HTTP_TLS_CERT}
+      # - OPENFGA_HTTP_TLS_KEY=${OPENFGA_HTTP_TLS_KEY}
+      - OPENFGA_LOG_FORMAT=json
+      - OPENFGA_LOG_LEVEL=debug
+      - OPENFGA_PLAYGROUND_PORT=${OPENFGA_PLAYGROUND_PORT}
+    command: run
+    volumes:
+      - ./certificates:/certs:ro
+    ports:
+      # HTTP server
+      - ${OPENFGA_HTTP_PORT}:8080
+      # # gRPC server (if used)
+      # - "${OPENFGA_GRPC_PORT}:8081"
+      # Playground (disable in prod)
+      - ${OPENFGA_PLAYGROUND_PORT}:${OPENFGA_PLAYGROUND_PORT}
+    networks:
+      - aipacto_network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/healthz"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+volumes:
+  postgres_data:
+    name: authz_postgres_data
+
+networks:
+  aipacto_network:
+    external: true
