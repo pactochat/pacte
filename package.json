@@ -18,6 +18,7 @@
 		"packages/shared/ui/*",
 		"packages/shared/utils/*",
 		"packages/workspace/*",
+		"packages/workspace/infrastructure/*"
 	],
 	"scripts": {
 		"______ Development ______": "Run applications in development mode",

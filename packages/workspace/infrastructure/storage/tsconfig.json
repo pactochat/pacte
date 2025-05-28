@@ -1,0 +1,16 @@
+{
+	"extends": "@aipacto/shared-tsconfig/base.json",
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "dist"
+	},
+	"include": ["src"],
+	"references": [
+		{
+			"path": "../../../shared/domain"
+		},
+		{
+			"path": "../../domain"
+		}
+	]
+}

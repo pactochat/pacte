@@ -1,0 +1,23 @@
+{
+	"name": "@aipacto/workspace-infra-storage",
+	"version": "0.0.1",
+	"type": "module",
+	"main": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsdown ./src/index.ts --dts --sourcemap --platform neutral --clean --silent"
+	},
+	"dependencies": {
+		"@openfga/sdk": "^0.8.1"
+	},
+	"peerDependencies": {
+		"@aipacto/workspace-domain": "workspace:*",
+		"effect": "^3.14.8"
+	}
+}

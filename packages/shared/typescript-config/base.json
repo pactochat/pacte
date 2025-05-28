@@ -69,6 +69,8 @@
       "@aipacto/workspace-domain": [
         "../../workspace/domain/src"
       ],
+      "@aipacto/workspace-infra-storage": [
+        "../../workspace/infrastructure/storage/src"
       ]
     }
   },
