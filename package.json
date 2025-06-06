@@ -15,6 +15,7 @@
 		"packages/harvesting/*",
 		"packages/harvesting/infrastructure/*",
 		"packages/shared/*",
+		"packages/shared/infrastructure/*",
 		"packages/shared/ui/*",
 		"packages/shared/utils/*",
 		"packages/workspace/*",

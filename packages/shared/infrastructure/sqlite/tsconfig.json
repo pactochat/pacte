@@ -1,0 +1,15 @@
+{
+	"extends": "@aipacto/shared-tsconfig/base.json",
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "dist"
+	},
+	"exclude": ["node_modules", "dist"],
+	"include": ["src"],
+	"references": [
+		{ "path": "../../../shared/utils/powersync" },
+		{ "path": "../../../workspace/domain" },
+		{ "path": "../kysely" },
+		{ "path": "../postgres" }
+	]
+}
