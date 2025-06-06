@@ -51,6 +51,15 @@
       "@aipacto/shared-domain": [
         "../domain/src"
       ],
+      "@aipacto/shared-infra-kysely": [
+        "../infrastructure/kysely/src"
+      ],
+      "@aipacto/shared-infra-pg": [
+        "../infrastructure/postgres/src"
+      ],
+      "@aipacto/shared-infra-sqlite": [
+        "../infrastructure/sqlite/src"
+      ],
       "@aipacto/shared-ui-core": [
         "../ui/core/src"
       ],
@@ -65,6 +74,9 @@
       ],
       "@aipacto/shared-utils-logging": [
         "../utils/logging/src"
+      ],
+      "@aipacto/shared-utils-powersync": [
+        "../utils/powersync/src"
       ],
       "@aipacto/workspace-domain": [
         "../../workspace/domain/src"

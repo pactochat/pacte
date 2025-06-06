@@ -40,6 +40,7 @@ export const logExpoAuthenticated =
 	logExpoAuth.getChildCategory('authenticated')
 export const logExpoComponents = logAppExpo.getChildCategory('components')
 export const logExpoHooks = logAppExpo.getChildCategory('hooks')
+export const logExpoProviders = logAppExpo.getChildCategory('providers')
 
 // Expo pages
 export const logExpoPagesAuth = logAppExpo.getChildCategory('pages.auth')

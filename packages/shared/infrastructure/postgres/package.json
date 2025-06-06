@@ -1,0 +1,32 @@
+{
+	"name": "@aipacto/shared-infra-pg",
+	"version": "0.0.1",
+	"type": "module",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"import": "./dist/index.js",
+			"require": "./dist/index.js",
+			"web": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsdown ./src/index.ts --dts --sourcemap --platform neutral --clean --silent",
+		"check-types": "tsc --noEmit",
+		"watch": "tsc --watch --preserveWatchOutput"
+	},
+	"dependencies": {
+		"@aipacto/shared-infra-kysely": "workspace:*"
+	},
+	"peerDependencies": {
+		"@effect/sql": "^0.33.8",
+		"@effect/sql-kysely": "^0.29.8",
+		"@effect/sql-pg": "^0.34.8",
+		"effect": "^3.14.8"
+	},
+	"devDependencies": {
+		"@aipacto/shared-tsconfig": "workspace:*",
+		"typescript": "5.7.2"
+	}
+}

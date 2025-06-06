@@ -5,13 +5,21 @@
 		"baseUrl": ".",
 		"paths": {
 			"~components": ["./src/components/index.ts"],
-			"~hooks": ["./src/hooks/index.ts"]
+			"~hooks": ["./src/hooks/index.ts"],
+			"~providers": ["./src/providers/index.ts"],
+			"~utils": ["./src/utils/index.ts"]
 		}
 	},
 	"include": ["src", ".expo/types/**/*.ts", "expo-env.d.ts", "types.d.ts"],
 	"references": [
 		{
 			"path": "../../packages/shared/domain"
+		},
+		{
+			"path": "../../packages/shared/infrastructure/kysely"
+		},
+		{
+			"path": "../../packages/shared/infrastructure/sqlite"
 		},
 		{
 			"path": "../../packages/shared/ui/core"
