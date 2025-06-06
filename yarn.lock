@@ -161,6 +161,9 @@ __metadata:
     "@clerk/fastify": "npm:^2.2.19"
     "@effect/platform": "npm:^0.80.8"
     "@effect/platform-node": "npm:^0.76.16"
+    "@effect/sql": "npm:^0.33.8"
+    "@effect/sql-kysely": "npm:^0.29.8"
+    "@effect/sql-pg": "npm:^0.34.8"
     "@fastify/cors": "npm:^10.0.1"
     "@fastify/formbody": "npm:^8.0.1"
     "@langchain/community": "npm:^0.3.34"
@@ -295,6 +298,18 @@ __metadata:
 "@aipacto/workspace-infra-authz@workspace:packages/workspace/infrastructure/authz":
   version: 0.0.0-use.local
   resolution: "@aipacto/workspace-infra-authz@workspace:packages/workspace/infrastructure/authz"
+  dependencies:
+    "@openfga/sdk": "npm:^0.8.1"
+  peerDependencies:
+    "@aipacto/shared-utils-logging": "workspace:*"
+    "@aipacto/workspace-domain": "workspace:*"
+    effect: ^3.14.8
+  languageName: unknown
+  linkType: soft
+
+"@aipacto/workspace-infra-storage@workspace:packages/workspace/infrastructure/storage":
+  version: 0.0.0-use.local
+  resolution: "@aipacto/workspace-infra-storage@workspace:packages/workspace/infrastructure/storage"
   dependencies:
     "@openfga/sdk": "npm:^0.8.1"
   peerDependencies:
@@ -2676,6 +2691,48 @@ __metadata:
   peerDependencies:
     effect: ^3.14.21
   checksum: 10/221d3c297414e7da9b6dbfd0f254da85b428e732c4e75b99ab9fd4b7a3c03b6cf085e9972180eb1b48f57aff2024e8ea6d6dcd574d59875bf08ddcfe20b641df
+  languageName: node
+  linkType: hard
+
+"@effect/sql-kysely@npm:^0.29.8":
+  version: 0.29.21
+  resolution: "@effect/sql-kysely@npm:0.29.21"
+  dependencies:
+    "@opentelemetry/semantic-conventions": "npm:^1.24.1"
+  peerDependencies:
+    "@effect/sql": ^0.33.21
+    effect: ^3.14.21
+    kysely: ^0.27.3
+  checksum: 10/d60efde2a1e122893ea5f80e8cdbfab0a755709c06680efb0614307bc983c90d1181db8b6d4856c8c4609b298454e11cbabb818b91485ab826fe3126f79eaad4
+  languageName: node
+  linkType: hard
+
+"@effect/sql-pg@npm:^0.34.8":
+  version: 0.34.21
+  resolution: "@effect/sql-pg@npm:0.34.21"
+  dependencies:
+    "@opentelemetry/semantic-conventions": "npm:^1.25.1"
+    postgres: "npm:^3.4.4"
+  peerDependencies:
+    "@effect/experimental": ^0.44.21
+    "@effect/platform": ^0.80.21
+    "@effect/sql": ^0.33.21
+    effect: ^3.14.21
+  checksum: 10/4a9b1be9f9dfed904a32123f8b3f623cb396c0fdc2d448e015532f2c62c8f48a1c7d11134385126235f359fb3cb0023e398673f9ffe34e6a4c31c839601ebb60
+  languageName: node
+  linkType: hard
+
+"@effect/sql@npm:^0.33.8":
+  version: 0.33.21
+  resolution: "@effect/sql@npm:0.33.21"
+  dependencies:
+    "@opentelemetry/semantic-conventions": "npm:^1.25.1"
+    uuid: "npm:^11.0.3"
+  peerDependencies:
+    "@effect/experimental": ^0.44.21
+    "@effect/platform": ^0.80.21
+    effect: ^3.14.21
+  checksum: 10/102999fe166651110a396557950f8eaa7e100796bf472407eba253b6264fe2ad5a4420e3285d44f5c318b7d747bd5755c14c56ada626bd720950d3dfacb20033
   languageName: node
   linkType: hard
 
@@ -5971,6 +6028,13 @@ __metadata:
   version: 1.9.0
   resolution: "@opentelemetry/api@npm:1.9.0"
   checksum: 10/a607f0eef971893c4f2ee2a4c2069aade6ec3e84e2a1f5c2aac19f65c5d9eeea41aa72db917c1029faafdd71789a1a040bdc18f40d63690e22ccae5d7070f194
+  languageName: node
+  linkType: hard
+
+"@opentelemetry/semantic-conventions@npm:^1.24.1, @opentelemetry/semantic-conventions@npm:^1.25.1":
+  version: 1.34.0
+  resolution: "@opentelemetry/semantic-conventions@npm:1.34.0"
+  checksum: 10/1892b4cc69c9e00456c809604a980e32696563e96463ff5f9d07e72d5aca73836a7378090509f28f54445ac6e072d2343a888c9d64d9ce287198e899082ff7aa
   languageName: node
   linkType: hard
 
@@ -20835,6 +20899,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"postgres@npm:^3.4.4":
+  version: 3.4.7
+  resolution: "postgres@npm:3.4.7"
+  checksum: 10/ef5b43b137412c13d907da0d37e7d4141653365fd371ffa000e124076119fe14ef95a27b1469f2ed6fb006f855746fc65087f326a124fe320a2b1f3bbec397f4
+  languageName: node
+  linkType: hard
+
 "preact@npm:^10.24.2":
   version: 10.26.6
   resolution: "preact@npm:10.26.6"
@@ -24944,6 +25015,15 @@ __metadata:
   bin:
     uuid: dist/bin/uuid
   checksum: 10/23857699a616d1b48224bc2b8440eae6e57d25463c3a0200e514ba8279dfa3bde7e92ea056122237839cfa32045e57d8f8f4a30e581d720fd72935572853ae2e
+  languageName: node
+  linkType: hard
+
+"uuid@npm:^11.0.3":
+  version: 11.1.0
+  resolution: "uuid@npm:11.1.0"
+  bin:
+    uuid: dist/esm/bin/uuid
+  checksum: 10/d2da43b49b154d154574891ced66d0c83fc70caaad87e043400cf644423b067542d6f3eb641b7c819224a7cd3b4c2f21906acbedd6ec9c6a05887aa9115a9cf5
   languageName: node
   linkType: hard
 

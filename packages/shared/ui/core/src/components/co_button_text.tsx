@@ -8,12 +8,13 @@ import {
 	ButtonFrame as ButtonFrameTamagui,
 	Button as ButtonTamagui,
 	type GetProps,
-	Spinner,
+	View,
 	getTokenValue,
 	styled,
 } from 'tamagui'
 
 import type { IconProps } from '../icons'
+import { CoSpinner } from './co_spinner'
 import { CoText } from './co_text'
 
 /**
@@ -36,7 +37,8 @@ export const CoButtonText = ({
 		props.filledDisabled ||
 		props.filledTonalDisabled ||
 		props.outlinedDisabled ||
-		props.textDisabled
+		props.textDisabled ||
+		isLoading
 
 	return (
 		<Base
@@ -44,10 +46,11 @@ export const CoButtonText = ({
 			paddingStart={isLoading ? '$spacingSm' : '$spacingMd'}
 			fullWidth={fullWidth}
 			{...props}
+			disabled={isDisabled}
 		>
 			{!isDisabled && isLoading ? (
 				<AnimatePresence>
-					<Spinner
+					<View
 						animation='bouncy'
 						enterStyle={{
 							scale: 0,
@@ -55,9 +58,10 @@ export const CoButtonText = ({
 						exitStyle={{
 							scale: 0,
 						}}
-						size='small'
 						marginEnd={'$gapSm'}
-					/>
+					>
+						<CoSpinner size='small' />
+					</View>
 				</AnimatePresence>
 			) : null}
 			{icon && !isLoading ? (
