@@ -1,4 +1,3 @@
-// import './styles.css'
 import '@tamagui/core/reset.css' // Get more consistent styles across browsers https://tamagui.dev/docs/guides/next-js#reseting-css
 
 import type { Metadata } from 'next'
