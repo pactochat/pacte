@@ -1,56 +1,72 @@
-# Pacte
+# Aipacto
 
 **Inglés**: Para la versión en inglés de este README, consulta [`README`](../README.md).
 
-## Resumen
+## Visión y Misión
 
-Este repositorio define **Pacte**, una plataforma de chat integral basada en IA, diseñada para empoderar a **gobiernos e instituciones locales** con capacidades de toma de decisiones seguras y basadas en datos. Utilizando datos regionales, Pacte facilita la planificación y la toma de decisiones, incluso con la misma calidad que los gobiernos centrales y organizaciones supranacionales como la OMS o la ONU. El sistema se basa en un **servidor Node.js Fastify**, una **interfaz de chat multiplataforma** (web y móvil nativa a través de Expo), un **orquestador LangChain** para flujos de trabajo multiagente y **rastreadores de datos** para recopilar y procesar información regional.
+Aipacto es una plataforma de chat de código abierto impulsada por IA, diseñada para revolucionar la toma de decisiones y la transparencia en gobiernos locales y regionales. Nuestra visión es establecer un nuevo estándar global para la IA en la política y la gobernanza, comenzando por las regiones de habla catalana y expandiéndose internacionalmente. Aprovechando modelos de lenguaje avanzados (como Salamandra-7b-instruct de Aina Kit), empoderamos a las administraciones públicas y a la ciudadanía con información basada en datos y herramientas accesibles para la participación cívica.
 
-Los componentes clave incluyen:
+### ¿Por qué Aipacto?
 
-1. **Interfaz de chat**: Una experiencia similar a ChatGPT para que los usuarios consulten datos, generen información o soliciten acciones. Plantee preguntas como "¿Cuál es la tendencia sanitaria en mi región?" o "¿Planificar una respuesta ante inundaciones?".
+- **Potenciar la toma de decisiones local**: Proporcionar a los gobiernos locales herramientas para analizar datos regionales y planificar eficazmente, superando a los sistemas centralizados al centrarse en el contexto hiperlocal.
+- **Mejorar la transparencia y el acceso**: Hacer que la información compleja sea accesible y accionable para la ciudadanía, fomentando la confianza y la participación.
+- **Escalable y sostenible**: Diseñado para adaptarse internacionalmente, con una versión autoalojada gratuita y una suscripción en la nube para la viabilidad a largo plazo.
 
-2. **Rastreadores de datos**: Recopilan y estructuran datos regionales para su análisis. 3. **Flujos de trabajo de Agentic**: Sistema multiagente (p. ej., Agente de datos, Agente de análisis, Agente de planificación) orquestado mediante LangChain.
+### Casos de uso
 
-## Objetivos principales
+**Para la ciudadanía:**
 
-1. **Potenciar la toma de decisiones local**
+- "¿Qué decidió el ayuntamiento sobre el nuevo plan de igualdad en la última reunión?"
+- "¿Dónde puedo encontrar información sobre eventos culturales locales y su impacto económico?"
+- "¿Cómo reporto una farola rota en mi barrio?"
+- "Explica el Plan de Acción Municipal en términos sencillos."
+- "¿Qué está haciendo el ayuntamiento para abordar la percepción de que 'aquí nunca pasa nada'?"
 
-- Proporcionar a los gobiernos locales herramientas para analizar datos regionales y planificar eficazmente.
-- Superar a los sistemas centralizados centrándose en el contexto hiperlocal.
+**Para personal y cargos públicos:**
 
-2. **Coordinación multiagente**
+- "Genera un borrador de hilo para redes sociales resumiendo la última reunión del pleno."
+- "Identifica fortalezas y debilidades en los argumentos de la oposición."
+- "Resume las quejas ciudadanas sobre la limpieza de calles."
+- "Analiza un documento de planificación extenso y extrae los 5 puntos más relevantes."
+- "Identifica menciones de 'impacto económico' y 'sostenibilidad' en los informes de festivales."
 
-- Aprovechar LangChain para orquestar agentes en tareas como el rastreo de datos, la síntesis y el apoyo a la toma de decisiones.
-- El **Agente de planificación** central coordina las subtareas; agentes especializados gestionan los datos y el análisis.
+### Impacto económico y social
+
+- **Cataluña**: 900+ municipios, más de 8.000 millones de euros de presupuesto anual. Incluso una adopción del 5% podría gestionar más de 400 millones de euros en recursos.
+- **Ahorros en eficiencia**: 2-5% de ahorro en presupuestos operativos, potencialmente 8-20 millones de euros optimizados anualmente en las primeras etapas.
+- **Escalabilidad**: Diseñado para España (8.000+ municipios, 60.000 millones de euros de presupuesto) y más allá, con planes para soporte multilingüe.
+
+## Arquitectura y stack tecnológico
+
+Aipacto está construido con una arquitectura moderna y robusta:
+
+- **Clean Architecture y DDD**: El código está organizado en contextos delimitados, siguiendo principios de Clean Architecture y Domain-Driven Design para facilitar el mantenimiento y la escalabilidad.
+- **TypeScript en todo**: Desarrollo full stack y multiplataforma en TypeScript para mayor consistencia y seguridad.
+- **Frontend**: React, React Native, Expo, Tamagui (Material Design 3, tokens personalizados para el tema).
+- **Backend**: Fastify (Node.js), Effect, contenedores para computación segura.
+- **Orquestación IA**: LangChain, LangGraph para flujos de trabajo multiagente.
+- **Búsqueda semántica**: Qdrant.
+- **LLMs principales**: Modelos Salamandra de Aina Kit, con soporte para OpenAI, DeepSeek, Grok, etc.
+- **Almacenamiento de datos**: PostgreSQL, Databricks.
+- **Otras herramientas**: Procesamiento masivo de datos, búsqueda en internet, GitHub para colaboración open source.
 
 ## Componentes principales
 
-1. **Backend Fastify/Node.js**
+1. **Interfaz de chat**: UI de chat multiplataforma (web/móvil) para consultar datos, generar información o solicitar acciones.
+2. **Rastreadores de datos**: Scripts para recopilar y estructurar datos regionales para su análisis.
+3. **Flujos de trabajo agentic**: Sistema multiagente orquestado mediante LangChain y LangGraph.
+4. **APIs backend**: Servidor Fastify que gestiona sesiones de chat, procesamiento de datos y tareas de agentes.
 
-- Servidor basado en TypeScript con API para gestionar sesiones de chat, procesar datos y ejecutar tareas de agente.
-- Se integra con entornos contenedorizados para una computación segura.
-- Sirve la interfaz de chat y el backend de la aplicación móvil.
+## Cómo contribuir
 
-2. **Chat multiplataforma (Expo)**
+Estamos desarrollando activamente las interfaces web y móvil principales y el orquestador de agentes IA. Si te interesa tener un impacto significativo en la intersección de IA, gobernanza y open source, ¡nos encantaría contar contigo!
 
-- Desarrollado con Expo para compatibilidad web y móvil nativa (iOS/Android).
-- Proporciona una interfaz de usuario similar a ChatGPT para consultar datos e interactuar con los agentes.
+Antes de empezar, por favor lee nuestra [Guía de contribución](../CONTRIBUTING.md) para instrucciones de configuración, estándares de código y flujo de trabajo de contribución.
 
-3. **Orquestador LangChain.js**
+## Licencia
 
-- Gestiona flujos de trabajo multiagente (p. ej., rastreo de datos, generación de informes, sugerencia de planes).
-- Impulsa las respuestas basadas en LLM y la delegación de tareas.
+Licenciado bajo la Licencia MIT con una cláusula visible de atribución.
 
-4. **Rastreadores de datos**
+Cualquier uso público debe mostrar el texto "Powered by AIPacto.com".
 
-- Scripts personalizados para extraer, agregar y limpiar datos regionales de diversas fuentes.
-- Alimenta el sistema con datos estructurados para el análisis de los agentes.
-
-## Tareas pendientes
-
-- [ ] Web y aplicación mínimas funcionando en Expo
-- [ ] Añadir agentes LangChain al servidor
-- [ ] Añadir interfaz de usuario similar a ChatGPT
-- [ ] Extraer datos de algunos sitios web y regiones de gobiernos locales
-- [ ] Introducir los datos extraídos en una base de datos
+Consulta [LICENSE](../LICENSE) para más detalles.

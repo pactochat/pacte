@@ -59,7 +59,7 @@ If any check fails, your commit will be blocked. **You must fix all errors befor
 
 - Follow Clean Architecture and DDD principles (bounded contexts)
 - Use TypeScript for all code (frontend and backend)
-- For UI: Use Tamagui, Material Design 3, and custom tokens from `@xiroi/shared-ui-core/theme`
+- For UI: Use Tamagui, Material Design 3, and custom tokens from `@aipacto/shared-ui-core/theme`
 - Add new UI text to the appropriate i18n files (e.g., `common.json`)
 - Prefer start/end over left/right for layout (LTR/RTL support)
 - Apply accessibility best practices

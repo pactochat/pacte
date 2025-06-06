@@ -1,12 +1,12 @@
-# Pacte Xat
+# Aipacto
 
 **Español**: For the Spanish version of this README, see [`README`](./docs/README_es.md).
 
 ## Vision & Mission
 
-Pacte Xat is an open-source, AI-powered chat platform designed to revolutionize decision-making and transparency in local and regional governments. Our vision is to set a new global standard for AI in politics and governance, starting with Catalan-speaking regions and expanding internationally. By leveraging advanced language models (like Aina Kit's Salamandra-7b-instruct), we empower public administrations and citizens with data-driven insights and accessible civic engagement tools.
+Aipacto is an open-source, AI-powered chat platform designed to revolutionize decision-making and transparency in local and regional governments. Our vision is to set a new global standard for AI in politics and governance, starting with Catalan-speaking regions and expanding internationally. By leveraging advanced language models (like Aina Kit's Salamandra-7b-instruct), we empower public administrations and citizens with data-driven insights and accessible civic engagement tools.
 
-### Why Pacte Xat?
+### Why Aipacto?
 
 - **Empower Local Decision-Making**: Provide local governments with tools to analyze regional data and plan effectively, outperforming centralized systems by focusing on hyper-local context.
 - **Enhance Transparency & Access**: Make complex information accessible and actionable for citizens, fostering trust and participation.
@@ -38,7 +38,7 @@ Pacte Xat is an open-source, AI-powered chat platform designed to revolutionize 
 
 ## Architecture & Tech Stack
 
-Pacte Xat is built with a modern, robust architecture:
+Aipacto is built with a modern, robust architecture:
 
 - **Clean Architecture & DDD**: The codebase is organized into bounded contexts, following Clean Architecture and Domain-Driven Design principles for maintainability and scalability.
 - **TypeScript Everywhere**: Full stack, cross-platform development in TypeScript for consistency and safety.
