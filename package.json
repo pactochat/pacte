@@ -37,6 +37,7 @@
 		"check-deps": "syncpack list",
 		"check-secrets": "secretlint '**/*'",
 		"check-types": "turbo run check-types --affected",
+		"check-pr-title": "commitlint --edit",
 		"______ Lint ______": "Code quality tools",
 		"lint": "yarn lint:biome && yarn lint:syncpack",
 		"lint:biome": "biome check --write --no-errors-on-unmatched",
@@ -50,6 +51,8 @@
 	"devDependencies": {
 		"@aipacto/shared-tsconfig": "workspace:*",
 		"@biomejs/biome": "^1.9.4",
+		"@commitlint/cli": "^19.8.1",
+		"@commitlint/config-conventional": "^19.8.1",
 		"@secretlint/secretlint-rule-no-dotenv": "^9.3.2",
 		"@secretlint/secretlint-rule-preset-recommend": "^9.2.0",
 		"@types/node": "^22.10.10",
@@ -66,14 +69,6 @@
 	},
 	"resolutions": {
 		"typescript": "5.7.2"
-	},
-	"config": {
-		"commitizen": {
-			"path": "node_modules/cz-customizable"
-		},
-		"cz-customizable": {
-			"config": "cz.config.cjs"
-		}
 	},
 	"dependenciesMeta": {
 		"agentic": {

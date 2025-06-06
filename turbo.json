@@ -8,7 +8,20 @@
 		},
 		"check-types": {
 			"dependsOn": ["generate-paths", "^check-types"],
-			"outputs": []
+			"outputs": ["tsconfig.tsbuildinfo"]
+		},
+		"lint": {
+			"dependsOn": ["generate-paths"],
+			"outputs": [],
+			"cache": true
+		},
+		"check-deps": {
+			"outputs": [],
+			"cache": true
+		},
+		"check-secrets": {
+			"outputs": [],
+			"cache": true
 		},
 		"generate-paths": {
 			"cache": false,
