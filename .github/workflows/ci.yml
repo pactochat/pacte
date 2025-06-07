@@ -62,7 +62,7 @@ jobs:
 
       - name: Run checks with Turbo
         run: |
-          yarn turbo run check-secrets lint check-deps build check-types
+          yarn turbo run check-secrets check-deps lint check-types
 
   build:
     name: Build
