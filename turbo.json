@@ -7,7 +7,7 @@
 			"outputs": ["dist/**/*", "types/**/*"]
 		},
 		"check-types": {
-			"dependsOn": ["generate-paths", "build", "^check-types"],
+			"dependsOn": ["generate-paths", "^build"],
 			"outputs": ["tsconfig.tsbuildinfo"]
 		},
 		"lint": {

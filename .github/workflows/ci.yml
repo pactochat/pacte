@@ -57,12 +57,9 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Generate TypeScript paths
-        run: yarn generate-paths
-
       - name: Run checks with Turbo
         run: |
-          yarn turbo run check-secrets check-deps lint check-types
+          DO_NOT_TRACK=1 TURBO_TELEMETRY_DISABLED=1 yarn turbo run check-secrets check-deps lint check-types
 
   build:
     name: Build
@@ -92,8 +89,5 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Generate TypeScript paths
-        run: yarn generate-paths
-
       - name: Build
-        run: yarn turbo run build
+        run: DO_NOT_TRACK=1 TURBO_TELEMETRY_DISABLED=1 yarn turbo run build
