@@ -12,7 +12,7 @@
 		}
 	},
 	"scripts": {
-		"build": "tsdown ./src/index.ts --dts --sourcemap --platform neutral --clean --silent",
+		"build": "tsdown ./src/index.ts --dts --sourcemap --platform neutral",
 		"check-types": "tsc --noEmit",
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
@@ -27,5 +27,8 @@
 		"expo-localization": "~16.0.1",
 		"react": "18.3.1",
 		"tamagui": "^1.126.1"
+	},
+	"devDependencies": {
+		"tsdown": "^0.12.7"
 	}
 }

@@ -11,7 +11,6 @@
 			"outputs": ["tsconfig.tsbuildinfo"]
 		},
 		"lint": {
-			"dependsOn": ["generate-paths"],
 			"outputs": [],
 			"cache": true
 		},

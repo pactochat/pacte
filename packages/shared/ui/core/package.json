@@ -32,7 +32,7 @@
 		}
 	},
 	"scripts": {
-		"build": "tsdown --config tsdown.config.ts --dts --sourcemap --platform neutral --clean --silent",
+		"build": "tsdown --config tsdown.config.ts --dts --sourcemap --platform neutral",
 		"check-types": "tsc --noEmit",
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
@@ -53,5 +53,8 @@
 		"react-native-reanimated": "~3.16.1",
 		"react-native-svg": "15.8.0",
 		"tamagui": "^1.126.1"
+	},
+	"devDependencies": {
+		"tsdown": "^0.12.7"
 	}
 }

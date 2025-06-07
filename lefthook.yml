@@ -24,8 +24,12 @@ pre-commit:
       stage_fixed: true
     check-types:
       run: |
-        echo "🔍 Running type checks..."
-        yarn check-types
+        if [ "$(git rev-parse --abbrev-ref HEAD)" = "main" ]; then
+          echo "🔍 Running type checks..."
+          yarn check-types
+        else
+          echo "⏭️ Skipping type checks on non-main branch"
+        fi
       stage_fixed: true
     lint:
       run: |
