@@ -30,41 +30,10 @@ jobs:
       - name: Validate PR title format
         run: echo "${{ github.event.pull_request.title }}" | npx commitlint
 
-  lint-and-check:
-    name: Lint and Type Check
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 2
-
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: "yarn"
-
-      - name: Cache Turbo
-        uses: actions/cache@v4
-        with:
-          path: .turbo
-          key: ${{ runner.os }}-turbo-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-turbo-
-
-      - name: Install dependencies
-        run: yarn install --immutable
-
-      - name: Run checks with Turbo
-        run: |
-          DO_NOT_TRACK=1 TURBO_TELEMETRY_DISABLED=1 yarn turbo run check-secrets check-deps lint check-types
-
+  # Single build job that creates all artifacts
   build:
     name: Build
     runs-on: ubuntu-latest
-    needs: [lint-and-check]
 
     steps:
       - name: Checkout
@@ -89,5 +58,97 @@ jobs:
       - name: Install dependencies
         run: yarn install --immutable
 
-      - name: Build
-        run: DO_NOT_TRACK=1 TURBO_TELEMETRY_DISABLED=1 yarn turbo run build
+      - name: Generate TypeScript paths
+        run: yarn generate-paths
+
+      - name: Build all packages
+        run: |
+          DO_NOT_TRACK=1 TURBO_TELEMETRY_DISABLED=1 yarn turbo run build
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-artifacts
+          path: |
+            packages/*/dist/
+            packages/*/*/dist/
+            packages/*/*/*/dist/
+            .turbo/
+          retention-days: 1
+
+  # Fast checks that run in parallel after build
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "yarn"
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run lint
+        run: |
+          DO_NOT_TRACK=1 TURBO_TELEMETRY_DISABLED=1 yarn turbo run lint
+
+  type-check:
+    name: Type Check
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "yarn"
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-artifacts
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run type checks
+        run: |
+          DO_NOT_TRACK=1 TURBO_TELEMETRY_DISABLED=1 yarn turbo run check-types
+
+  security:
+    name: Security & Dependencies
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Run security and dependency checks
+        run: |
+          DO_NOT_TRACK=1 TURBO_TELEMETRY_DISABLED=1 yarn turbo run check-secrets check-deps
