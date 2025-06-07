@@ -12,12 +12,16 @@
 		}
 	},
 	"scripts": {
-		"build": "tsdown ./src/index.ts --dts --sourcemap --platform neutral --clean --silent",
+		"build": "tsdown ./src/index.ts --dts --sourcemap --platform neutral",
 		"check-types": "tsc --noEmit",
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
 	"peerDependencies": {
 		"@aipacto/shared-domain": "workspace:*",
 		"effect": "^3.14.8"
+	},
+	"devDependencies": {
+		"@aipacto/shared-domain": "workspace:*",
+		"tsdown": "^0.12.7"
 	}
 }
