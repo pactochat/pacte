@@ -29,6 +29,8 @@
 		"tamagui": "^1.126.1"
 	},
 	"devDependencies": {
+		"@aipacto/shared-domain": "workspace:*",
+		"@aipacto/shared-utils-logging": "workspace:*",
 		"tsdown": "^0.12.7"
 	}
 }

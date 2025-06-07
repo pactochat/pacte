@@ -55,6 +55,8 @@
 		"tamagui": "^1.126.1"
 	},
 	"devDependencies": {
+		"@aipacto/shared-domain": "workspace:*",
+		"@aipacto/shared-ui-localization": "workspace:*",
 		"tsdown": "^0.12.7"
 	}
 }
