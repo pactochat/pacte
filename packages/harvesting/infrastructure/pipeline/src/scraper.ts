@@ -15,6 +15,7 @@ import {
 	FirecrawlFormat,
 	LocationSettings,
 } from './types'
+
 class ErrorScraperScrape extends Data.TaggedError('ErrorScraperScrape')<{
 	readonly url?: string
 	readonly error?: unknown

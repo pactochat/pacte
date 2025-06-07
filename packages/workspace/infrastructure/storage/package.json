@@ -11,7 +11,7 @@
 		}
 	},
 	"scripts": {
-		"build": "tsdown ./src/index.ts --dts --sourcemap --platform neutral --clean --silent"
+		"build": "tsdown ./src/index.ts --dts --sourcemap --platform neutral"
 	},
 	"dependencies": {
 		"@openfga/sdk": "^0.8.1"
@@ -19,5 +19,8 @@
 	"peerDependencies": {
 		"@aipacto/workspace-domain": "workspace:*",
 		"effect": "^3.14.8"
+	},
+	"devDependencies": {
+		"tsdown": "^0.12.7"
 	}
 }

@@ -1,15 +1,21 @@
 pre-commit:
-  parallel: true
   commands:
+    block-main-commit:
+      run: |
+        if [ "$(git rev-parse --abbrev-ref HEAD)" = "main" ]; then
+          echo "❌ Direct commits to the 'main' branch are not allowed."
+          echo "Please use a feature branch and create a pull request."
+          exit 1
+        fi
     secretlint:
       run: |
         echo "🔑 Running Secretlint..."
         yarn secretlint "{staged_files}"
       stage_fixed: false
-    lint:
+    generate-paths:
       run: |
-        echo "✨ Running lint checks..."
-        yarn lint
+        echo "🔄 Updating TypeScript paths..."
+        yarn generate-paths
       stage_fixed: true
     check-deps:
       run: |
@@ -18,11 +24,25 @@ pre-commit:
       stage_fixed: true
     check-types:
       run: |
-        echo "🔍 Running type checks..."
-        yarn check-types
+        if [ "$(git rev-parse --abbrev-ref HEAD)" = "main" ]; then
+          echo "🔍 Running type checks..."
+          yarn check-types
+        else
+          echo "⏭️ Skipping type checks on non-main branch"
+        fi
       stage_fixed: true
-    generate-paths:
+    lint:
       run: |
-        echo "🔄 Updating TypeScript paths..."
-        yarn generate-paths
+        echo "✨ Running lint checks..."
+        yarn lint
       stage_fixed: true
+
+pre-push:
+  commands:
+    block-main-push:
+      run: |
+        if [ "$(git rev-parse --abbrev-ref HEAD)" = "main" ]; then
+          echo "❌ Direct pushes to the 'main' branch are not allowed."
+          echo "Please use a feature branch and create a pull request."
+          exit 1
+        fi

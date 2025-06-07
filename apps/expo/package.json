@@ -18,7 +18,7 @@
 		"web": "METRO_VERBOSE=1 expo start --web --port 3000",
 		"______ Prebuild ______": "Prebuild the app",
 		"prebuild": "expo prebuild",
-		"prebuild:clean": "expo prebuild --clean",
+		"prebuild:clean": "expo prebuild",
 		"prebuild:ios": "expo prebuild --platform ios",
 		"______ Build ______": "Build the app",
 		"eas:build:dev:android": "cross-env NODE_ENV=development APP_VARIANT=development eas build --profile development --platform android",
