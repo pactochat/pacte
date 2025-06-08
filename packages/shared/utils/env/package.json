@@ -13,7 +13,7 @@
 		}
 	},
 	"scripts": {
-		"build": "tsdown ./src/index.ts --dts --sourcemap --platform node --clean --silent",
+		"build": "tsdown ./src/index.ts --dts --sourcemap --platform node",
 		"check-types": "tsc --noEmit",
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
@@ -25,5 +25,9 @@
 		"@effect/platform": "^0.80.8",
 		"@effect/platform-node": "^0.76.16",
 		"effect": "^3.14.8"
+	},
+	"devDependencies": {
+		"@aipacto/shared-utils-logging": "workspace:*",
+		"tsdown": "^0.12.7"
 	}
 }

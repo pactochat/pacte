@@ -28,7 +28,9 @@ import {
 	getSessionFromAuth,
 } from './powersync_connector_types'
 
-class ErrorPowerSyncTransaction extends Data.TaggedError('ErrorPowerSyncTransaction') {}
+class ErrorPowerSyncTransaction extends Data.TaggedError(
+	'ErrorPowerSyncTransaction',
+) {}
 
 const log = logExpoProviders.getChildCategory('powersync_connector')
 
@@ -41,7 +43,9 @@ const make = (config: PowerSyncConfig) =>
 			public override readonly listeners: Set<Partial<ConnectorListener>> =
 				new Set()
 			ready = false
-			private _session: Option.Option<import('./powersync_connector_types').BasicSession> = Option.none()
+			private _session: Option.Option<
+				import('./powersync_connector_types').BasicSession
+			> = Option.none()
 
 			async init() {
 				log.debug('Initializing...')
@@ -51,8 +55,8 @@ const make = (config: PowerSyncConfig) =>
 
 				const session = await Effect.runPromise(
 					getSessionFromAuth(config.auth, config.jwtTemplate).pipe(
-						Effect.either
-					)
+						Effect.either,
+					),
 				)
 
 				if (
@@ -60,11 +64,11 @@ const make = (config: PowerSyncConfig) =>
 					(Either.isRight(session) && Option.isNone(session.right))
 				) {
 					log.debug('No session found')
-					this.ready = false;
-					this._session = Option.none();
+					this.ready = false
+					this._session = Option.none()
 				} else {
 					this.ready = true
-					this._session = session.right;
+					this._session = session.right
 				}
 
 				log.debug('Initialized')
@@ -86,7 +90,7 @@ const make = (config: PowerSyncConfig) =>
 					(Either.isRight(session) && Option.isNone(session.right))
 				) {
 					log.debug('No session found')
-					this._session = Option.none();
+					this._session = Option.none()
 					this.iterateListeners(cb =>
 						cb.sessionUpdated?.(Either.right(Option.none())),
 					)
@@ -94,7 +98,7 @@ const make = (config: PowerSyncConfig) =>
 				}
 
 				log.debug('Session found')
-				this._session = session.right;
+				this._session = session.right
 				this.iterateListeners(cb => cb.sessionUpdated?.(session))
 			}
 
@@ -102,7 +106,7 @@ const make = (config: PowerSyncConfig) =>
 				const session = await Effect.runPromise(
 					getSessionFromAuth(config.auth, config.jwtTemplate).pipe(
 						Effect.map(sessionOption => {
-							this._session = sessionOption;
+							this._session = sessionOption
 							if (Option.isNone(sessionOption)) {
 								return null
 							}
@@ -113,7 +117,9 @@ const make = (config: PowerSyncConfig) =>
 							}
 
 							if (sessionOption.value.expirationTime !== undefined) {
-								credentials.expiresAt = new Date(sessionOption.value.expirationTime)
+								credentials.expiresAt = new Date(
+									sessionOption.value.expirationTime,
+								)
 							}
 
 							// Expiration date for logging
@@ -129,8 +135,8 @@ const make = (config: PowerSyncConfig) =>
 						Effect.catchAll(error => {
 							log.error('Failed to fetch credentials', { error })
 							throw error
-						})
-					)
+						}),
+					),
 				)
 
 				return session
@@ -138,7 +144,7 @@ const make = (config: PowerSyncConfig) =>
 
 			uploadData(database: AbstractPowerSyncDatabase): Promise<void> {
 				log.debug('Uploading data...')
-				
+
 				return Effect.runPromise(
 					Effect.gen(function* () {
 						const transaction = yield* Effect.tryPromise({
@@ -146,12 +152,10 @@ const make = (config: PowerSyncConfig) =>
 							catch: error => {
 								log.error('Failed to get next CRUD transaction', { error })
 								return new ErrorPowerSyncTransaction()
-							}
+							},
 						})
 
-						if (!transaction) 
-							return
-						
+						if (!transaction) return
 
 						try {
 							if (transaction.crud.length === 0) {
@@ -160,11 +164,19 @@ const make = (config: PowerSyncConfig) =>
 							}
 
 							// Get current session for API authentication
-							const sessionOption = yield* getSessionFromAuth(config.auth, config.jwtTemplate)
-							
+							const sessionOption = yield* getSessionFromAuth(
+								config.auth,
+								config.jwtTemplate,
+							)
+
 							const session = yield* pipe(
 								sessionOption,
-								Effect.fromOption(() => new SessionNotFound({ message: 'No authentication session available' }))
+								Effect.fromOption(
+									() =>
+										new SessionNotFound({
+											message: 'No authentication session available',
+										}),
+								),
 							)
 
 							const token = session.jwt
@@ -180,7 +192,7 @@ const make = (config: PowerSyncConfig) =>
 										crud.table as keyof typeof TableWorkspaceNames
 									],
 									tx_id: crud.transactionId ?? null,
-								})
+								}),
 							)
 
 							// TODO: Implement actual API call here
@@ -220,15 +232,15 @@ const make = (config: PowerSyncConfig) =>
 						} catch (error) {
 							// If we have an error after getting the transaction,
 							// we need to complete it to avoid blocking the queue
-							await transaction.complete()
+							yield* Effect.tryPromise(() => transaction.complete())
 							throw error
 						}
 					}).pipe(
 						Effect.catchAll(error => {
 							log.error('Upload data failed', { error })
 							return Effect.fail(error)
-						})
-					)
+						}),
+					),
 				)
 			}
 		}

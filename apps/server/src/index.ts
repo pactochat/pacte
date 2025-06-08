@@ -1,12 +1,14 @@
 import 'dotenv/config'
 import { clerkPlugin } from '@clerk/fastify'
+import cors from '@fastify/cors'
 import formbodyPlugin from '@fastify/formbody'
 import { Effect } from 'effect'
 import Fastify from 'fastify'
 
-import { Env } from '@pacto-chat/shared-utils-env'
-import { logAppServer } from '@pacto-chat/shared-utils-logging'
-import { routesConversations } from './routes/conversations'
+import { Env } from '@aipacto/shared-utils-env'
+import { logAppServer } from '@aipacto/shared-utils-logging'
+import { routesAgents } from './routes/agents'
+import { routesThreads } from './routes/threads'
 
 async function main() {
 	try {
@@ -32,7 +34,7 @@ async function main() {
 				},
 			},
 		},
-		trustProxy: true, // Respect Caddy's forwarded headers
+		trustProxy: true,
 	}
 
 	const server = Fastify(serverOptions)
@@ -41,22 +43,48 @@ async function main() {
 	logAppServer.info('Registering Formbody plugin')
 	server.register(formbodyPlugin)
 
+	// Register CORS
+	logAppServer.info('Registering CORS plugin')
+	server.register(cors, {
+		origin: (origin, callback) => {
+			// Allow all origins in development
+			if (process.env.NODE_ENV === 'development') {
+				callback(null, true)
+				return
+			}
+
+			// In production, check against allowed origins
+			const allowedOrigins =
+				process.env.ALLOWED_ORIGINS?.split(',').map(s => s.trim()) || []
+			if (!origin || allowedOrigins.includes(origin)) {
+				callback(null, true)
+			} else {
+				callback(new Error('CORS origin not allowed'), false)
+			}
+		},
+		credentials: true,
+		methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+		allowedHeaders: ['Content-Type', 'Authorization'],
+		maxAge: 86400, // 24 hours
+		preflight: true,
+		strictPreflight: true,
+	})
+
+	// Register authentication
+	logAppServer.info('Registering Clerk plugin')
 	server.register(clerkPlugin)
 
 	logAppServer.info('Setting error handler')
 	server.setErrorHandler((err, request, reply) => {
-		// // Pass the error through Clerk (Clerk might send a response immediately)
-		// clerkErrorHandler()(err, request, reply)
-
-		// Do any other fallback logic if the reply is not yet sent
 		if (!reply.sent) {
 			reply.status(500).send({ error: 'Internal Server Error' })
 		}
 	})
 
-	// Routes
+	// Register routes
 	logAppServer.info('Registering routes')
-	await routesConversations(server)
+	await routesAgents(server)
+	await routesThreads(server)
 
 	// Health check route
 	server.get('/check', async () => {
