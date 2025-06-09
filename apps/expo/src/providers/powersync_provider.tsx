@@ -1,15 +1,7 @@
-import { getClerkInstance, useAuth, useClerk } from '@clerk/clerk-expo'
+import { getClerkInstance, useAuth } from '@clerk/clerk-expo'
 import type { AbstractPowerSyncDatabase } from '@powersync/common'
 import { PowerSyncContext } from '@powersync/react'
-import {
-	Config,
-	Effect,
-	Either,
-	Layer,
-	ManagedRuntime,
-	Option,
-	Runtime,
-} from 'effect'
+import { Config, Effect, Either, Layer, ManagedRuntime, Option } from 'effect'
 import { type ReactNode, useEffect, useRef, useState } from 'react'
 
 import { PowerSyncClient, PowerSyncDb } from '@aipacto/shared-infra-sqlite'
