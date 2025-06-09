@@ -1,2 +1,1 @@
-export * from './runtime_client'
-export * from './powersync_connector'
+export * from './powersync_provider'
