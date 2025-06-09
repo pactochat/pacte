@@ -41,6 +41,7 @@
 		"@aipacto/shared-ui-localization": "workspace:*",
 		"@aipacto/shared-utils-logging": "workspace:*",
 		"@clerk/clerk-expo": "^2.10.1",
+		"@clerk/clerk-react": "^5.31.9",
 		"@clerk/types": "^4.56.0",
 		"@effect/platform": "^0.80.8",
 		"@expo-google-fonts/dm-sans": "^0.3.0",

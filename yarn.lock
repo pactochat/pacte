@@ -120,6 +120,7 @@ __metadata:
     "@babel/plugin-proposal-export-namespace-from": "npm:^7.18.9"
     "@babel/plugin-transform-class-static-block": "npm:^7.26.0"
     "@clerk/clerk-expo": "npm:^2.10.1"
+    "@clerk/clerk-react": "npm:^5.31.9"
     "@clerk/types": "npm:^4.56.0"
     "@effect/platform": "npm:^0.80.8"
     "@expo-google-fonts/dm-sans": "npm:^0.3.0"
@@ -2695,6 +2696,20 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@clerk/clerk-react@npm:^5.31.9":
+  version: 5.31.9
+  resolution: "@clerk/clerk-react@npm:5.31.9"
+  dependencies:
+    "@clerk/shared": "npm:^3.9.6"
+    "@clerk/types": "npm:^4.60.0"
+    tslib: "npm:2.8.1"
+  peerDependencies:
+    react: ^18.0.0 || ^19.0.0 || ^19.0.0-0
+    react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-0
+  checksum: 10/7f387c3cd472dad32ce89bf9150e71dc24fcd234cdfc7881985f7ee2c75100c99f01526dde6e69b8fd3ad75ecde932288a672021259c86a9dab1e0509c800140
+  languageName: node
+  linkType: hard
+
 "@clerk/fastify@npm:^2.2.19":
   version: 2.2.20
   resolution: "@clerk/fastify@npm:2.2.20"
@@ -2741,12 +2756,43 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@clerk/shared@npm:^3.9.6":
+  version: 3.9.6
+  resolution: "@clerk/shared@npm:3.9.6"
+  dependencies:
+    "@clerk/types": "npm:^4.60.0"
+    dequal: "npm:2.0.3"
+    glob-to-regexp: "npm:0.4.1"
+    js-cookie: "npm:3.0.5"
+    std-env: "npm:^3.9.0"
+    swr: "npm:^2.3.3"
+  peerDependencies:
+    react: ^18.0.0 || ^19.0.0 || ^19.0.0-0
+    react-dom: ^18.0.0 || ^19.0.0 || ^19.0.0-0
+  peerDependenciesMeta:
+    react:
+      optional: true
+    react-dom:
+      optional: true
+  checksum: 10/fc1929b667c76ef945927a7f4c9be2e9c2e2f5e9b5b88d71cb1c04d9731aea9044745ff406753906955b5a39df4cad242196c3d2e3274d5403cf6ae81b19d979
+  languageName: node
+  linkType: hard
+
 "@clerk/types@npm:^4.56.0, @clerk/types@npm:^4.59.1":
   version: 4.59.1
   resolution: "@clerk/types@npm:4.59.1"
   dependencies:
     csstype: "npm:3.1.3"
   checksum: 10/dbf56a6cca858b68dbd07f6eaa46062975bbe917d826d17f6c6b0f86f3568cd11d001209c9425f8e6fecbd1b758104ca7dcf0dae92114e9840ecd3b4f1e98962
+  languageName: node
+  linkType: hard
+
+"@clerk/types@npm:^4.60.0":
+  version: 4.60.0
+  resolution: "@clerk/types@npm:4.60.0"
+  dependencies:
+    csstype: "npm:3.1.3"
+  checksum: 10/cb3552ef0a38a3495c556f0dc003ce981361a769ca9d7f225fadf891546af1efb8ce3e4a4ee498a799c319724c83d946342f6a668914d8be5aa66032e5006b8b
   languageName: node
   linkType: hard
 
