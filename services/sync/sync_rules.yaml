@@ -1,0 +1,10 @@
+# Docs https://docs.powersync.com/usage/sync-rules
+
+# yaml-language-server: $schema=https://unpkg.com/@powersync/service-sync-rules@latest/schema/sync_rules.json
+
+bucket_definitions:
+  # Sync the current servant (user)
+  servant_data:
+    parameters: SELECT request.user_id() AS servant_id
+    data:
+      - SELECT * FROM servants WHERE id = bucket.servant_id

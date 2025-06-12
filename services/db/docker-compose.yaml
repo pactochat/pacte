@@ -1,0 +1,54 @@
+name: aipacto_db
+
+services:
+  db_visualizer:
+    image: sosedoff/pgweb:latest
+    depends_on:
+      - db
+    environment:
+      PGWEB_DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@db:${POSTGRES_PORT}/${POSTGRES_DB}?sslmode=disable
+    healthcheck:
+      test: ["CMD", "wget", "--spider", "--quiet", "http://localhost:9001"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    ports:
+      - 9001:8081
+    networks:
+      - aipacto_network
+    restart: unless-stopped
+    volumes:
+      - db_visualizer_data:/data
+  db:
+    image: postgres:17.2-alpine3.21
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - PGPORT=${POSTGRES_PORT}
+    ports:
+      - ${POSTGRES_PORT}:${POSTGRES_PORT}
+    command: ["postgres", "-c", "wal_level=logical"] # Required for PowerSync replication
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      start_period: 30s
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - aipacto_network 
+
+volumes:
+  pg_data:
+    name: aipacto_db_postgres_data
+  db_visualizer_data:
+    name: aipacto_db_visualizer_data
+
+networks:
+  aipacto_network:
+    external: true
