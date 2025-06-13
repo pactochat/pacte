@@ -3,4 +3,6 @@ export const services = {
 	// email: '../../services/email',
 	// db_marketing: '../../services/db_marketing',
 	authz: '../../services/authz',
+	db: '../../services/db',
+	sync: '../../services/sync',
 } as const
