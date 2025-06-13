@@ -6301,6 +6301,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@nderscore/tamagui-typescript-plugin@npm:^0.6.0":
+  version: 0.6.0
+  resolution: "@nderscore/tamagui-typescript-plugin@npm:0.6.0"
+  dependencies:
+    color: "npm:4.2.3"
+  peerDependencies:
+    "@tamagui/core": "*"
+    "@tamagui/helpers": "*"
+    typescript: ">=4.8"
+  checksum: 10/a1662109336f37576aaf9bdcfba25cdae33d8c465e3c3f031c3e801062526097013a4e881b5e40fc6825571fd8298921eea2c2155fcf69516073925ac68858aa
+  languageName: node
+  linkType: hard
+
 "@next/env@npm:15.2.3":
   version: 15.2.3
   resolution: "@next/env@npm:15.2.3"
@@ -11702,6 +11715,7 @@ __metadata:
     "@commitlint/cli": "npm:^19.8.1"
     "@commitlint/config-conventional": "npm:^19.8.1"
     "@effect/language-service": "npm:^0.20.1"
+    "@nderscore/tamagui-typescript-plugin": "npm:^0.6.0"
     "@secretlint/secretlint-rule-no-dotenv": "npm:^9.3.2"
     "@secretlint/secretlint-rule-preset-recommend": "npm:^9.2.0"
     "@types/node": "npm:^22.10.10"
@@ -13292,7 +13306,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color@npm:^4.2.3":
+"color@npm:4.2.3, color@npm:^4.2.3":
   version: 4.2.3
   resolution: "color@npm:4.2.3"
   dependencies:

@@ -65,6 +65,10 @@
 		"plugins": [
 			{
 				"name": "@effect/language-service"
+			},
+			{
+				"name": "@nderscore/tamagui-typescript-plugin",
+				"pathToApp": "apps/expo"
 			}
 		]
 	},
