@@ -61,7 +61,12 @@
 			"@aipacto/workspace-infra-storage": [
 				"../../workspace/infrastructure/storage/src"
 			]
-		}
+		},
+		"plugins": [
+			{
+				"name": "@effect/language-service"
+			}
+		]
 	},
 	"exclude": ["node_modules", "dist"],
 	"types": ["node"]

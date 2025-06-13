@@ -3069,6 +3069,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@effect/language-service@npm:^0.20.1":
+  version: 0.20.1
+  resolution: "@effect/language-service@npm:0.20.1"
+  checksum: 10/1e506d82a502129923b39e67cdfd4fa1255a9c86e568a7fcdbd4c6f99b4637ae2b001b47d344134a81e1de68211030e55f93bad480a17b7e15692441683e892c
+  languageName: node
+  linkType: hard
+
 "@effect/platform-node-shared@npm:^0.30.22":
   version: 0.30.22
   resolution: "@effect/platform-node-shared@npm:0.30.22"
@@ -11694,6 +11701,7 @@ __metadata:
     "@biomejs/biome": "npm:^1.9.4"
     "@commitlint/cli": "npm:^19.8.1"
     "@commitlint/config-conventional": "npm:^19.8.1"
+    "@effect/language-service": "npm:^0.20.1"
     "@secretlint/secretlint-rule-no-dotenv": "npm:^9.3.2"
     "@secretlint/secretlint-rule-preset-recommend": "npm:^9.2.0"
     "@types/node": "npm:^22.10.10"
