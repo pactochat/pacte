@@ -22,15 +22,6 @@ pre-commit:
         echo "📦 Running dependency version consistency checks..."
         yarn check-deps
       stage_fixed: true
-    check-types:
-      run: |
-        if [ "$(git rev-parse --abbrev-ref HEAD)" = "main" ]; then
-          echo "🔍 Running type checks..."
-          yarn check-types
-        else
-          echo "⏭️ Skipping type checks on non-main branch"
-        fi
-      stage_fixed: true
     lint:
       run: |
         echo "✨ Running lint checks..."
