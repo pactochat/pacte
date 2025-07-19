@@ -1,6 +1,3 @@
-import * as Localization from 'expo-localization'
-import { isWeb } from 'tamagui'
-
 import {
 	type LanguageDeviceLanguageCode,
 	ListSupportedLanguagesCodes,
@@ -8,6 +5,8 @@ import {
 	isValidDeviceLanguageCode,
 } from '@aipacto/shared-domain'
 import { logSharedUiLocalization } from '@aipacto/shared-utils-logging'
+
+const isWeb = typeof window !== 'undefined' && typeof document !== 'undefined'
 
 /**
  * Gets the user's preferred language from metadata or device
@@ -86,6 +85,8 @@ export const detectDeviceLanguage =
 					}
 				}
 			} else {
+				// Dynamic import for native only
+				const Localization = require('expo-localization')
 				const locales = Localization.getLocales()
 				const primaryLocale = locales[0]
 				if (primaryLocale?.languageCode) {

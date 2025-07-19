@@ -1,13 +1,8 @@
-import * as Localization from 'expo-localization'
 import i18next, { type i18n as I18nInstance } from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
-import {
-	ListSupportedLanguagesCodes,
-	ListSupportedLanguagesMapperIso1to3,
-} from '@aipacto/shared-domain'
-import { logSharedUiLocalization } from '@aipacto/shared-utils-logging'
-import { getPreferredLanguage } from './language_utils'
+import { ListSupportedLanguagesCodes } from '@aipacto/shared-domain'
+import { detectDeviceLanguage, getPreferredLanguage } from './language_utils'
 import { languages } from './languages'
 
 import 'intl-pluralrules' // Load Intl.PluralRules polyfill for native
@@ -17,26 +12,7 @@ import 'intl-pluralrules' // Load Intl.PluralRules polyfill for native
  * Works in both web and native environments
  */
 export function detectLanguage(): ListSupportedLanguagesCodes {
-	try {
-		// Get device locale (works in both web and native)
-		const locales = Localization.getLocales()
-		const locale = locales[0]?.languageCode || 'en'
-
-		// Use just the language code part (in case it's something like 'en-US')
-		const languageCode = (locale.split('-')[0] ?? 'en').toLowerCase()
-
-		// Convert from ISO 639-1 to our ISO 639-3 format
-		const iso3Code =
-			ListSupportedLanguagesMapperIso1to3[
-				languageCode as keyof typeof ListSupportedLanguagesMapperIso1to3
-			]
-
-		// If we don't support this language, fall back to English
-		return iso3Code || ListSupportedLanguagesCodes.eng
-	} catch (error) {
-		logSharedUiLocalization.warn('Failed to detect language:', error)
-		return ListSupportedLanguagesCodes.eng
-	}
+	return detectDeviceLanguage()
 }
 
 // Initialize i18next instance
