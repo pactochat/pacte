@@ -1,10 +1,28 @@
 import { LogLevel } from 'typescript-logging'
 import { CategoryProvider } from 'typescript-logging-category-style'
 
+// Clear the provider if we're in a node environment and in development mode
+const isNodeEnvironment = (): boolean => {
+	try {
+		return (
+			typeof process !== 'undefined' &&
+			process.versions != null &&
+			process.versions.node != null
+		)
+	} catch {
+		return false
+	}
+}
+
+if (isNodeEnvironment() && process.env.NODE_ENV === 'development') {
+	CategoryProvider.clear()
+}
+
 // Root categories
 export const rootProvider = CategoryProvider.createProvider('@aipacto', {
 	level: LogLevel.Debug,
 })
+
 const logApps = rootProvider.getCategory('apps')
 const logShared = rootProvider.getCategory('shared')
 const logAgents = rootProvider.getCategory('agents')

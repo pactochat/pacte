@@ -1,0 +1,41 @@
+{
+	"name": "@aipacto/apps-web",
+	"version": "0.0.1",
+	"main": "src/index.ts",
+	"type": "module",
+	"scripts": {
+		"dev": "vite",
+		"build": "vite build",
+		"preview": "vite preview"
+	},
+	"dependencies": {
+		"@tanstack/react-router": "^1.128.0",
+		"@tanstack/react-router-devtools": "^1.127.3",
+		"@tanstack/react-start": "^1.128.0",
+		"@univerjs/core": "^0.9.2",
+		"@univerjs/design": "^0.9.2",
+		"@univerjs/docs": "^0.9.2",
+		"@univerjs/docs-ui": "^0.9.2",
+		"@univerjs/engine-formula": "^0.9.2",
+		"@univerjs/engine-render": "^0.9.2",
+		"@univerjs/preset-docs-core": "^0.9.2",
+		"@univerjs/presets": "^0.9.2",
+		"@univerjs/ui": "^0.9.2",
+		"effect": "^3.14.8",
+		"expo-localization": "~16.0.1",
+		"react": "^19.1.0",
+		"react-dom": "19.1.0",
+		"rxjs": "^7.8.2"
+	},
+	"devDependencies": {
+		"@aipacto/shared-tsconfig": "workspace:*",
+		"@types/react": "^19.1.6",
+		"@types/react-dom": "^19.1.6",
+		"@univerjs/vite-plugin": "0.5.1",
+		"@vitejs/plugin-react": "^4.6.0",
+		"typescript": "5.8.3",
+		"vite": "7.0.5",
+		"vite-tsconfig-paths": "^5.1.4"
+	},
+	"private": true
+}

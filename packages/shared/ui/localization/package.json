@@ -1,6 +1,7 @@
 {
 	"name": "@aipacto/shared-ui-localization",
 	"version": "0.0.1",
+	"main": "./dist/index.js",
 	"type": "module",
 	"types": "./dist/index.d.ts",
 	"exports": {
@@ -25,12 +26,16 @@
 		"@aipacto/shared-domain": "workspace:*",
 		"@aipacto/shared-utils-logging": "workspace:*",
 		"expo-localization": "~16.0.1",
-		"react": "18.3.1",
-		"tamagui": "^1.126.1"
+		"react": "19.1.0"
 	},
 	"devDependencies": {
 		"@aipacto/shared-domain": "workspace:*",
 		"@aipacto/shared-utils-logging": "workspace:*",
 		"tsdown": "^0.12.7"
+	},
+	"peerDependenciesMeta": {
+		"expo-localization": {
+			"optional": true
+		}
 	}
 }

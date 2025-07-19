@@ -1,21 +1,19 @@
 {
 	"name": "@aipacto/shared-utils-env",
 	"version": "0.0.1",
-	"main": "./src/index.ts",
+	"main": "./dist/index.js",
 	"type": "module",
 	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
 			"types": "./dist/index.d.ts",
 			"import": "./dist/index.ts",
-			"require": "./dist/index.js",
-			"web": "./dist/index.ts"
+			"require": "./dist/index.js"
 		}
 	},
 	"scripts": {
 		"build": "tsdown ./src/index.ts --dts --sourcemap --platform node",
-		"check-types": "tsc --noEmit",
-		"watch": "tsc --watch --preserveWatchOutput"
+		"check-types": "tsc --noEmit"
 	},
 	"dependencies": {
 		"dotenv": "^16.4.5"

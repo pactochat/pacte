@@ -16,8 +16,9 @@ Aipacto is a web and mobile app inspired by ChatGPT, designed for city councils,
 - Langchain +v0.3, Langgraph +v0.2.71
 - React
 - Fastify v5
-- Expo v52 (web and native app)
-- Expo Router v4 (web and native app)
+- Web: Vite v6 + Tanstack Router
+- [Deprecated] Expo v52 (native app)
+- [Deprecated] Expo Router v4 (web and native app)
 - Clerk for auth (Expo frontend +v2.10 and Fastify backend, including workspace-level permissions)
 - Workspace storage:
   - Loro.dev for collaborative editing, undo/redo, and versioning
@@ -41,15 +42,17 @@ Aipacto is a web and mobile app inspired by ChatGPT, designed for city councils,
 
 - Tamagui +v1.126 for web & native
 - Follow Material Design 3 guidelines
-- @aipacto/shared-ui-core/*: Exports Tamagui components, providers, icons, and workspace-specific UI (e.g., document editors, folder views)
-- Always prioritize custom tokens from `@aipacto/shared-ui-core/theme` for colors, spacing, gaps, z-index...
-- When adding text for UI add it to common.json or other i18n files
+- @aipacto/shared-ui-core/*:
+  - /components: CoPage, CoText, CoButton, CoCard, CoLink, CoParagraph, CoSpinner, CoTextField, CoToast
+  - /icons
+  - /theme. Always prioritize custom tokens for colors, spacing, gaps, font sizes, border radius, z-index...
+- When adding text for UI add it to common.json and rest of i18n json
 
 ## Requirements
 
 - Try to keep comments and docs in the code
 - For UI tasks:
   - Use start-end before left-right terms to support ltr/rtl when Tamagui allows it
-- Apply accessibility best practices
+  - Consider accessibility, follow best practices
 
 ## Instructions
